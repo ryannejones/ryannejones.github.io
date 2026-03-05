@@ -363,7 +363,7 @@
       <g id="regionsGroup"></g>
       <g id="labelsGroup"></g>
     </svg>
-
+    
     <div class="legend">
       <div class="legend-title">SIMILARITY SCALE</div>
       <div class="legend-gradient" id="legendGrad"></div>
@@ -387,6 +387,8 @@
 // ═══════════════════════════════════════════════════════════════════════════
 // DIALECT DATA - 16 varieties from original HTML
 // ═══════════════════════════════════════════════════════════════════════════
+
+console.log('Script loading...');
 
 const DIALECTS = [
   {
@@ -472,7 +474,7 @@ const DIALECTS = [
       { label: 'Completive "done"', note: '"I done told you"' },
       { label: '"Fixin\' to"', note: 'near-future marker' },
     ],
-
+    similarity: {
       inland_north: 18, new_england: 22, mid_atlantic: 35, upper_midwest: 15,
       appalachian: 50, gulf_south: 75, texas: 68, ozark: 55, piedmont: 60,
       gullah: 55, cajun: 32, new_orleans: 45, plains: 40, mountain_west: 32,
@@ -725,14 +727,14 @@ const REGIONS = {
 function similarityColor(score) {
   // 0% = harvest red (#a4301e), 100% = harvest green (#374a1f)
   const t = score / 100;
-
+  
   // Harvest red RGB: 164, 48, 30
   // Harvest green RGB: 55, 74, 31
-
+  
   const r = Math.round(164 - (164 - 55) * t);
   const g = Math.round(48 + (74 - 48) * t);
   const b = Math.round(30 + (31 - 30) * t);
-
+  
   return `rgb(${r}, ${g}, ${b})`;
 }
 
@@ -756,7 +758,7 @@ function buildMap() {
   DIALECTS.forEach(dialect => {
     const pts = REGIONS[dialect.id];
     if (!pts) return;
-
+    
     // Create polygon
     const poly = document.createElementNS(svgNS, 'polygon');
     poly.setAttribute('points', pts.map(p=>p.join(',')).join(' '));
@@ -790,17 +792,17 @@ function buildMap() {
 
 function updateHeatmap() {
   const polys = document.querySelectorAll('#regionsGroup polygon');
-
+  
   polys.forEach(poly => {
     const id = poly.dataset.id;
-
+    
     if (!selectedDialect) {
       poly.setAttribute('fill', '#3d3425');
       poly.setAttribute('fill-opacity', '0.4');
       poly.setAttribute('stroke-width', '1.5');
       return;
     }
-
+    
     if (id === selectedDialect) {
       // Selected region = harvest green (100%)
       poly.setAttribute('fill', '#374a1f');
@@ -809,7 +811,7 @@ function updateHeatmap() {
       poly.setAttribute('stroke-width', '2.5');
       return;
     }
-
+    
     // Other regions colored by similarity
     const dialect = DIALECTS.find(d => d.id === selectedDialect);
     const score = dialect.similarity[id] || 30;
@@ -833,12 +835,12 @@ function updateHeatmap() {
 
 function selectDialect(id) {
   selectedDialect = id;
-
+  
   // Update dialect buttons
   document.querySelectorAll('.dialect-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.id === id);
   });
-
+  
   updateHeatmap();
   renderRightPanel(id);
 }
@@ -846,15 +848,15 @@ function selectDialect(id) {
 function renderRightPanel(id) {
   const dialect = DIALECTS.find(d => d.id === id);
   if (!dialect) return;
-
+  
   const panel = document.getElementById('rightPanel');
 
   // Get sorted similarities
   const others = DIALECTS
     .filter(d => d.id !== id)
-    .map(d => ({
-      id: d.id,
-      name: d.name,
+    .map(d => ({ 
+      id: d.id, 
+      name: d.name, 
       score: dialect.similarity[d.id] || 0
     }))
     .sort((a,b) => b.score - a.score);
@@ -902,14 +904,14 @@ const tooltip = document.getElementById('tooltip');
 function showTooltip(e, id) {
   const dialect = DIALECTS.find(d => d.id === id);
   if (!dialect) return;
-
+  
   let extra = '';
   if (selectedDialect && selectedDialect !== id) {
     const selected = DIALECTS.find(d => d.id === selectedDialect);
     const score = selected.similarity[id] || 0;
     extra = `<br><span style="color:var(--gold);">${score}% similar</span>`;
   }
-
+  
   tooltip.innerHTML = `<strong>${dialect.name}</strong><br><span style="font-size:0.65rem;color:var(--muted);">${dialect.region}</span>${extra}`;
   tooltip.style.opacity = 1;
   moveTip(e);
@@ -962,9 +964,15 @@ function buildLegend() {
 // INIT
 // ═══════════════════════════════════════════════════════════════════════════
 
+console.log('Initializing atlas...');
+console.log('DIALECTS array length:', DIALECTS.length);
+console.log('REGIONS object keys:', Object.keys(REGIONS).length);
+
 buildDialectList();
 buildMap();
 buildLegend();
+
+console.log('Atlas initialized successfully');
 </script>
 
 </body>
