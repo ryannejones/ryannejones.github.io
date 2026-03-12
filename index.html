@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>American English Dialect Atlas</title>
+<title>American English Dialect Migration & Similarity</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Code+Pro:wght@400;600&display=swap');
 
@@ -18,8 +18,6 @@
     --muted: #8a7d65;
     --panel: #221e16;
     --border: #3d3425;
-    --harvest-green: #374a1f;
-    --harvest-red: #a4301e;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -48,7 +46,6 @@
     display: flex;
     align-items: baseline;
     gap: 2rem;
-    flex-wrap: wrap;
   }
 
   header h1 {
@@ -77,8 +74,8 @@
 
   .app {
     display: grid;
-    grid-template-columns: 280px 1fr 320px;
-    height: calc(100vh - 90px);
+    grid-template-columns: 280px 1fr 260px;
+    height: calc(100vh - 70px);
   }
 
   .left-panel {
@@ -113,7 +110,7 @@
     border: 1px solid transparent;
     color: var(--cream);
     font-family: 'Libre Baskerville', serif;
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     text-align: left;
     padding: 0.5rem 0.75rem;
     cursor: pointer;
@@ -136,10 +133,42 @@
 
   .dialect-btn .region-tag {
     display: block;
-    font-size: 0.63rem;
+    font-size: 0.65rem;
     color: var(--muted);
     font-style: italic;
     margin-top: 0.1rem;
+  }
+
+  .layer-toggles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+  }
+
+  .toggle-row input[type="checkbox"] {
+    accent-color: var(--gold);
+    width: 14px;
+    height: 14px;
+  }
+
+  .toggle-row label {
+    font-size: 0.78rem;
+    color: var(--cream);
+    cursor: pointer;
+  }
+
+  .toggle-row .swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
   }
 
   .map-area {
@@ -171,11 +200,10 @@
     position: absolute;
     bottom: 1.5rem;
     left: 1.5rem;
-    background: rgba(26,22,16,0.95);
+    background: rgba(26,22,16,0.9);
     border: 1px solid var(--border);
     padding: 0.8rem 1rem;
     font-size: 0.7rem;
-    min-width: 200px;
   }
 
   .legend-title {
@@ -186,20 +214,26 @@
     margin-bottom: 0.5rem;
   }
 
+  .legend-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+  }
+
   .legend-gradient {
-    width: 180px;
-    height: 12px;
-    border-radius: 2px;
-    margin: 0.5rem 0;
+    width: 100px;
+    height: 10px;
+    border-radius: 1px;
   }
 
   .legend-labels {
     display: flex;
-    justify-between;
-    width: 180px;
-    font-size: 0.58rem;
+    justify-content: space-between;
+    width: 100px;
+    font-size: 0.6rem;
     color: var(--muted);
-    font-family: 'Source Code Pro', monospace;
+    margin-top: 0.2rem;
   }
 
   .right-panel {
@@ -226,7 +260,7 @@
   }
 
   .info-card p {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     line-height: 1.6;
     color: var(--cream);
   }
@@ -239,18 +273,9 @@
   }
 
   .feature-item {
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     line-height: 1.5;
     color: var(--cream);
-    padding-left: 0.8rem;
-    position: relative;
-  }
-
-  .feature-item::before {
-    content: '→';
-    position: absolute;
-    left: 0;
-    color: var(--gold);
   }
 
   .feature-item strong {
@@ -271,36 +296,51 @@
 
   .sim-label {
     font-size: 0.7rem;
-    min-width: 90px;
-    color: var(--cream);
+    min-width: 100px;
+    color: var(--muted);
   }
 
   .sim-bar-bg {
     flex: 1;
-    height: 10px;
-    background: #0f0d09;
+    height: 8px;
+    background: var(--parchment);
     border-radius: 2px;
     overflow: hidden;
   }
 
   .sim-bar-fill {
     height: 100%;
-    transition: width 0.3s ease;
+    transition: width 0.3s;
   }
 
   .sim-pct {
     font-family: 'Source Code Pro', monospace;
     font-size: 0.65rem;
-    color: var(--gold);
     min-width: 35px;
     text-align: right;
+    color: var(--gold);
   }
 
-  .tooltip {
+  .migration-arrow {
+    stroke: var(--rust);
+    stroke-width: 1.5;
+    fill: none;
+    opacity: 0.6;
+  }
+
+  .trade-route {
+    stroke: var(--teal);
+    stroke-width: 1.5;
+    fill: none;
+    stroke-dasharray: 4,4;
+    opacity: 0.5;
+  }
+
+  #tooltip {
     position: absolute;
-    background: rgba(26,22,16,0.98);
+    background: rgba(26,22,16,0.95);
     border: 1px solid var(--gold);
-    padding: 0.5rem 0.75rem;
+    padding: 0.6rem 0.8rem;
     font-size: 0.7rem;
     pointer-events: none;
     opacity: 0;
@@ -308,440 +348,1589 @@
     z-index: 100;
     line-height: 1.4;
   }
-
-  .data-sources {
-    font-size: 0.62rem;
-    color: var(--muted);
-    line-height: 1.5;
-    padding: 0.8rem;
-    background: var(--parchment);
-    border: 1px solid var(--border);
-  }
-
-  .data-sources strong {
-    color: var(--gold);
-  }
-
-  .no-selection {
-    color: var(--muted);
-    font-style: italic;
-    font-size: 0.8rem;
-    text-align: center;
-    padding: 2rem 1rem;
-    line-height: 1.6;
-  }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>American English Dialect Atlas</h1>
-  <span class="subtitle">Geographic Similarity Heatmap • 16 Varieties</span>
-  <span class="epoch">BASELINE DATA • 1960s-1970s</span>
+  <h1>American English Dialect Map</h1>
+  <span class="subtitle">Migration Patterns & Linguistic Similarity</span>
+  <span class="epoch">ALPHA v0.3</span>
 </header>
 
 <div class="app">
   <div class="left-panel">
     <div>
-      <div class="section-label">Dialect Varieties</div>
+      <div class="section-label">Dialect Regions</div>
       <div class="dialect-list" id="dialectList"></div>
     </div>
 
-    <div class="data-sources">
-      <strong>Data Sources:</strong><br>
-      Based on Labov's <em>Atlas of North American English</em>, DARE, and regional sociolinguistic literature.<br>
-      <br>
-      Similarity scores approximate. Migration patterns from historical settlement records.<br>
-      <br>
-      All data pre-2000.
+    <div>
+      <div class="section-label">Map Layers</div>
+      <div class="layer-toggles">
+        <div class="toggle-row">
+          <input type="checkbox" id="layerMigration" checked>
+          <div class="swatch" style="background:var(--rust);"></div>
+          <label for="layerMigration">Migration Routes</label>
+        </div>
+        <div class="toggle-row">
+          <input type="checkbox" id="layerTrade" checked>
+          <div class="swatch" style="background:var(--teal);"></div>
+          <label for="layerTrade">Trade Routes</label>
+        </div>
+        <div class="toggle-row">
+          <input type="checkbox" id="layerLabels" checked>
+          <label for="layerLabels">Region Labels</label>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="map-area">
-    <div class="map-title">CONTINENTAL UNITED STATES — DIALECT REGIONS</div>
-    <svg id="mapSvg" viewBox="0 0 800 500">
+    <div class="map-title">SIMILARITY TO: <span id="refName">—</span></div>
+
+    <svg id="mapSvg" viewBox="0 0 900 500" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <marker id="arrow-migration" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--rust)"/>
+        </marker>
+        <marker id="arrow-trade" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--teal)"/>
+        </marker>
+      </defs>
+
       <g id="regionsGroup"></g>
+      <g id="migrationGroup"></g>
+      <g id="tradeGroup"></g>
       <g id="labelsGroup"></g>
     </svg>
-    
+
     <div class="legend">
       <div class="legend-title">SIMILARITY SCALE</div>
-      <div class="legend-gradient" id="legendGrad"></div>
+      <div class="legend-bar">
+        <div class="legend-gradient" id="legendGrad"></div>
+      </div>
       <div class="legend-labels">
-        <span>Divergent (0%)</span>
-        <span>Similar (100%)</span>
+        <span>0%</span>
+        <span>100%</span>
       </div>
     </div>
 
-    <div class="tooltip" id="tooltip"></div>
+    <div id="tooltip"></div>
   </div>
 
   <div class="right-panel" id="rightPanel">
-    <div class="no-selection">
-      ← Select a dialect region to explore its similarity heatmap and characteristic features
+    <div class="info-card">
+      <h3>Select a Region</h3>
+      <p>Click any region on the map or choose from the list to view detailed similarity scores and dialect features.</p>
     </div>
   </div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════════════════════════
-// DIALECT DATA - 16 varieties from original HTML
-// ═══════════════════════════════════════════════════════════════════════════
-
 const DIALECTS = [
   {
-    id: 'inland_north',
-    name: 'Inland North',
-    region: 'Chicago, Cleveland, Detroit corridor',
-    description: 'Defined by the Northern Cities Vowel Shift, a dramatic chain shift documented by Labov. Began mid-20th century.',
-    features: [
-      { label: 'Cot–caught distinction', note: 'strongly maintained' },
-      { label: 'Northern Cities Shift', note: '/æ/ raised and tensed; /ɑ/ fronted' },
-      { label: '"Pop" for soda', note: 'core lexical marker' },
-      { label: 'Pail (not bucket)', note: 'retained Northern term' },
+    "id": "pacific_northwest",
+    "name": "Pacific Northwest",
+    "region": "Coastal WA/OR",
+    "description": "Western Washington, western Oregon, coastal strip. Bounded by Cascades to the east, Canadian border to the north, northern California to the south.\n",
+    "features": [
+      {
+        "label": "Cot-caught merger",
+        "note": "Score: 3"
+      },
+      {
+        "label": "Pin-pen merger",
+        "note": "Score: ?"
+      }
     ],
-    similarity: {
-      new_england: 62, upper_midwest: 70, mid_atlantic: 45, appalachian: 22,
-      southern: 18, gulf_south: 15, texas: 17, ozark: 24, piedmont: 20,
-      gullah: 10, cajun: 12, new_orleans: 20, plains: 55, mountain_west: 48,
-      pacific_northwest: 50, california: 45
+    "similarity": {
+      "pacific_northwest": 100.0,
+      "inland_northwest_urban": 93.62318840579711,
+      "north_idaho_mountain": 90.57971014492753,
+      "outer_banks": 56.79012345679012,
+      "california": 75,
+      "upper_midwest": 70,
+      "inland_north": 65,
+      "mountain_west": 68,
+      "plains": 60,
+      "nyc": 50,
+      "new_england": 55,
+      "mid_atlantic": 52,
+      "southern": 45,
+      "appalachian": 50,
+      "gulf_south": 42,
+      "texas": 48,
+      "ozark": 52,
+      "piedmont": 47,
+      "gullah": 38,
+      "cajun": 40,
+      "new_orleans": 43
     }
   },
   {
-    id: 'new_england',
-    name: 'New England',
-    region: 'Boston, Providence, Hartford',
-    description: 'One of the oldest American English varieties. R-dropping (non-rhotic) in eastern areas; strong vowel distinctions.',
-    features: [
-      { label: 'Non-rhotic (eastern)', note: '"park the car" → /paːk ðə kaː/' },
-      { label: '"Wicked" as intensifier', note: 'wicked good, wicked cold' },
-      { label: 'Broadened /a/', note: 'in "bath," "half," "can\'t"' },
-      { label: '"Bubbler" for water fountain', note: 'Rhode Island / Boston area' },
+    "id": "inland_northwest_urban",
+    "name": "Inland Northwest Urban",
+    "region": "Spokane, Eastern WA/OR",
+    "description": "Spokane metropolitan area and surrounding communities, Coeur d'Alene and Kootenai County ID. I-90 corridor as primary axis. Bounded culturally by Cascades to the west and rural transition to the east and north.\n",
+    "features": [
+      {
+        "label": "High directness",
+        "note": "Score: 3"
+      },
+      {
+        "label": "Cot-caught merger",
+        "note": "Score: 3"
+      }
     ],
-    similarity: {
-      inland_north: 62, upper_midwest: 55, mid_atlantic: 58, appalachian: 25,
-      southern: 22, gulf_south: 20, texas: 25, ozark: 28, piedmont: 30,
-      gullah: 15, cajun: 10, new_orleans: 18, plains: 50, mountain_west: 44,
-      pacific_northwest: 48, california: 42
+    "similarity": {
+      "pacific_northwest": 92.816091954023,
+      "inland_northwest_urban": 100.0,
+      "north_idaho_mountain": 90.37037037037037,
+      "outer_banks": 64.51612903225806,
+      "california": 72,
+      "mountain_west": 70,
+      "plains": 65,
+      "upper_midwest": 68,
+      "nyc": 48,
+      "new_england": 52,
+      "inland_north": 62,
+      "mid_atlantic": 50,
+      "southern": 43,
+      "appalachian": 55,
+      "gulf_south": 40,
+      "texas": 50,
+      "ozark": 58,
+      "piedmont": 45,
+      "gullah": 35,
+      "cajun": 38,
+      "new_orleans": 40
     }
   },
   {
-    id: 'mid_atlantic',
-    name: 'Mid-Atlantic',
-    region: 'Philadelphia, Baltimore, DC',
-    description: 'Distinct from both North and South. Philadelphia features the "mad-bad split." Baltimore has unique /oʊ/ fronting.',
-    features: [
-      { label: 'Mad-bad split (Philly)', note: '/æ/ tensing before voiceless fricatives' },
-      { label: '"Wooder" for water (Philly)', note: '/ʊ/ before /r/' },
-      { label: '"Hon" (Baltimore)', note: 'term of endearment — cultural marker' },
-      { label: '"Hoagie" for sub', note: 'Philadelphia lexical marker' },
+    "id": "north_idaho_mountain",
+    "name": "North Idaho Mountain",
+    "region": "Silver Valley, Clearwater Basin",
+    "description": "Bonner, Boundary, and Shoshone counties; Kootenai County in mountain portions only (explicitly excludes Coeur d'Alene urban area which patterns with INW Urban). Eastern extent reaches Montana border and may overlap with western Montana varieties \u2014 boundary TBD pending informant data. River and canyon corridors: Coeur d'Alene River, St. Joe, Clark Fork, Priest River.\n",
+    "features": [
+      {
+        "label": "Very fast speech",
+        "note": "Foundational prosodic feature"
+      },
+      {
+        "label": "Pin-pen merger",
+        "note": "Score: 3"
+      },
+      {
+        "label": "Punched final stops",
+        "note": "Compensation for speed"
+      }
     ],
-    similarity: {
-      inland_north: 45, new_england: 58, upper_midwest: 42, appalachian: 40,
-      southern: 35, gulf_south: 30, texas: 32, ozark: 38, piedmont: 50,
-      gullah: 25, cajun: 12, new_orleans: 25, plains: 40, mountain_west: 38,
-      pacific_northwest: 42, california: 40
+    "similarity": {
+      "pacific_northwest": 89.11564625850342,
+      "inland_northwest_urban": 89.36170212765957,
+      "north_idaho_mountain": 100.0,
+      "outer_banks": 69.52380952380952,
+      "appalachian": 78,
+      "ozark": 76,
+      "upper_midwest": 65,
+      "mountain_west": 72,
+      "plains": 62,
+      "southern": 70,
+      "gulf_south": 65,
+      "texas": 68,
+      "piedmont": 72,
+      "california": 58,
+      "nyc": 42,
+      "new_england": 45,
+      "inland_north": 55,
+      "mid_atlantic": 48,
+      "gullah": 60,
+      "cajun": 62,
+      "new_orleans": 64
     }
   },
   {
-    id: 'appalachian',
-    name: 'Appalachian',
-    region: 'West Virginia, Eastern Kentucky',
-    description: 'Scots-Irish heritage with archaic features retained. A-prefixing, double modals, and positive "anymore."',
-    features: [
-      { label: 'A-prefixing', note: '"I was a-huntin\'"' },
-      { label: 'Double modals', note: '"might could," "used to could"' },
-      { label: 'Positive "anymore"', note: '"Anymore it\'s different"' },
-      { label: '"Reckon" for "suppose"', note: 'archaic retention' },
+    "id": "outer_banks",
+    "name": "Outer Banks English",
+    "region": "Ocracoke, Harkers Island",
+    "description": "Barrier islands and adjacent coastal mainland of North Carolina, including Ocracoke, Harkers Island, Wanchese, Atlantic, Davis, and Sea Level. Pamlico Sound communities. Dialect family extends to Chesapeake Bay varieties (Smith Island MD, Tangier Island VA) but those are out of scope for this record \u2014 see sub-dialect notes.\n",
+    "features": [
+      {
+        "label": "Hoi toide",
+        "note": "High tide pronunciation"
+      },
+      {
+        "label": "Unique vowel system",
+        "note": "Preservation of archaic features"
+      }
     ],
-    similarity: {
-      inland_north: 22, new_england: 25, mid_atlantic: 40, upper_midwest: 20,
-      southern: 50, gulf_south: 45, texas: 42, ozark: 75, piedmont: 55,
-      gullah: 30, cajun: 18, new_orleans: 22, plains: 35, mountain_west: 30,
-      pacific_northwest: 28, california: 25
+    "similarity": {
+      "pacific_northwest": 69.44444444444446,
+      "inland_northwest_urban": 76.54320987654322,
+      "north_idaho_mountain": 77.45098039215685,
+      "outer_banks": 100.0,
+      "gullah": 72,
+      "southern": 68,
+      "piedmont": 75,
+      "mid_atlantic": 62,
+      "new_england": 58,
+      "appalachian": 65,
+      "gulf_south": 60,
+      "cajun": 55,
+      "new_orleans": 58,
+      "nyc": 50,
+      "texas": 52,
+      "ozark": 55,
+      "plains": 45,
+      "upper_midwest": 48,
+      "inland_north": 52,
+      "mountain_west": 42,
+      "california": 40
     }
   },
   {
-    id: 'southern',
-    name: 'Southern',
-    region: 'Deep South — Alabama, Georgia, Mississippi',
-    description: 'Classic Southern features: monophthongized /aɪ/, pin-pen merger, completive "done."',
-    features: [
-      { label: 'Pin-pen merger', note: '/ɪ/ → /ɛ/ before nasals' },
-      { label: '/aɪ/ monophthongization', note: '"ride" → /raːd/' },
-      { label: 'Completive "done"', note: '"I done told you"' },
-      { label: '"Fixin\' to"', note: 'near-future marker' },
+    "id": "nyc",
+    "name": "New York City",
+    "region": "NYC Metro",
+    "description": "One of the most distinctive American dialects. Non-rhotic, distinctive vowel shifts, strong ethnic neighborhood variation.",
+    "features": [
+      {
+        "label": "Non-rhotic",
+        "note": "\"park the car\" \u2192 /pa\u02d0k \u00f0\u0259 ka\u02d0/"
+      },
+      {
+        "label": "Raised THOUGHT vowel",
+        "note": "\"coffee\" \u2192 /k\u0254\u02d0fi/"
+      },
+      {
+        "label": "Short-a split",
+        "note": "/\u00e6/ tensed before certain consonants"
+      },
+      {
+        "label": "\"On line\" (not \"in line\")",
+        "note": "regional marker"
+      }
     ],
-    similarity: {
-      inland_north: 18, new_england: 22, mid_atlantic: 35, upper_midwest: 15,
-      appalachian: 50, gulf_south: 75, texas: 68, ozark: 55, piedmont: 60,
-      gullah: 55, cajun: 32, new_orleans: 45, plains: 40, mountain_west: 32,
-      pacific_northwest: 28, california: 25
+    "similarity": {
+      "pacific_northwest": 50,
+      "inland_northwest_urban": 48,
+      "north_idaho_mountain": 42,
+      "outer_banks": 50,
+      "inland_north": 65,
+      "new_england": 70,
+      "mid_atlantic": 75,
+      "upper_midwest": 55,
+      "plains": 48,
+      "mountain_west": 45,
+      "california": 52,
+      "southern": 40,
+      "appalachian": 42,
+      "gulf_south": 38,
+      "texas": 45,
+      "ozark": 40,
+      "piedmont": 48,
+      "gullah": 35,
+      "cajun": 32,
+      "new_orleans": 38
     }
   },
   {
-    id: 'gulf_south',
-    name: 'Gulf South',
-    region: 'Coastal Louisiana, Mississippi, Alabama',
-    description: 'Shares many Southern features but with distinctive Gulf Coast characteristics and French/Spanish substrate influence.',
-    features: [
-      { label: 'Pin-pen merger', note: 'like inland South' },
-      { label: 'French loanwords', note: 'bayou, levee, lagniappe' },
-      { label: '/r/ variability', note: 'some non-rhoticity in older speakers' },
-      { label: '"Y\'all" universal', note: 'second person plural' },
+    "id": "inland_north",
+    "name": "Inland North",
+    "region": "Chicago, Cleveland, Detroit corridor",
+    "description": "Defined by the Northern Cities Vowel Shift, a dramatic chain shift documented by Labov. Began mid-20th century.",
+    "features": [
+      {
+        "label": "Cot\u2013caught distinction",
+        "note": "strongly maintained"
+      },
+      {
+        "label": "Northern Cities Shift",
+        "note": "/\u00e6/ raised and tensed; /\u0251/ fronted"
+      },
+      {
+        "label": "\"Pop\" for soda",
+        "note": "core lexical marker"
+      },
+      {
+        "label": "Pail (not bucket)",
+        "note": "retained Northern term"
+      }
     ],
-    similarity: {
-      inland_north: 15, new_england: 20, mid_atlantic: 30, upper_midwest: 14,
-      appalachian: 45, southern: 75, texas: 70, ozark: 48, piedmont: 52,
-      gullah: 60, cajun: 40, new_orleans: 55, plains: 35, mountain_west: 25,
-      pacific_northwest: 22, california: 20
+    "similarity": {
+      "pacific_northwest": 65,
+      "inland_northwest_urban": 62,
+      "north_idaho_mountain": 55,
+      "outer_banks": 52,
+      "nyc": 65,
+      "new_england": 68,
+      "mid_atlantic": 62,
+      "upper_midwest": 75,
+      "plains": 70,
+      "mountain_west": 60,
+      "california": 58,
+      "southern": 35,
+      "appalachian": 45,
+      "gulf_south": 32,
+      "texas": 40,
+      "ozark": 48,
+      "piedmont": 42,
+      "gullah": 28,
+      "cajun": 30,
+      "new_orleans": 35
     }
   },
   {
-    id: 'texas',
-    name: 'Texas',
-    region: 'Texas (excl. far East)',
-    description: 'Blends Southern and Western features. Distinct identity with Mexican Spanish influence in South Texas.',
-    features: [
-      { label: 'Pin-pen merger (variable)', note: 'stronger in East TX' },
-      { label: 'Cot-caught (variable)', note: 'merger stronger in West TX' },
-      { label: 'Spanish loanwords', note: 'ranch, rodeo, lasso' },
-      { label: '"Fixinto" / "finna"', note: 'near-future compressed form' },
+    "id": "new_england",
+    "name": "New England",
+    "region": "Boston, Providence, Hartford",
+    "description": "One of the oldest American English varieties. R-dropping (non-rhotic) in eastern areas; strong vowel distinctions.",
+    "features": [
+      {
+        "label": "Non-rhotic (eastern)",
+        "note": "\"park the car\" \u2192 /pa\u02d0k \u00f0\u0259 ka\u02d0/"
+      },
+      {
+        "label": "\"Wicked\" as intensifier",
+        "note": "wicked good, wicked cold"
+      },
+      {
+        "label": "Broadened /a/",
+        "note": "in \"bath,\" \"half,\" \"can't\""
+      },
+      {
+        "label": "\"Bubbler\" for water fountain",
+        "note": "Rhode Island / Boston area"
+      }
     ],
-    similarity: {
-      inland_north: 17, new_england: 25, mid_atlantic: 32, upper_midwest: 18,
-      appalachian: 42, southern: 68, gulf_south: 70, ozark: 52, piedmont: 48,
-      gullah: 35, cajun: 35, new_orleans: 40, plains: 58, mountain_west: 45,
-      pacific_northwest: 35, california: 40
+    "similarity": {
+      "pacific_northwest": 55,
+      "inland_northwest_urban": 52,
+      "north_idaho_mountain": 45,
+      "outer_banks": 58,
+      "nyc": 70,
+      "inland_north": 68,
+      "mid_atlantic": 72,
+      "upper_midwest": 60,
+      "plains": 50,
+      "mountain_west": 48,
+      "california": 50,
+      "southern": 42,
+      "appalachian": 48,
+      "gulf_south": 40,
+      "texas": 42,
+      "ozark": 45,
+      "piedmont": 52,
+      "gullah": 38,
+      "cajun": 35,
+      "new_orleans": 40
     }
   },
   {
-    id: 'ozark',
-    name: 'Ozark',
-    region: 'Ozark Mountains — Missouri, Arkansas',
-    description: 'Interior Highlands dialect. Shares Appalachian features due to Scots-Irish settlement despite geographic separation.',
-    features: [
-      { label: 'A-prefixing', note: 'like Appalachian' },
-      { label: 'Positive "anymore"', note: 'Midland feature' },
-      { label: 'Double modals', note: 'less frequent than Appalachia' },
-      { label: '"Tump" for tip over', note: 'regional lexical item' },
+    "id": "mid_atlantic",
+    "name": "Mid-Atlantic",
+    "region": "Philadelphia, Baltimore, DC",
+    "description": "Distinct from both North and South. Philadelphia features the \"mad-bad split.\" Baltimore has unique /o\u028a/ fronting.",
+    "features": [
+      {
+        "label": "Mad-bad split (Philly)",
+        "note": "/\u00e6/ tensing before voiceless fricatives"
+      },
+      {
+        "label": "\"Wooder\" for water (Philly)",
+        "note": "/\u028a/ before /r/"
+      },
+      {
+        "label": "\"Hon\" (Baltimore)",
+        "note": "term of endearment \u2014 cultural marker"
+      },
+      {
+        "label": "\"Hoagie\" for sub",
+        "note": "Philadelphia lexical marker"
+      }
     ],
-    similarity: {
-      inland_north: 24, new_england: 28, mid_atlantic: 38, upper_midwest: 22,
-      appalachian: 75, southern: 55, gulf_south: 48, texas: 52, piedmont: 50,
-      gullah: 25, cajun: 20, new_orleans: 25, plains: 42, mountain_west: 35,
-      pacific_northwest: 30, california: 28
+    "similarity": {
+      "pacific_northwest": 52,
+      "inland_northwest_urban": 50,
+      "north_idaho_mountain": 48,
+      "outer_banks": 62,
+      "nyc": 75,
+      "inland_north": 62,
+      "new_england": 72,
+      "upper_midwest": 58,
+      "plains": 52,
+      "mountain_west": 48,
+      "california": 48,
+      "southern": 55,
+      "appalachian": 65,
+      "gulf_south": 50,
+      "texas": 52,
+      "ozark": 58,
+      "piedmont": 70,
+      "gullah": 45,
+      "cajun": 42,
+      "new_orleans": 48
     }
   },
   {
-    id: 'piedmont',
-    name: 'Piedmont',
-    region: 'North Carolina, Virginia Piedmont',
-    description: 'Transitional between Mid-Atlantic and Deep South. Retains some older Southern features while moving toward national norms.',
-    features: [
-      { label: 'Variable pin-pen merger', note: 'less consistent than Deep South' },
-      { label: '/aɪ/ raising', note: 'before voiceless consonants' },
-      { label: '"Carry" for drive/take', note: '"Carry me to the store"' },
-      { label: 'Moderate /r/ retention', note: 'younger speakers fully rhotic' },
+    "id": "appalachian",
+    "name": "Appalachian",
+    "region": "West Virginia, Eastern Kentucky",
+    "description": "Scots-Irish heritage with archaic features retained. A-prefixing, double modals, and positive \"anymore.\"",
+    "features": [
+      {
+        "label": "A-prefixing",
+        "note": "\"I was a-huntin'\""
+      },
+      {
+        "label": "Double modals",
+        "note": "\"might could,\" \"used to could\""
+      },
+      {
+        "label": "Positive \"anymore\"",
+        "note": "\"Anymore it's different\""
+      },
+      {
+        "label": "\"Reckon\" for \"suppose\"",
+        "note": "archaic retention"
+      }
     ],
-    similarity: {
-      inland_north: 20, new_england: 30, mid_atlantic: 50, upper_midwest: 18,
-      appalachian: 55, southern: 60, gulf_south: 52, texas: 48, ozark: 50,
-      gullah: 45, cajun: 25, new_orleans: 35, plains: 38, mountain_west: 28,
-      pacific_northwest: 25, california: 23
+    "similarity": {
+      "pacific_northwest": 50,
+      "inland_northwest_urban": 55,
+      "north_idaho_mountain": 78,
+      "outer_banks": 65,
+      "nyc": 42,
+      "inland_north": 45,
+      "new_england": 48,
+      "mid_atlantic": 65,
+      "upper_midwest": 52,
+      "plains": 58,
+      "mountain_west": 62,
+      "california": 48,
+      "southern": 72,
+      "gulf_south": 68,
+      "texas": 65,
+      "ozark": 85,
+      "piedmont": 75,
+      "gullah": 60,
+      "cajun": 58,
+      "new_orleans": 62
     }
   },
   {
-    id: 'gullah',
-    name: 'Gullah/Geechee',
-    region: 'South Carolina/Georgia coast & Sea Islands',
-    description: 'English-based creole with significant West African substrate. Distinct grammatical and phonological system.',
-    features: [
-      { label: 'Creole grammar', note: 'habitual "duh," completive "done"' },
-      { label: 'African substrate', note: 'vocabulary and phonology from Krio, Kongo' },
-      { label: 'Distinctive prosody', note: 'intonation patterns from substrate' },
-      { label: 'Strong identity marker', note: 'tied to Gullah cultural community' },
+    "id": "southern",
+    "name": "Southern",
+    "region": "Deep South \u2014 Alabama, Georgia, Mississippi",
+    "description": "Classic Southern features: monophthongized /a\u026a/, pin-pen merger, completive \"done.\"",
+    "features": [
+      {
+        "label": "Pin-pen merger",
+        "note": "/\u026a/ \u2192 /\u025b/ before nasals"
+      },
+      {
+        "label": "/a\u026a/ monophthongization",
+        "note": "\"ride\" \u2192 /ra\u02d0d/"
+      },
+      {
+        "label": "Completive \"done\"",
+        "note": "\"I done told you\""
+      },
+      {
+        "label": "\"Fixin' to\"",
+        "note": "near-future marker"
+      }
     ],
-    similarity: {
-      inland_north: 10, new_england: 15, mid_atlantic: 25, upper_midwest: 8,
-      appalachian: 30, southern: 55, gulf_south: 60, texas: 35, ozark: 25,
-      piedmont: 45, cajun: 25, new_orleans: 35, plains: 12, mountain_west: 10,
-      pacific_northwest: 10, california: 12
+    "similarity": {
+      "pacific_northwest": 45,
+      "inland_northwest_urban": 43,
+      "north_idaho_mountain": 70,
+      "outer_banks": 68,
+      "nyc": 40,
+      "inland_north": 35,
+      "new_england": 42,
+      "mid_atlantic": 55,
+      "upper_midwest": 40,
+      "plains": 48,
+      "mountain_west": 50,
+      "california": 42,
+      "appalachian": 72,
+      "gulf_south": 80,
+      "texas": 75,
+      "ozark": 70,
+      "piedmont": 78,
+      "gullah": 65,
+      "cajun": 70,
+      "new_orleans": 72
     }
   },
   {
-    id: 'cajun',
-    name: 'Cajun English',
-    region: 'South Louisiana bayou country',
-    description: 'Heavily influenced by Cajun French. Distinct substrate effects on syntax, phonology, and vocabulary.',
-    features: [
-      { label: 'French substrate', note: '"me" for "I," "dem" for "them"' },
-      { label: '"Make" for cause', note: '"Don\'t make me do it" extended' },
-      { label: 'French loanwords', note: 'lagniappe, boudin, fais do-do' },
-      { label: '"For to" infinitive', note: '"I need for to go"' },
+    "id": "gulf_south",
+    "name": "Gulf South",
+    "region": "Coastal Louisiana, Mississippi, Alabama",
+    "description": "Shares many Southern features but with distinctive Gulf Coast characteristics and French/Spanish substrate influence.",
+    "features": [
+      {
+        "label": "Pin-pen merger",
+        "note": "like inland South"
+      },
+      {
+        "label": "French loanwords",
+        "note": "bayou, levee, lagniappe"
+      },
+      {
+        "label": "/r/ variability",
+        "note": "some non-rhoticity in older speakers"
+      },
+      {
+        "label": "\"Y'all\" universal",
+        "note": "second person plural"
+      }
     ],
-    similarity: {
-      inland_north: 12, new_england: 10, mid_atlantic: 12, upper_midwest: 10,
-      appalachian: 18, southern: 32, gulf_south: 40, texas: 35, ozark: 20,
-      piedmont: 25, gullah: 25, new_orleans: 65, plains: 18, mountain_west: 15,
-      pacific_northwest: 12, california: 14
+    "similarity": {
+      "pacific_northwest": 42,
+      "inland_northwest_urban": 40,
+      "north_idaho_mountain": 65,
+      "outer_banks": 60,
+      "nyc": 38,
+      "inland_north": 32,
+      "new_england": 40,
+      "mid_atlantic": 50,
+      "upper_midwest": 38,
+      "plains": 45,
+      "mountain_west": 48,
+      "california": 40,
+      "appalachian": 68,
+      "southern": 80,
+      "texas": 78,
+      "ozark": 65,
+      "piedmont": 72,
+      "gullah": 70,
+      "cajun": 75,
+      "new_orleans": 80
     }
   },
   {
-    id: 'new_orleans',
-    name: 'New Orleans',
-    region: 'Greater New Orleans metro',
-    description: 'Truly singular dialect. "Yat" variety resembles NYC in some features — attributed to 19th-century port city trade.',
-    features: [
-      { label: '"Where y\'at?"', note: 'defining Yat greeting' },
-      { label: 'Non-rhotic (like NYC)', note: 'trade-port commonality' },
-      { label: 'French/Spanish loanwords', note: 'banquette, neutral ground' },
-      { label: '"Make groceries"', note: 'French calque' },
+    "id": "texas",
+    "name": "Texas",
+    "region": "Texas (excl. far East)",
+    "description": "Blends Southern and Western features. Distinct identity with Mexican Spanish influence in South Texas.",
+    "features": [
+      {
+        "label": "Pin-pen merger (variable)",
+        "note": "stronger in East TX"
+      },
+      {
+        "label": "Cot-caught (variable)",
+        "note": "merger stronger in West TX"
+      },
+      {
+        "label": "Spanish loanwords",
+        "note": "ranch, rodeo, lasso"
+      },
+      {
+        "label": "\"Fixinto\" / \"finna\"",
+        "note": "near-future compressed form"
+      }
     ],
-    similarity: {
-      inland_north: 20, new_england: 18, mid_atlantic: 25, upper_midwest: 18,
-      appalachian: 22, southern: 45, gulf_south: 55, texas: 40, ozark: 25,
-      piedmont: 35, gullah: 35, cajun: 65, plains: 22, mountain_west: 18,
-      pacific_northwest: 18, california: 20
+    "similarity": {
+      "pacific_northwest": 48,
+      "inland_northwest_urban": 50,
+      "north_idaho_mountain": 68,
+      "outer_banks": 52,
+      "nyc": 45,
+      "inland_north": 40,
+      "new_england": 42,
+      "mid_atlantic": 52,
+      "upper_midwest": 48,
+      "plains": 70,
+      "mountain_west": 62,
+      "california": 55,
+      "appalachian": 65,
+      "southern": 75,
+      "gulf_south": 78,
+      "ozark": 68,
+      "piedmont": 62,
+      "gullah": 55,
+      "cajun": 65,
+      "new_orleans": 70
     }
   },
   {
-    id: 'upper_midwest',
-    name: 'Upper Midwest',
-    region: 'Minnesota, Wisconsin, Dakotas',
-    description: 'Heavily influenced by Scandinavian and German immigration. Distinctive vowel qualities and prosodic patterns.',
-    features: [
-      { label: '"Uff da"', note: 'Norwegian exclamation' },
-      { label: '"Hotdish" for casserole', note: 'Midwest Lutheran culture' },
-      { label: 'Oh for + adjective', note: '"Oh for cute!" — Scandinavian' },
-      { label: 'Distinctive /oʊ/', note: 'monophthongized or fronted' },
+    "id": "ozark",
+    "name": "Ozark",
+    "region": "Ozark Mountains \u2014 Missouri, Arkansas",
+    "description": "Interior Highlands dialect. Shares Appalachian features due to Scots-Irish settlement despite geographic separation.",
+    "features": [
+      {
+        "label": "A-prefixing",
+        "note": "like Appalachian"
+      },
+      {
+        "label": "Positive \"anymore\"",
+        "note": "Midland feature"
+      },
+      {
+        "label": "Double modals",
+        "note": "less frequent than Appalachia"
+      },
+      {
+        "label": "\"Tump\" for tip over",
+        "note": "regional lexical item"
+      }
     ],
-    similarity: {
-      inland_north: 70, new_england: 55, mid_atlantic: 42, appalachian: 20,
-      southern: 15, gulf_south: 14, texas: 18, ozark: 22, piedmont: 18,
-      gullah: 8, cajun: 10, new_orleans: 18, plains: 65, mountain_west: 52,
-      pacific_northwest: 55, california: 48
+    "similarity": {
+      "pacific_northwest": 52,
+      "inland_northwest_urban": 58,
+      "north_idaho_mountain": 76,
+      "outer_banks": 55,
+      "nyc": 40,
+      "inland_north": 48,
+      "new_england": 45,
+      "mid_atlantic": 58,
+      "upper_midwest": 55,
+      "plains": 65,
+      "mountain_west": 60,
+      "california": 50,
+      "appalachian": 85,
+      "southern": 70,
+      "gulf_south": 65,
+      "texas": 68,
+      "piedmont": 68,
+      "gullah": 55,
+      "cajun": 60,
+      "new_orleans": 62
     }
   },
   {
-    id: 'plains',
-    name: 'Plains / Midland',
-    region: 'Kansas, Nebraska, Iowa, Indiana',
-    description: 'Sometimes called "General American" — historically treated as broadcast standard. Diverse settlement from North and South.',
-    features: [
-      { label: 'Cot-caught merger', note: 'widespread' },
-      { label: '"Supper" for evening meal', note: 'rural Plains usage' },
-      { label: 'Fully rhotic', note: '"standard" perception' },
-      { label: '"Warsh"', note: 'intrusive /r/ in some subregions' },
+    "id": "piedmont",
+    "name": "Piedmont",
+    "region": "North Carolina, Virginia Piedmont",
+    "description": "Transitional between Mid-Atlantic and Deep South. Retains some older Southern features while moving toward national norms.",
+    "features": [
+      {
+        "label": "Variable pin-pen merger",
+        "note": "less consistent than Deep South"
+      },
+      {
+        "label": "/a\u026a/ raising",
+        "note": "before voiceless consonants"
+      },
+      {
+        "label": "\"Carry\" for drive/take",
+        "note": "\"Carry me to the store\""
+      },
+      {
+        "label": "Moderate /r/ retention",
+        "note": "younger speakers fully rhotic"
+      }
     ],
-    similarity: {
-      inland_north: 55, new_england: 50, mid_atlantic: 40, appalachian: 35,
-      southern: 40, gulf_south: 35, texas: 58, ozark: 42, piedmont: 38,
-      gullah: 12, cajun: 18, new_orleans: 22, upper_midwest: 65, mountain_west: 68,
-      pacific_northwest: 62, california: 58
+    "similarity": {
+      "pacific_northwest": 47,
+      "inland_northwest_urban": 45,
+      "north_idaho_mountain": 72,
+      "outer_banks": 75,
+      "nyc": 48,
+      "inland_north": 42,
+      "new_england": 52,
+      "mid_atlantic": 70,
+      "upper_midwest": 48,
+      "plains": 52,
+      "mountain_west": 50,
+      "california": 45,
+      "appalachian": 75,
+      "southern": 78,
+      "gulf_south": 72,
+      "texas": 62,
+      "ozark": 68,
+      "gullah": 68,
+      "cajun": 60,
+      "new_orleans": 65
     }
   },
   {
-    id: 'mountain_west',
-    name: 'Mountain West',
-    region: 'Colorado, Utah, Idaho, Montana',
-    description: 'Settled from Plains/Midland and New England. Mormon influence in Utah. Generally rhotic and "unmarked."',
-    features: [
-      { label: 'Cot-caught merger', note: 'nearly universal' },
-      { label: 'Pin-pen merger absent', note: 'vs Southern' },
-      { label: '"Sluff" for skip class', note: 'Utah/Idaho marker' },
-      { label: '"The" before highways', note: '"the I-15"' },
+    "id": "gullah",
+    "name": "Gullah/Geechee",
+    "region": "South Carolina/Georgia coast & Sea Islands",
+    "description": "English-based creole with significant West African substrate. Distinct grammatical and phonological system.",
+    "features": [
+      {
+        "label": "Creole grammar",
+        "note": "habitual \"duh,\" completive \"done\""
+      },
+      {
+        "label": "African substrate",
+        "note": "vocabulary and phonology from Krio, Kongo"
+      },
+      {
+        "label": "Distinctive prosody",
+        "note": "intonation patterns from substrate"
+      },
+      {
+        "label": "Strong identity marker",
+        "note": "tied to Gullah cultural community"
+      }
     ],
-    similarity: {
-      inland_north: 48, new_england: 44, mid_atlantic: 38, appalachian: 30,
-      southern: 32, gulf_south: 25, texas: 45, ozark: 35, piedmont: 28,
-      gullah: 10, cajun: 15, new_orleans: 18, plains: 68, upper_midwest: 52,
-      pacific_northwest: 72, california: 65
+    "similarity": {
+      "pacific_northwest": 38,
+      "inland_northwest_urban": 35,
+      "north_idaho_mountain": 60,
+      "outer_banks": 72,
+      "nyc": 35,
+      "inland_north": 28,
+      "new_england": 38,
+      "mid_atlantic": 45,
+      "upper_midwest": 32,
+      "plains": 40,
+      "mountain_west": 42,
+      "california": 35,
+      "appalachian": 60,
+      "southern": 65,
+      "gulf_south": 70,
+      "texas": 55,
+      "ozark": 55,
+      "piedmont": 68,
+      "cajun": 62,
+      "new_orleans": 65
     }
   },
   {
-    id: 'pacific_northwest',
-    name: 'Pacific Northwest',
-    region: 'Oregon, Washington, Idaho panhandle',
-    description: 'Often cited as closest to "standard" American. Settled from Plains via Oregon Trail. Lacks salient regional features.',
-    features: [
-      { label: 'Cot-caught merger', note: 'universal' },
-      { label: '"The" before highways', note: '"the I-5" (like California)' },
-      { label: 'Lack of marked features', note: 'perceived as "accentless"' },
-      { label: '"Geoduck" pronunciation', note: '/ˈɡuːiːdʌk/ — local marker' },
+    "id": "cajun",
+    "name": "Cajun English",
+    "region": "South Louisiana bayou country",
+    "description": "Heavily influenced by Cajun French. Distinct substrate effects on syntax, phonology, and vocabulary.",
+    "features": [
+      {
+        "label": "French substrate",
+        "note": "\"me\" for \"I,\" \"dem\" for \"them\""
+      },
+      {
+        "label": "\"Make\" for cause",
+        "note": "\"Don't make me do it\" extended"
+      },
+      {
+        "label": "French loanwords",
+        "note": "lagniappe, boudin, fais do-do"
+      },
+      {
+        "label": "\"For to\" infinitive",
+        "note": "\"I need for to go\""
+      }
     ],
-    similarity: {
-      inland_north: 50, new_england: 48, mid_atlantic: 42, appalachian: 28,
-      southern: 28, gulf_south: 22, texas: 35, ozark: 30, piedmont: 25,
-      gullah: 10, cajun: 12, new_orleans: 18, plains: 62, upper_midwest: 55,
-      mountain_west: 72, california: 75
+    "similarity": {
+      "pacific_northwest": 40,
+      "inland_northwest_urban": 38,
+      "north_idaho_mountain": 62,
+      "outer_banks": 55,
+      "nyc": 32,
+      "inland_north": 30,
+      "new_england": 35,
+      "mid_atlantic": 42,
+      "upper_midwest": 35,
+      "plains": 42,
+      "mountain_west": 45,
+      "california": 38,
+      "appalachian": 58,
+      "southern": 70,
+      "gulf_south": 75,
+      "texas": 65,
+      "ozark": 60,
+      "piedmont": 60,
+      "gullah": 62,
+      "new_orleans": 85
     }
   },
   {
-    id: 'california',
-    name: 'California',
-    region: 'California (esp. Southern/Central)',
-    description: 'Rapidly evolving with massive in-migration. California Vowel Shift documented by Labov in 1990s.',
-    features: [
-      { label: 'California Vowel Shift', note: '/ɪ/ → /iː/ before laterals' },
-      { label: 'Uptalk', note: 'high rising terminal — spreading nationally' },
-      { label: '"Like" as quotative', note: 'I was like, "no way"' },
-      { label: '"Hella"', note: 'Northern California intensifier' },
+    "id": "new_orleans",
+    "name": "New Orleans",
+    "region": "Greater New Orleans metro",
+    "description": "Truly singular dialect. \"Yat\" variety resembles NYC in some features \u2014 attributed to 19th-century port city trade.",
+    "features": [
+      {
+        "label": "\"Where y'at?\"",
+        "note": "defining Yat greeting"
+      },
+      {
+        "label": "Non-rhotic (like NYC)",
+        "note": "trade-port commonality"
+      },
+      {
+        "label": "French/Spanish loanwords",
+        "note": "banquette, neutral ground"
+      },
+      {
+        "label": "\"Make groceries\"",
+        "note": "French calque"
+      }
     ],
-    similarity: {
-      inland_north: 45, new_england: 42, mid_atlantic: 40, appalachian: 25,
-      southern: 25, gulf_south: 20, texas: 40, ozark: 28, piedmont: 23,
-      gullah: 12, cajun: 14, new_orleans: 20, plains: 58, upper_midwest: 48,
-      mountain_west: 65, pacific_northwest: 75
+    "similarity": {
+      "pacific_northwest": 43,
+      "inland_northwest_urban": 40,
+      "north_idaho_mountain": 64,
+      "outer_banks": 58,
+      "nyc": 38,
+      "inland_north": 35,
+      "new_england": 40,
+      "mid_atlantic": 48,
+      "upper_midwest": 38,
+      "plains": 45,
+      "mountain_west": 48,
+      "california": 40,
+      "appalachian": 62,
+      "southern": 72,
+      "gulf_south": 80,
+      "texas": 70,
+      "ozark": 62,
+      "piedmont": 65,
+      "gullah": 65,
+      "cajun": 85
+    }
+  },
+  {
+    "id": "upper_midwest",
+    "name": "Upper Midwest",
+    "region": "Minnesota, Wisconsin, Dakotas",
+    "description": "Heavily influenced by Scandinavian and German immigration. Distinctive vowel qualities and prosodic patterns.",
+    "features": [
+      {
+        "label": "\"Uff da\"",
+        "note": "Norwegian exclamation"
+      },
+      {
+        "label": "\"Hotdish\" for casserole",
+        "note": "Midwest Lutheran culture"
+      },
+      {
+        "label": "Oh for + adjective",
+        "note": "\"Oh for cute!\" \u2014 Scandinavian"
+      },
+      {
+        "label": "Distinctive /o\u028a/",
+        "note": "monophthongized or fronted"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 70,
+      "inland_northwest_urban": 68,
+      "north_idaho_mountain": 65,
+      "outer_banks": 48,
+      "nyc": 55,
+      "inland_north": 75,
+      "new_england": 60,
+      "mid_atlantic": 58,
+      "plains": 72,
+      "mountain_west": 65,
+      "california": 62,
+      "appalachian": 52,
+      "southern": 40,
+      "gulf_south": 38,
+      "texas": 48,
+      "ozark": 55,
+      "piedmont": 48,
+      "gullah": 32,
+      "cajun": 35,
+      "new_orleans": 38
+    }
+  },
+  {
+    "id": "plains",
+    "name": "Plains / Midland",
+    "region": "Kansas, Nebraska, Iowa, Indiana",
+    "description": "Sometimes called \"General American\" \u2014 historically treated as broadcast standard. Diverse settlement from North and South.",
+    "features": [
+      {
+        "label": "Cot-caught merger",
+        "note": "widespread"
+      },
+      {
+        "label": "\"Supper\" for evening meal",
+        "note": "rural Plains usage"
+      },
+      {
+        "label": "Fully rhotic",
+        "note": "\"standard\" perception"
+      },
+      {
+        "label": "\"Warsh\"",
+        "note": "intrusive /r/ in some subregions"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 60,
+      "inland_northwest_urban": 65,
+      "north_idaho_mountain": 62,
+      "outer_banks": 45,
+      "nyc": 48,
+      "inland_north": 70,
+      "new_england": 50,
+      "mid_atlantic": 52,
+      "upper_midwest": 72,
+      "mountain_west": 75,
+      "california": 58,
+      "appalachian": 58,
+      "southern": 48,
+      "gulf_south": 45,
+      "texas": 70,
+      "ozark": 65,
+      "piedmont": 52,
+      "gullah": 40,
+      "cajun": 42,
+      "new_orleans": 45
+    }
+  },
+  {
+    "id": "mountain_west",
+    "name": "Mountain West",
+    "region": "Colorado, Utah, Idaho, Montana",
+    "description": "Settled from Plains/Midland and New England. Mormon influence in Utah. Generally rhotic and \"unmarked.\"",
+    "features": [
+      {
+        "label": "Cot-caught merger",
+        "note": "nearly universal"
+      },
+      {
+        "label": "Pin-pen merger absent",
+        "note": "vs Southern"
+      },
+      {
+        "label": "\"Sluff\" for skip class",
+        "note": "Utah/Idaho marker"
+      },
+      {
+        "label": "\"The\" before highways",
+        "note": "\"the I-15\""
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 68,
+      "inland_northwest_urban": 70,
+      "north_idaho_mountain": 72,
+      "outer_banks": 42,
+      "nyc": 45,
+      "inland_north": 60,
+      "new_england": 48,
+      "mid_atlantic": 48,
+      "upper_midwest": 65,
+      "plains": 75,
+      "california": 70,
+      "appalachian": 62,
+      "southern": 50,
+      "gulf_south": 48,
+      "texas": 62,
+      "ozark": 60,
+      "piedmont": 50,
+      "gullah": 42,
+      "cajun": 45,
+      "new_orleans": 48
+    }
+  },
+  {
+    "id": "california",
+    "name": "California",
+    "region": "California (esp. Southern/Central)",
+    "description": "Rapidly evolving with massive in-migration. California Vowel Shift documented by Labov in 1990s.",
+    "features": [
+      {
+        "label": "California Vowel Shift",
+        "note": "/\u026a/ \u2192 /i\u02d0/ before laterals"
+      },
+      {
+        "label": "Uptalk",
+        "note": "high rising terminal \u2014 spreading nationally"
+      },
+      {
+        "label": "\"Like\" as quotative",
+        "note": "I was like, \"no way\""
+      },
+      {
+        "label": "\"Hella\"",
+        "note": "Northern California intensifier"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 75,
+      "inland_northwest_urban": 72,
+      "north_idaho_mountain": 58,
+      "outer_banks": 40,
+      "nyc": 52,
+      "inland_north": 58,
+      "new_england": 50,
+      "mid_atlantic": 48,
+      "upper_midwest": 62,
+      "plains": 58,
+      "mountain_west": 70,
+      "appalachian": 48,
+      "southern": 42,
+      "gulf_south": 40,
+      "texas": 55,
+      "ozark": 50,
+      "piedmont": 45,
+      "gullah": 35,
+      "cajun": 38,
+      "new_orleans": 40
     }
   }
 ];
 
-// Geographic regions - approximate polygons for 800x500 viewBox
 const REGIONS = {
-  inland_north:     [[420,100],[540,100],[540,180],[420,180]],
-  new_england:      [[600,80],[700,80],[700,155],[600,155]],
-  mid_atlantic:     [[565,155],[640,155],[640,215],[565,215]],
-  appalachian:      [[510,195],[575,195],[575,265],[510,265]],
-  southern:         [[530,265],[620,265],[620,320],[530,320]],
-  gulf_south:       [[460,310],[560,310],[560,370],[460,370]],
-  texas:            [[330,290],[460,290],[460,390],[330,390]],
-  ozark:            [[415,230],[510,230],[510,300],[415,300]],
-  piedmont:         [[555,240],[620,240],[620,295],[555,295]],
-  gullah:           [[595,280],[645,280],[645,320],[595,320]],
-  cajun:            [[420,355],[490,355],[490,395],[420,395]],
-  new_orleans:      [[457,335],[500,335],[500,375],[457,375]],
-  upper_midwest:    [[315,90],[420,90],[420,165],[315,165]],
-  plains:           [[315,165],[415,165],[415,240],[315,240]],
-  mountain_west:    [[200,130],[315,130],[315,245],[200,245]],
-  pacific_northwest:[[100,80],[200,80],[200,175],[100,175]],
-  california:       [[100,175],[200,175],[200,300],[100,300]],
+  "pacific_northwest": [
+    [
+      100,
+      80
+    ],
+    [
+      220,
+      80
+    ],
+    [
+      220,
+      175
+    ],
+    [
+      100,
+      175
+    ]
+  ],
+  "inland_northwest_urban": [
+    [
+      220,
+      80
+    ],
+    [
+      340,
+      80
+    ],
+    [
+      340,
+      175
+    ],
+    [
+      220,
+      175
+    ]
+  ],
+  "north_idaho_mountain": [
+    [
+      340,
+      130
+    ],
+    [
+      430,
+      130
+    ],
+    [
+      430,
+      200
+    ],
+    [
+      340,
+      200
+    ]
+  ],
+  "outer_banks": [
+    [
+      700,
+      240
+    ],
+    [
+      780,
+      240
+    ],
+    [
+      780,
+      300
+    ],
+    [
+      700,
+      300
+    ]
+  ],
+  "nyc": [
+    [
+      700,
+      155
+    ],
+    [
+      800,
+      155
+    ],
+    [
+      800,
+      215
+    ],
+    [
+      700,
+      215
+    ]
+  ],
+  "inland_north": [
+    [
+      575,
+      130
+    ],
+    [
+      675,
+      130
+    ],
+    [
+      675,
+      195
+    ],
+    [
+      575,
+      195
+    ]
+  ],
+  "new_england": [
+    [
+      790,
+      80
+    ],
+    [
+      870,
+      80
+    ],
+    [
+      870,
+      155
+    ],
+    [
+      790,
+      155
+    ]
+  ],
+  "mid_atlantic": [
+    [
+      740,
+      180
+    ],
+    [
+      800,
+      180
+    ],
+    [
+      800,
+      230
+    ],
+    [
+      740,
+      230
+    ]
+  ],
+  "appalachian": [
+    [
+      680,
+      220
+    ],
+    [
+      750,
+      220
+    ],
+    [
+      750,
+      285
+    ],
+    [
+      680,
+      285
+    ]
+  ],
+  "southern": [
+    [
+      700,
+      285
+    ],
+    [
+      780,
+      285
+    ],
+    [
+      780,
+      340
+    ],
+    [
+      700,
+      340
+    ]
+  ],
+  "gulf_south": [
+    [
+      620,
+      330
+    ],
+    [
+      710,
+      330
+    ],
+    [
+      710,
+      390
+    ],
+    [
+      620,
+      390
+    ]
+  ],
+  "texas": [
+    [
+      475,
+      310
+    ],
+    [
+      600,
+      310
+    ],
+    [
+      600,
+      410
+    ],
+    [
+      475,
+      410
+    ]
+  ],
+  "ozark": [
+    [
+      570,
+      250
+    ],
+    [
+      660,
+      250
+    ],
+    [
+      660,
+      320
+    ],
+    [
+      570,
+      320
+    ]
+  ],
+  "piedmont": [
+    [
+      730,
+      260
+    ],
+    [
+      790,
+      260
+    ],
+    [
+      790,
+      315
+    ],
+    [
+      730,
+      315
+    ]
+  ],
+  "gullah": [
+    [
+      775,
+      300
+    ],
+    [
+      820,
+      300
+    ],
+    [
+      820,
+      340
+    ],
+    [
+      775,
+      340
+    ]
+  ],
+  "cajun": [
+    [
+      575,
+      375
+    ],
+    [
+      640,
+      375
+    ],
+    [
+      640,
+      415
+    ],
+    [
+      575,
+      415
+    ]
+  ],
+  "new_orleans": [
+    [
+      618,
+      355
+    ],
+    [
+      658,
+      355
+    ],
+    [
+      658,
+      395
+    ],
+    [
+      618,
+      395
+    ]
+  ],
+  "upper_midwest": [
+    [
+      460,
+      110
+    ],
+    [
+      555,
+      110
+    ],
+    [
+      555,
+      185
+    ],
+    [
+      460,
+      185
+    ]
+  ],
+  "plains": [
+    [
+      460,
+      185
+    ],
+    [
+      570,
+      185
+    ],
+    [
+      570,
+      260
+    ],
+    [
+      460,
+      260
+    ]
+  ],
+  "mountain_west": [
+    [
+      430,
+      150
+    ],
+    [
+      540,
+      150
+    ],
+    [
+      540,
+      265
+    ],
+    [
+      430,
+      265
+    ]
+  ],
+  "california": [
+    [
+      210,
+      195
+    ],
+    [
+      330,
+      195
+    ],
+    [
+      330,
+      320
+    ],
+    [
+      210,
+      320
+    ]
+  ]
 };
 
-// ═══════════════════════════════════════════════════════════════════════════
-// HARVEST GOLD COLOR SCHEME
-// ═══════════════════════════════════════════════════════════════════════════
+const MIGRATION_ROUTES = [
+  {
+    "from": "new_england",
+    "to": "inland_north",
+    "label": "Yankee westward"
+  },
+  {
+    "from": "new_england",
+    "to": "upper_midwest",
+    "label": "Great Lakes"
+  },
+  {
+    "from": "mid_atlantic",
+    "to": "appalachian",
+    "label": "Scots-Irish"
+  },
+  {
+    "from": "appalachian",
+    "to": "ozark",
+    "label": "Upland South"
+  },
+  {
+    "from": "southern",
+    "to": "gulf_south",
+    "label": "Plantation West"
+  },
+  {
+    "from": "gulf_south",
+    "to": "texas",
+    "label": "Cotton West"
+  },
+  {
+    "from": "texas",
+    "to": "plains",
+    "label": "Cattle/Oklahoma"
+  },
+  {
+    "from": "plains",
+    "to": "mountain_west",
+    "label": "Homesteaders"
+  },
+  {
+    "from": "plains",
+    "to": "pacific_northwest",
+    "label": "Oregon Trail"
+  },
+  {
+    "from": "mountain_west",
+    "to": "california",
+    "label": "Mining boom"
+  },
+  {
+    "from": "texas",
+    "to": "california",
+    "label": "Dust Bowl"
+  },
+  {
+    "from": "upper_midwest",
+    "to": "plains",
+    "label": "Homesteaders"
+  }
+];
 
-function similarityColor(score) {
-  // 0% = harvest red (#a4301e), 100% = harvest green (#374a1f)
-  const t = score / 100;
-  
-  // Harvest red RGB: 164, 48, 30
-  // Harvest green RGB: 55, 74, 31
-  
-  const r = Math.round(164 - (164 - 55) * t);
-  const g = Math.round(48 + (74 - 48) * t);
-  const b = Math.round(30 + (31 - 30) * t);
-  
-  return `rgb(${r}, ${g}, ${b})`;
-}
+const TRADE_ROUTES = [
+  {
+    "path": [
+      [
+        270,
+        260
+      ],
+      [
+        475,
+        360
+      ],
+      [
+        620,
+        380
+      ],
+      [
+        655,
+        375
+      ]
+    ],
+    "label": "Pacific Coast \u2192 Gulf"
+  },
+  {
+    "path": [
+      [
+        640,
+        375
+      ],
+      [
+        710,
+        340
+      ],
+      [
+        740,
+        300
+      ],
+      [
+        790,
+        240
+      ],
+      [
+        815,
+        200
+      ]
+    ],
+    "label": "Mississippi / Gulf Coast"
+  },
+  {
+    "path": [
+      [
+        270,
+        260
+      ],
+      [
+        425,
+        220
+      ],
+      [
+        545,
+        220
+      ],
+      [
+        625,
+        165
+      ],
+      [
+        815,
+        160
+      ]
+    ],
+    "label": "Northern rail corridor"
+  },
+  {
+    "path": [
+      [
+        545,
+        220
+      ],
+      [
+        620,
+        280
+      ],
+      [
+        680,
+        310
+      ],
+      [
+        710,
+        330
+      ]
+    ],
+    "label": "Ohio / Tennessee river"
+  }
+];
 
-// ═══════════════════════════════════════════════════════════════════════════
-// MAP RENDERING
-// ═══════════════════════════════════════════════════════════════════════════
+// ─── RENDERING ───────────────────────────────────────────────────────────────
 
 const svgNS = 'http://www.w3.org/2000/svg';
 let selectedDialect = null;
+
+function lerp(a, b, t) { return a + (b - a) * t; }
+
+function similarityColor(score) {
+  const t = score / 100;
+  if (t < 0.5) {
+    const u = t / 0.5;
+    return `rgb(${Math.round(lerp(127,159,u))},${Math.round(lerp(168,167,u))},${Math.round(lerp(201,160,u))})`;
+  } else {
+    const u = (t - 0.5) / 0.5;
+    return `rgb(${Math.round(lerp(159,212,u))},${Math.round(lerp(167,167,u))},${Math.round(lerp(160,106,u))})`;
+  }
+}
 
 function polyCenter(pts) {
   const x = pts.reduce((s,p)=>s+p[0],0)/pts.length;
@@ -753,26 +1942,20 @@ function buildMap() {
   const rg = document.getElementById('regionsGroup');
   const lg = document.getElementById('labelsGroup');
 
-  DIALECTS.forEach(dialect => {
-    const pts = REGIONS[dialect.id];
-    if (!pts) return;
-    
-    // Create polygon
+  Object.entries(REGIONS).forEach(([id, pts]) => {
     const poly = document.createElementNS(svgNS, 'polygon');
     poly.setAttribute('points', pts.map(p=>p.join(',')).join(' '));
-    poly.setAttribute('fill', '#3d3425');
-    poly.setAttribute('fill-opacity', '0.4');
-    poly.setAttribute('stroke', '#8a7d65');
-    poly.setAttribute('stroke-width', '1.5');
-    poly.dataset.id = dialect.id;
+    poly.setAttribute('fill', '#1a1610');
+    poly.setAttribute('stroke', '#3d3425');
+    poly.setAttribute('stroke-width', '1');
+    poly.dataset.id = id;
     poly.style.cursor = 'pointer';
-    poly.style.transition = 'fill 0.4s, fill-opacity 0.4s';
-    poly.addEventListener('mouseenter', (e) => showTooltip(e, dialect.id));
+    poly.style.transition = 'fill 0.5s';
+    poly.addEventListener('mouseenter', (e) => showTooltip(e, id));
     poly.addEventListener('mouseleave', hideTooltip);
-    poly.addEventListener('click', () => selectDialect(dialect.id));
+    poly.addEventListener('click', () => selectDialect(id));
     rg.appendChild(poly);
 
-    // Create label
     const [cx, cy] = polyCenter(pts);
     const label = document.createElementNS(svgNS, 'text');
     label.setAttribute('x', cx);
@@ -780,83 +1963,95 @@ function buildMap() {
     label.setAttribute('text-anchor', 'middle');
     label.setAttribute('dominant-baseline', 'middle');
     label.setAttribute('fill', '#8a7d65');
-    label.setAttribute('font-size', '9');
+    label.setAttribute('font-size', '7');
     label.setAttribute('font-family', 'Source Code Pro, monospace');
     label.setAttribute('pointer-events', 'none');
-    label.textContent = dialect.name.toUpperCase();
+    label.dataset.id = id;
+    const d = DIALECTS.find(d=>d.id===id);
+    label.textContent = d ? d.name.toUpperCase() : id.toUpperCase().replace(/_/g, ' ');
     lg.appendChild(label);
+  });
+}
+
+function buildMigrationRoutes() {
+  const mg = document.getElementById('migrationGroup');
+  mg.innerHTML = '';
+
+  MIGRATION_ROUTES.forEach(r => {
+    const fromPts = REGIONS[r.from];
+    const toPts = REGIONS[r.to];
+    if (!fromPts || !toPts) return;
+
+    const [fx, fy] = polyCenter(fromPts);
+    const [tx, ty] = polyCenter(toPts);
+
+    const line = document.createElementNS(svgNS, 'line');
+    line.setAttribute('x1', fx);
+    line.setAttribute('y1', fy);
+    line.setAttribute('x2', tx);
+    line.setAttribute('y2', ty);
+    line.setAttribute('class', 'migration-arrow');
+    line.setAttribute('marker-end', 'url(#arrow-migration)');
+    mg.appendChild(line);
+  });
+}
+
+function buildTradeRoutes() {
+  const tg = document.getElementById('tradeGroup');
+  tg.innerHTML = '';
+  TRADE_ROUTES.forEach(r => {
+    const poly = document.createElementNS(svgNS, 'polyline');
+    poly.setAttribute('points', r.path.map(p=>p.join(',')).join(' '));
+    poly.setAttribute('class', 'trade-route');
+    poly.setAttribute('marker-end', 'url(#arrow-trade)');
+    tg.appendChild(poly);
   });
 }
 
 function updateHeatmap() {
   const polys = document.querySelectorAll('#regionsGroup polygon');
-  
   polys.forEach(poly => {
     const id = poly.dataset.id;
-    
     if (!selectedDialect) {
-      poly.setAttribute('fill', '#3d3425');
-      poly.setAttribute('fill-opacity', '0.4');
-      poly.setAttribute('stroke-width', '1.5');
+      poly.setAttribute('fill', '#1a1610');
       return;
     }
-    
-    if (id === selectedDialect) {
-      // Selected region = harvest green (100%)
-      poly.setAttribute('fill', '#374a1f');
-      poly.setAttribute('fill-opacity', '0.85');
-      poly.setAttribute('stroke', '#c9a84c');
-      poly.setAttribute('stroke-width', '2.5');
+    if (id === selectedDialect.id) {
+      poly.setAttribute('fill', '#c9a84c');
+      poly.setAttribute('fill-opacity', '0.5');
       return;
     }
-    
-    // Other regions colored by similarity
-    const dialect = DIALECTS.find(d => d.id === selectedDialect);
-    const score = dialect.similarity[id] || 30;
+    const score = selectedDialect.similarity[id] ?? 30;
     poly.setAttribute('fill', similarityColor(score));
-    poly.setAttribute('fill-opacity', '0.75');
-    poly.setAttribute('stroke', '#8a7d65');
-    poly.setAttribute('stroke-width', '1.5');
+    poly.setAttribute('fill-opacity', '0.7');
   });
 
-  // Update labels
+  document.getElementById('refName').textContent = selectedDialect ? selectedDialect.name.toUpperCase() : '—';
+
   document.querySelectorAll('#labelsGroup text').forEach(t => {
-    if (!selectedDialect) {
-      t.setAttribute('fill', '#8a7d65');
-      t.setAttribute('font-size', '9');
-    } else {
-      t.setAttribute('fill', '#c9a84c');
-      t.setAttribute('font-size', '9');
-    }
+    t.setAttribute('fill', selectedDialect ? '#c9a84c' : '#8a7d65');
+    t.setAttribute('font-size', '7');
   });
 }
 
 function selectDialect(id) {
-  selectedDialect = id;
-  
-  // Update dialect buttons
+  const d = DIALECTS.find(x => x.id === id);
+  if (!d) return;
+  selectedDialect = d;
+
   document.querySelectorAll('.dialect-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.id === id);
   });
-  
+
   updateHeatmap();
-  renderRightPanel(id);
+  renderRightPanel(d);
 }
 
-function renderRightPanel(id) {
-  const dialect = DIALECTS.find(d => d.id === id);
-  if (!dialect) return;
-  
+function renderRightPanel(d) {
   const panel = document.getElementById('rightPanel');
 
-  // Get sorted similarities
-  const others = DIALECTS
-    .filter(d => d.id !== id)
-    .map(d => ({ 
-      id: d.id, 
-      name: d.name, 
-      score: dialect.similarity[d.id] || 0
-    }))
+  const others = DIALECTS.filter(x => x.id !== d.id)
+    .map(x => ({ id: x.id, name: x.name, score: d.similarity[x.id] ?? 0 }))
     .sort((a,b) => b.score - a.score);
 
   const barsHtml = others.map(o => {
@@ -866,19 +2061,19 @@ function renderRightPanel(id) {
       <div class="sim-bar-bg">
         <div class="sim-bar-fill" style="width:${o.score}%;background:${color};"></div>
       </div>
-      <span class="sim-pct">${o.score}%</span>
+      <span class="sim-pct">${o.score.toFixed(1)}%</span>
     </div>`;
   }).join('');
 
-  const featuresHtml = dialect.features.map(f =>
+  const featuresHtml = d.features.map(f =>
     `<div class="feature-item"><strong>${f.label}</strong> — ${f.note}</div>`
   ).join('');
 
   panel.innerHTML = `
     <div class="info-card">
-      <h3>${dialect.name}</h3>
-      <p style="font-size:0.65rem;color:var(--muted);margin-bottom:0.5rem;font-style:italic;">${dialect.region}</p>
-      <p>${dialect.description}</p>
+      <h3>${d.name}</h3>
+      <p style="font-size:0.68rem;color:var(--muted);margin-bottom:0.5rem;font-style:italic;">${d.region}</p>
+      <p>${d.description}</p>
     </div>
 
     <div>
@@ -887,51 +2082,44 @@ function renderRightPanel(id) {
     </div>
 
     <div>
-      <div class="section-label">Similarity Rankings</div>
+      <div class="section-label">Similarity to All Regions</div>
       <div class="similarity-bars">${barsHtml}</div>
     </div>
   `;
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
-// TOOLTIP
-// ═══════════════════════════════════════════════════════════════════════════
-
 const tooltip = document.getElementById('tooltip');
-
 function showTooltip(e, id) {
-  const dialect = DIALECTS.find(d => d.id === id);
-  if (!dialect) return;
-  
+  const d = DIALECTS.find(x => x.id === id);
+  if (!d) return;
   let extra = '';
-  if (selectedDialect && selectedDialect !== id) {
-    const selected = DIALECTS.find(d => d.id === selectedDialect);
-    const score = selected.similarity[id] || 0;
-    extra = `<br><span style="color:var(--gold);">${score}% similar</span>`;
+  if (selectedDialect && selectedDialect.id !== id) {
+    const score = selectedDialect.similarity[id] ?? '—';
+    extra = `<br><span style="color:var(--gold);">${typeof score === 'number' ? score.toFixed(1) : score}% similarity</span>`;
   }
-  
-  tooltip.innerHTML = `<strong>${dialect.name}</strong><br><span style="font-size:0.65rem;color:var(--muted);">${dialect.region}</span>${extra}`;
+  tooltip.innerHTML = `<strong>${d.name}</strong><br>${d.region}${extra}`;
   tooltip.style.opacity = 1;
   moveTip(e);
 }
-
-function hideTooltip() {
-  tooltip.style.opacity = 0;
-}
-
+function hideTooltip() { tooltip.style.opacity = 0; }
 function moveTip(e) {
   const rect = document.querySelector('.map-area').getBoundingClientRect();
   tooltip.style.left = (e.clientX - rect.left + 12) + 'px';
   tooltip.style.top = (e.clientY - rect.top - 10) + 'px';
 }
-
 document.querySelector('.map-area').addEventListener('mousemove', e => {
   if (tooltip.style.opacity > 0) moveTip(e);
 });
 
-// ═══════════════════════════════════════════════════════════════════════════
-// BUILD DIALECT LIST
-// ═══════════════════════════════════════════════════════════════════════════
+document.getElementById('layerMigration').addEventListener('change', e => {
+  document.getElementById('migrationGroup').style.display = e.target.checked ? '' : 'none';
+});
+document.getElementById('layerTrade').addEventListener('change', e => {
+  document.getElementById('tradeGroup').style.display = e.target.checked ? '' : 'none';
+});
+document.getElementById('layerLabels').addEventListener('change', e => {
+  document.getElementById('labelsGroup').style.display = e.target.checked ? '' : 'none';
+});
 
 function buildDialectList() {
   const list = document.getElementById('dialectList');
@@ -945,10 +2133,6 @@ function buildDialectList() {
   });
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
-// BUILD LEGEND
-// ═══════════════════════════════════════════════════════════════════════════
-
 function buildLegend() {
   const grad = document.getElementById('legendGrad');
   const colors = [];
@@ -958,14 +2142,11 @@ function buildLegend() {
   grad.style.background = `linear-gradient(to right, ${colors.join(',')})`;
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════════════════════════════════
-
 buildDialectList();
 buildMap();
+buildMigrationRoutes();
+buildTradeRoutes();
 buildLegend();
 </script>
-
 </body>
 </html>
