@@ -364,34 +364,14 @@
       <div class="section-label">Dialect Regions</div>
       <div class="dialect-list" id="dialectList"></div>
     </div>
-
-    <div>
-      <div class="section-label">Map Layers</div>
-      <div class="layer-toggles">
-        <div class="toggle-row">
-          <input type="checkbox" id="layerMigration" checked>
-          <div class="swatch" style="background:var(--rust);"></div>
-          <label for="layerMigration">Migration Routes</label>
-        </div>
-        <div class="toggle-row">
-          <input type="checkbox" id="layerTrade" checked>
-          <div class="swatch" style="background:var(--teal);"></div>
-          <label for="layerTrade">Trade Routes</label>
-        </div>
-        <div class="toggle-row">
-          <input type="checkbox" id="layerLabels" checked>
-          <label for="layerLabels">Region Labels</label>
-        </div>
-      </div>
-    </div>
   </div>
 
   <div class="map-area">
     <div class="map-title">SIMILARITY TO: <span id="refName">—</span></div>
-
+    
     <svg id="mapSvg" viewBox="0 0 850 370" preserveAspectRatio="xMidYMid meet">
       <defs>
-        <marker id="arrow-migration" viewBox="0 0 10 10" refX="9" refY="5"
+        <marker id="arrow-migration" viewBox="0 0 10 10" refX="9" refY="5" 
                 markerWidth="6" markerHeight="6" orient="auto">
           <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--rust)"/>
         </marker>
@@ -400,7 +380,7 @@
           <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--teal)"/>
         </marker>
       </defs>
-
+      
       <g id="regionsGroup"></g>
       <g id="migrationGroup"></g>
       <g id="tradeGroup"></g>
@@ -489,7 +469,7 @@ const DIALECTS = [
       "pacific_northwest": 92.816091954023,
       "inland_northwest_urban": 100.0,
       "north_idaho_mountain": 90.37037037037038,
-      "outer_banks": 64.51612903225808,
+      "outer_banks": 64.51612903225806,
       "california": 72,
       "mountain_west": 70,
       "plains": 65,
@@ -529,10 +509,10 @@ const DIALECTS = [
       }
     ],
     "similarity": {
-      "pacific_northwest": 89.1156462585034,
-      "inland_northwest_urban": 89.36170212765956,
+      "pacific_northwest": 89.11564625850342,
+      "inland_northwest_urban": 89.36170212765957,
       "north_idaho_mountain": 100.0,
-      "outer_banks": 69.52380952380952,
+      "outer_banks": 69.52380952380953,
       "appalachian": 78,
       "ozark": 76,
       "upper_midwest": 65,
@@ -570,7 +550,7 @@ const DIALECTS = [
     "similarity": {
       "pacific_northwest": 69.44444444444446,
       "inland_northwest_urban": 76.54320987654322,
-      "north_idaho_mountain": 77.45098039215686,
+      "north_idaho_mountain": 77.45098039215685,
       "outer_banks": 100.0,
       "gullah": 72,
       "southern": 68,
@@ -1756,163 +1736,9 @@ const REGIONS = {
   ]
 };
 
-const MIGRATION_ROUTES = [
-  {
-    "from": "new_england",
-    "to": "inland_north",
-    "label": "Yankee westward"
-  },
-  {
-    "from": "new_england",
-    "to": "upper_midwest",
-    "label": "Great Lakes"
-  },
-  {
-    "from": "mid_atlantic",
-    "to": "appalachian",
-    "label": "Scots-Irish"
-  },
-  {
-    "from": "appalachian",
-    "to": "ozark",
-    "label": "Upland South"
-  },
-  {
-    "from": "southern",
-    "to": "gulf_south",
-    "label": "Plantation West"
-  },
-  {
-    "from": "gulf_south",
-    "to": "texas",
-    "label": "Cotton West"
-  },
-  {
-    "from": "texas",
-    "to": "plains",
-    "label": "Cattle/Oklahoma"
-  },
-  {
-    "from": "plains",
-    "to": "mountain_west",
-    "label": "Homesteaders"
-  },
-  {
-    "from": "plains",
-    "to": "pacific_northwest",
-    "label": "Oregon Trail"
-  },
-  {
-    "from": "mountain_west",
-    "to": "california",
-    "label": "Mining boom"
-  },
-  {
-    "from": "texas",
-    "to": "california",
-    "label": "Dust Bowl"
-  },
-  {
-    "from": "upper_midwest",
-    "to": "plains",
-    "label": "Homesteaders"
-  }
-];
+const MIGRATION_ROUTES = [];
 
-const TRADE_ROUTES = [
-  {
-    "path": [
-      [
-        270,
-        260
-      ],
-      [
-        475,
-        360
-      ],
-      [
-        620,
-        380
-      ],
-      [
-        655,
-        375
-      ]
-    ],
-    "label": "Pacific Coast \u2192 Gulf"
-  },
-  {
-    "path": [
-      [
-        640,
-        375
-      ],
-      [
-        710,
-        340
-      ],
-      [
-        740,
-        300
-      ],
-      [
-        790,
-        240
-      ],
-      [
-        815,
-        200
-      ]
-    ],
-    "label": "Mississippi / Gulf Coast"
-  },
-  {
-    "path": [
-      [
-        270,
-        260
-      ],
-      [
-        425,
-        220
-      ],
-      [
-        545,
-        220
-      ],
-      [
-        625,
-        165
-      ],
-      [
-        815,
-        160
-      ]
-    ],
-    "label": "Northern rail corridor"
-  },
-  {
-    "path": [
-      [
-        545,
-        220
-      ],
-      [
-        620,
-        280
-      ],
-      [
-        680,
-        310
-      ],
-      [
-        710,
-        330
-      ]
-    ],
-    "label": "Ohio / Tennessee river"
-  }
-];
+const TRADE_ROUTES = [];
 
 // ─── RENDERING ───────────────────────────────────────────────────────────────
 
@@ -1939,7 +1765,7 @@ function polyCenter(pts) {
 }
 
 function buildMap() {
-
+  const rg = document.getElementById('regionsGroup');
   const lg = document.getElementById('labelsGroup');
 
   Object.entries(REGIONS).forEach(([id, pts]) => {
@@ -1981,10 +1807,10 @@ function buildMigrationRoutes() {
     const fromPts = REGIONS[r.from];
     const toPts = REGIONS[r.to];
     if (!fromPts || !toPts) return;
-
+    
     const [fx, fy] = polyCenter(fromPts);
     const [tx, ty] = polyCenter(toPts);
-
+    
     const line = document.createElementNS(svgNS, 'line');
     line.setAttribute('x1', fx);
     line.setAttribute('y1', fy);
@@ -2109,16 +1935,6 @@ function moveTip(e) {
 }
 document.querySelector('.map-area').addEventListener('mousemove', e => {
   if (tooltip.style.opacity > 0) moveTip(e);
-});
-
-document.getElementById('layerMigration').addEventListener('change', e => {
-  document.getElementById('migrationGroup').style.display = e.target.checked ? '' : 'none';
-});
-document.getElementById('layerTrade').addEventListener('change', e => {
-  document.getElementById('tradeGroup').style.display = e.target.checked ? '' : 'none';
-});
-document.getElementById('layerLabels').addEventListener('change', e => {
-  document.getElementById('labelsGroup').style.display = e.target.checked ? '' : 'none';
 });
 
 function buildDialectList() {
