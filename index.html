@@ -1,1003 +1,1968 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GCP Professional Cloud Architect Practice Exam</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #1a1a1a;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #2d2d2d;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #062e24 0%, #041f19 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 16px;
-            opacity: 0.9;
-        }
-
-        .content {
-            padding: 30px;
-            color: #e0e0e0;
-        }
-
-        .start-screen {
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .start-screen h2 {
-            color: #f0f0f0;
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-
-        .start-screen p {
-            color: #b0b0b0;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #062e24 0%, #041f19 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(6, 46, 36, 0.4);
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .question-container {
-            display: none;
-        }
-
-        .question-container.active {
-            display: block;
-        }
-
-        .question-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #404040;
-        }
-
-        .question-number {
-            font-size: 14px;
-            font-weight: 600;
-            color: #10b981;
-        }
-
-        .question-text {
-            background: #1f1f1f;
-            padding: 25px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            line-height: 1.7;
-            color: #e0e0e0;
-            font-size: 16px;
-        }
-
-        .scenario {
-            background: #2a2a1a;
-            border-left: 4px solid #10b981;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            font-style: italic;
-            color: #d0d0d0;
-        }
-
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .option {
-            display: flex;
-            align-items: flex-start;
-            background: #1f1f1f;
-            border: 2px solid #404040;
-            padding: 18px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .option:hover {
-            border-color: #10b981;
-            background: #252525;
-        }
-
-        .option.selected {
-            border-color: #10b981;
-            background: #1a3a2e;
-        }
-
-        .option.correct {
-            border-color: #34a853;
-            background: #1a3a2e;
-        }
-
-        .option.incorrect {
-            border-color: #ea4335;
-            background: #3a1a1a;
-        }
-
-        .option input[type="radio"] {
-            margin-right: 12px;
-            margin-top: 2px;
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-
-        .option-text {
-            flex: 1;
-            color: #e0e0e0;
-            line-height: 1.5;
-        }
-
-        .feedback {
-            display: none;
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 8px;
-            line-height: 1.6;
-        }
-
-        .feedback.show {
-            display: block;
-        }
-
-        .feedback.correct {
-            background: #1a3a2e;
-            border-left: 4px solid #34a853;
-            color: #7ee3a4;
-        }
-
-        .feedback.incorrect {
-            background: #3a1a1a;
-            border-left: 4px solid #ea4335;
-            color: #ff9999;
-        }
-
-        .feedback-title {
-            font-weight: 600;
-            font-size: 16px;
-            margin-bottom: 10px;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 12px;
-            margin-top: 25px;
-        }
-
-        .btn-secondary {
-            background: #1f1f1f;
-            color: #10b981;
-            border: 2px solid #062e24;
-        }
-
-        .btn-secondary:hover {
-            background: #252525;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #b0b0b0;
-        }
-
-        .spinner {
-            border: 3px solid #404040;
-            border-top: 3px solid #10b981;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .results-screen {
-            display: none;
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .results-screen.active {
-            display: block;
-        }
-
-        .score-display {
-            font-size: 72px;
-            font-weight: 700;
-            color: #10b981;
-            margin: 20px 0;
-        }
-
-        .score-label {
-            font-size: 24px;
-            color: #b0b0b0;
-            margin-bottom: 30px;
-        }
-
-        .score-breakdown {
-            background: #1f1f1f;
-            border-radius: 8px;
-            padding: 25px;
-            margin: 30px 0;
-            text-align: left;
-        }
-
-        .breakdown-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #404040;
-            color: #e0e0e0;
-        }
-
-        .breakdown-item:last-child {
-            border-bottom: none;
-        }
-
-        .pass-fail {
-            font-size: 20px;
-            font-weight: 600;
-            margin: 30px 0;
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .pass-fail.pass {
-            background: #1a3a2e;
-            color: #7ee3a4;
-        }
-
-        .pass-fail.fail {
-            background: #3a1a1a;
-            color: #ff9999;
-        }
-
-        .review-section {
-            margin: 30px 0;
-            text-align: left;
-        }
-
-        .review-section h3 {
-            color: #f0f0f0;
-            margin-bottom: 20px;
-            font-size: 20px;
-        }
-
-        .domain-group {
-            background: #1f1f1f;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .domain-group h4 {
-            color: #10b981;
-            margin-bottom: 15px;
-            font-size: 16px;
-            font-weight: 600;
-        }
-
-        .review-question {
-            background: #2d2d2d;
-            border-left: 4px solid #ea4335;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 4px;
-        }
-
-        .review-question-text {
-            color: #e0e0e0;
-            font-weight: 500;
-            margin-bottom: 10px;
-            line-height: 1.5;
-        }
-
-        .review-answer {
-            font-size: 14px;
-            margin: 8px 0;
-            padding: 8px 12px;
-            border-radius: 4px;
-        }
-
-        .review-answer.your-answer {
-            background: #3a1a1a;
-            color: #ff9999;
-        }
-
-        .review-answer.correct-answer {
-            background: #1a3a2e;
-            color: #7ee3a4;
-        }
-
-        .no-mistakes {
-            text-align: center;
-            color: #7ee3a4;
-            padding: 40px;
-            font-size: 18px;
-            background: #1a3a2e;
-            border-radius: 8px;
-        }
-
-        .explanation-box {
-            margin-top: 10px;
-            padding: 10px;
-            background: #1f1f1f;
-            border-radius: 4px;
-            font-size: 14px;
-            line-height: 1.5;
-            color: #b0b0b0;
-        }
-
-        .explanation-box strong {
-            color: #e0e0e0;
-        }
-
-        body.light-mode .explanation-box {
-            background: #f8f9fa;
-            color: #555;
-        }
-
-        body.light-mode .explanation-box strong {
-            color: #333;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #404040;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #10b981 0%, #062e24 100%);
-            transition: width 0.3s ease;
-        }
-
-        .theme-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            cursor: pointer;
-            transition: all 0.3s;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
-
-        .theme-toggle:hover {
-            transform: scale(1.1);
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* Light mode overrides */
-        body.light-mode {
-            background: #f5f5f5;
-        }
-
-        body.light-mode .container {
-            background: white;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-        }
-
-        body.light-mode .header {
-            background: linear-gradient(135deg, #062e24 0%, #041f19 100%);
-        }
-
-        body.light-mode .content {
-            color: #333;
-        }
-
-        body.light-mode .start-screen h2 {
-            color: #333;
-        }
-
-        body.light-mode .start-screen p {
-            color: #666;
-        }
-
-        body.light-mode .loading {
-            color: #666;
-        }
-
-        body.light-mode .question-header {
-            border-bottom: 2px solid #e0e0e0;
-        }
-
-        body.light-mode .question-number {
-            color: #10b981;
-        }
-
-        body.light-mode .question-text {
-            background: #f8f9fa;
-            color: #333;
-        }
-
-        body.light-mode .scenario {
-            background: #fff9e6;
-            border-left: 4px solid #10b981;
-            color: #555;
-        }
-
-        body.light-mode .option {
-            background: white;
-            border: 2px solid #e0e0e0;
-        }
-
-        body.light-mode .option:hover {
-            border-color: #10b981;
-            background: #f0fdf4;
-        }
-
-        body.light-mode .option.selected {
-            border-color: #10b981;
-            background: #d1fae5;
-        }
-
-        body.light-mode .option.correct {
-            background: #d1fae5;
-        }
-
-        body.light-mode .option.incorrect {
-            background: #fee2e2;
-        }
-
-        body.light-mode .option-text {
-            color: #333;
-        }
-
-        body.light-mode .feedback.correct {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        body.light-mode .feedback.incorrect {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        body.light-mode .btn-secondary {
-            background: white;
-            color: #062e24;
-        }
-
-        body.light-mode .btn-secondary:hover {
-            background: #f0fdf4;
-        }
-
-        body.light-mode .spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #10b981;
-        }
-
-        body.light-mode .score-display {
-            color: #10b981;
-        }
-
-        body.light-mode .score-label {
-            color: #666;
-        }
-
-        body.light-mode .score-breakdown {
-            background: #f8f9fa;
-        }
-
-        body.light-mode .breakdown-item {
-            border-bottom: 1px solid #e0e0e0;
-            color: #333;
-        }
-
-        body.light-mode .pass-fail.pass {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        body.light-mode .pass-fail.fail {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        body.light-mode .review-section h3 {
-            color: #333;
-        }
-
-        body.light-mode .domain-group {
-            background: #f8f9fa;
-        }
-
-        body.light-mode .domain-group h4 {
-            color: #10b981;
-        }
-
-        body.light-mode .review-question {
-            background: white;
-        }
-
-        body.light-mode .review-question-text {
-            color: #333;
-        }
-
-        body.light-mode .review-answer.your-answer {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        body.light-mode .review-answer.correct-answer {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        body.light-mode .no-mistakes {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        body.light-mode .progress-bar {
-            background: #e0e0e0;
-        }
-
-        body.light-mode .theme-toggle {
-            background: rgba(0, 0, 0, 0.05);
-            border: 2px solid rgba(0, 0, 0, 0.1);
-        }
-
-        body.light-mode .theme-toggle:hover {
-            background: rgba(0, 0, 0, 0.1);
-        }
-    </style>
-    <script src="gcp_questions.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>American English Dialect Migration & Similarity</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Code+Pro:wght@400;600&display=swap');
+
+  :root {
+    --bg: #1a1610;
+    --parchment: #2a2318;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --rust: #8b3a2a;
+    --teal: #2a6b6b;
+    --cream: #e8e0cc;
+    --muted: #8a7d65;
+    --panel: #221e16;
+    --border: #3d3425;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Libre Baskerville', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  header {
+    padding: 2rem 2.5rem 1rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 2rem;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--gold-light);
+    letter-spacing: 0.02em;
+  }
+
+  header .subtitle {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-style: italic;
+    letter-spacing: 0.05em;
+  }
+
+  header .epoch {
+    margin-left: auto;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.7rem;
+    color: var(--gold);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.7rem;
+    letter-spacing: 0.1em;
+  }
+
+  .app {
+    display: grid;
+    grid-template-columns: 280px 1fr 260px;
+    height: calc(100vh - 70px);
+  }
+
+  .left-panel {
+    background: var(--panel);
+    border-right: 1px solid var(--border);
+    padding: 1.5rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .section-label {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dialect-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .dialect-btn {
+    background: none;
+    border: 1px solid transparent;
+    color: var(--cream);
+    font-family: 'Libre Baskerville', serif;
+    font-size: 0.8rem;
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+    line-height: 1.3;
+  }
+
+  .dialect-btn:hover {
+    border-color: var(--border);
+    background: var(--parchment);
+    color: var(--gold-light);
+  }
+
+  .dialect-btn.active {
+    border-color: var(--gold);
+    background: var(--parchment);
+    color: var(--gold-light);
+  }
+
+  .dialect-btn .region-tag {
+    display: block;
+    font-size: 0.65rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 0.1rem;
+  }
+
+  .layer-toggles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+  }
+
+  .toggle-row input[type="checkbox"] {
+    accent-color: var(--gold);
+    width: 14px;
+    height: 14px;
+  }
+
+  .toggle-row label {
+    font-size: 0.78rem;
+    color: var(--cream);
+    cursor: pointer;
+  }
+
+  .toggle-row .swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .map-area {
+    position: relative;
+    background: #0f0d09;
+    overflow: hidden;
+  }
+
+  #mapSvg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .map-title {
+    position: absolute;
+    top: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    text-align: center;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  .legend {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    background: rgba(26,22,16,0.9);
+    border: 1px solid var(--border);
+    padding: 0.8rem 1rem;
+    font-size: 0.7rem;
+  }
+
+  .legend-title {
+    font-family: 'Source Code Pro', monospace;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    font-size: 0.6rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .legend-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+  }
+
+  .legend-gradient {
+    width: 100px;
+    height: 10px;
+    border-radius: 1px;
+  }
+
+  .legend-labels {
+    display: flex;
+    justify-content: space-between;
+    width: 100px;
+    font-size: 0.6rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+
+  .right-panel {
+    background: var(--panel);
+    border-left: 1px solid var(--border);
+    padding: 1.5rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .info-card {
+    background: var(--parchment);
+    border: 1px solid var(--border);
+    padding: 1rem;
+  }
+
+  .info-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--gold-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .info-card p {
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: var(--cream);
+  }
+
+  .feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+  }
+
+  .feature-item {
+    font-size: 0.72rem;
+    line-height: 1.5;
+    color: var(--cream);
+  }
+
+  .feature-item strong {
+    color: var(--gold-light);
+  }
+
+  .similarity-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .sim-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .sim-label {
+    font-size: 0.7rem;
+    min-width: 100px;
+    color: var(--muted);
+  }
+
+  .sim-bar-bg {
+    flex: 1;
+    height: 8px;
+    background: var(--parchment);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .sim-bar-fill {
+    height: 100%;
+    transition: width 0.3s;
+  }
+
+  .sim-pct {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 0.65rem;
+    min-width: 35px;
+    text-align: right;
+    color: var(--gold);
+  }
+
+  .migration-arrow {
+    stroke: var(--rust);
+    stroke-width: 1.5;
+    fill: none;
+    opacity: 0.6;
+  }
+
+  .trade-route {
+    stroke: var(--teal);
+    stroke-width: 1.5;
+    fill: none;
+    stroke-dasharray: 4,4;
+    opacity: 0.5;
+  }
+
+  #tooltip {
+    position: absolute;
+    background: rgba(26,22,16,0.95);
+    border: 1px solid var(--gold);
+    padding: 0.6rem 0.8rem;
+    font-size: 0.7rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 100;
+    line-height: 1.4;
+  }
+</style>
 </head>
 <body>
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-        <span id="themeIcon">☀️</span>
-    </button>
-    <div class="container">
-        <div class="header">
-            <h1>Practice Exam Simulator</h1>
-            <p>Google Professional Cloud Architect</p>
-        </div>
 
-        <div class="content">
-            <!-- Start Screen -->
-            <div id="startScreen" class="start-screen">
-                <h2>Practice Exam Simulator</h2>
-                <p style="font-size: 18px; font-weight: 500; margin-bottom: 25px;">Google Professional Cloud Architect</p>
-                <p>
-                    This practice exam simulates the Google Professional Cloud Architect certification test.
-                    You'll get 10 questions covering key exam domains including design & planning, implementation, 
-                    security & compliance, AI & machine learning, optimization, reliability, infrastructure as code, 
-                    and hybrid & multicloud.
-                </p>
-                <p style="margin-top: 20px; font-style: italic; color: #999;">
-                    This practice exam does not include case studies. It is meant as a study aide, not a full practice exam.
-                </p>
-                <p style="margin-top: 15px;">
-                    <strong>Format:</strong> Multiple choice questions with immediate feedback and explanations.
-                </p>
-                <button class="btn" onclick="startExam()">Start Practice Exam</button>
-            </div>
+<header>
+  <h1>American English Dialect Map</h1>
+  <span class="subtitle">Migration Patterns & Linguistic Similarity</span>
+  <span class="epoch">ALPHA v0.3</span>
+</header>
 
-            <!-- Loading Screen -->
-            <div id="loadingScreen" class="loading" style="display: none;">
-                <div class="spinner"></div>
-                <p>Generating exam questions...</p>
-            </div>
+<div class="app">
+  <div class="left-panel">
+    <div>
+      <div class="section-label">Dialect Regions</div>
+      <div class="dialect-list" id="dialectList"></div>
+    </div>
+  </div>
 
-            <!-- Question Screen -->
-            <div id="questionScreen" class="question-container">
-                <div class="progress-bar">
-                    <div id="progressFill" class="progress-fill" style="width: 0%"></div>
-                </div>
-                
-                <div class="question-header">
-                    <span id="questionNumber" class="question-number">Question 1 of 10</span>
-                    <span id="currentScore" class="question-number">Score: 0/0</span>
-                </div>
+  <div class="map-area">
+    <div class="map-title">SIMILARITY TO: <span id="refName">—</span></div>
+    
+    <svg id="mapSvg" viewBox="0 0 850 370" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <marker id="arrow-migration" viewBox="0 0 10 10" refX="9" refY="5" 
+                markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--rust)"/>
+        </marker>
+        <marker id="arrow-trade" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--teal)"/>
+        </marker>
+      </defs>
+      
+      <g id="regionsGroup"></g>
+      <g id="migrationGroup"></g>
+      <g id="tradeGroup"></g>
+      <g id="labelsGroup"></g>
+    </svg>
 
-                <div id="scenarioText" class="scenario" style="display: none;"></div>
-                
-                <div id="questionText" class="question-text"></div>
-
-                <div id="optionsContainer" class="options"></div>
-
-                <div id="feedback" class="feedback"></div>
-
-                <div class="button-group">
-                    <button id="submitBtn" class="btn" onclick="submitAnswer()">Submit Answer</button>
-                    <button id="nextBtn" class="btn btn-secondary" onclick="nextQuestion()" style="display: none;">Next Question</button>
-                </div>
-            </div>
-
-            <!-- Results Screen -->
-            <div id="resultsScreen" class="results-screen">
-                <h2>Exam Complete!</h2>
-                <div class="score-display" id="finalScore">0%</div>
-                <div class="score-label" id="scoreLabel"></div>
-                
-                <div id="passFailMessage" class="pass-fail"></div>
-
-                <div class="score-breakdown">
-                    <h3 style="margin-bottom: 20px; color: #f0f0f0;">Performance Summary</h3>
-                    <div class="breakdown-item">
-                        <span>Total Questions:</span>
-                        <strong id="totalQuestions">10</strong>
-                    </div>
-                    <div class="breakdown-item">
-                        <span>Correct Answers:</span>
-                        <strong id="correctAnswers" style="color: #34a853;">0</strong>
-                    </div>
-                    <div class="breakdown-item">
-                        <span>Incorrect Answers:</span>
-                        <strong id="incorrectAnswers" style="color: #ea4335;">0</strong>
-                    </div>
-                    <div class="breakdown-item">
-                        <span>Final Score:</span>
-                        <strong id="percentageScore">0%</strong>
-                    </div>
-                </div>
-
-                <div id="reviewSection" class="review-section">
-                    <!-- This will be populated with incorrect answers grouped by domain -->
-                </div>
-
-                <button class="btn" onclick="location.reload()">Try Another Practice Exam</button>
-            </div>
-        </div>
+    <div class="legend">
+      <div class="legend-title">SIMILARITY SCALE</div>
+      <div class="legend-bar">
+        <div class="legend-gradient" id="legendGrad"></div>
+      </div>
+      <div class="legend-labels">
+        <span>0%</span>
+        <span>100%</span>
+      </div>
     </div>
 
-    <script>
-        // Theme toggle functionality
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
-            const themeIcon = document.getElementById('themeIcon');
-            const isLightMode = document.body.classList.contains('light-mode');
-            themeIcon.textContent = isLightMode ? '🌙' : '☀️';
-            localStorage.setItem('theme', isLightMode ? 'light' : 'dark');
-        }
+    <div id="tooltip"></div>
+  </div>
 
-        // Load saved theme on page load (default to dark)
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme');
-            // Default to dark mode - only switch to light if explicitly saved
-            if (savedTheme === 'light') {
-                document.body.classList.add('light-mode');
-                document.getElementById('themeIcon').textContent = '🌙';
-            }
-        });
+  <div class="right-panel" id="rightPanel">
+    <div class="info-card">
+      <h3>Select a Region</h3>
+      <p>Click any region on the map or choose from the list to view detailed similarity scores and dialect features.</p>
+    </div>
+  </div>
+</div>
 
-        let examState = {
-            questions: [],
-            currentQuestionIndex: 0,
-            score: 0,
-            selectedAnswer: null,
-            answered: false,
-            incorrectAnswers: []
-        };
+<script>
+const DIALECTS = [
+  {
+    "id": "pacific_northwest",
+    "name": "Pacific Northwest",
+    "region": "Coastal WA/OR",
+    "description": "Western Washington, western Oregon, coastal strip. Bounded by Cascades to the east, Canadian border to the north, northern California to the south.\n",
+    "features": [
+      {
+        "label": "Cot-caught merger",
+        "note": "Score: 3"
+      },
+      {
+        "label": "Pin-pen merger",
+        "note": "Score: ?"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 100.0,
+      "inland_northwest_urban": 93.62318840579711,
+      "north_idaho_mountain": 90.57971014492755,
+      "outer_banks": 56.79012345679012,
+      "california": 75,
+      "upper_midwest": 70,
+      "inland_north": 65,
+      "mountain_west": 68,
+      "plains": 60,
+      "nyc": 50,
+      "new_england": 55,
+      "mid_atlantic": 52,
+      "southern": 45,
+      "appalachian": 50,
+      "gulf_south": 42,
+      "texas": 48,
+      "ozark": 52,
+      "piedmont": 47,
+      "gullah": 38,
+      "cajun": 40,
+      "new_orleans": 43
+    }
+  },
+  {
+    "id": "inland_northwest_urban",
+    "name": "Inland Northwest Urban",
+    "region": "Spokane, Eastern WA/OR",
+    "description": "Spokane metropolitan area and surrounding communities, Coeur d'Alene and Kootenai County ID. I-90 corridor as primary axis. Bounded culturally by Cascades to the west and rural transition to the east and north.\n",
+    "features": [
+      {
+        "label": "High directness",
+        "note": "Score: 3"
+      },
+      {
+        "label": "Cot-caught merger",
+        "note": "Score: 3"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 92.816091954023,
+      "inland_northwest_urban": 100.0,
+      "north_idaho_mountain": 90.37037037037038,
+      "outer_banks": 64.51612903225806,
+      "california": 72,
+      "mountain_west": 70,
+      "plains": 65,
+      "upper_midwest": 68,
+      "nyc": 48,
+      "new_england": 52,
+      "inland_north": 62,
+      "mid_atlantic": 50,
+      "southern": 43,
+      "appalachian": 55,
+      "gulf_south": 40,
+      "texas": 50,
+      "ozark": 58,
+      "piedmont": 45,
+      "gullah": 35,
+      "cajun": 38,
+      "new_orleans": 40
+    }
+  },
+  {
+    "id": "north_idaho_mountain",
+    "name": "North Idaho Mountain",
+    "region": "Silver Valley, Clearwater Basin",
+    "description": "Bonner, Boundary, and Shoshone counties; Kootenai County in mountain portions only (explicitly excludes Coeur d'Alene urban area which patterns with INW Urban). Eastern extent reaches Montana border and may overlap with western Montana varieties \u2014 boundary TBD pending informant data. River and canyon corridors: Coeur d'Alene River, St. Joe, Clark Fork, Priest River.\n",
+    "features": [
+      {
+        "label": "Very fast speech",
+        "note": "Foundational prosodic feature"
+      },
+      {
+        "label": "Pin-pen merger",
+        "note": "Score: 3"
+      },
+      {
+        "label": "Punched final stops",
+        "note": "Compensation for speed"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 89.11564625850342,
+      "inland_northwest_urban": 89.36170212765957,
+      "north_idaho_mountain": 100.0,
+      "outer_banks": 69.52380952380953,
+      "appalachian": 78,
+      "ozark": 76,
+      "upper_midwest": 65,
+      "mountain_west": 72,
+      "plains": 62,
+      "southern": 70,
+      "gulf_south": 65,
+      "texas": 68,
+      "piedmont": 72,
+      "california": 58,
+      "nyc": 42,
+      "new_england": 45,
+      "inland_north": 55,
+      "mid_atlantic": 48,
+      "gullah": 60,
+      "cajun": 62,
+      "new_orleans": 64
+    }
+  },
+  {
+    "id": "outer_banks",
+    "name": "Outer Banks English",
+    "region": "Ocracoke, Harkers Island",
+    "description": "Barrier islands and adjacent coastal mainland of North Carolina, including Ocracoke, Harkers Island, Wanchese, Atlantic, Davis, and Sea Level. Pamlico Sound communities. Dialect family extends to Chesapeake Bay varieties (Smith Island MD, Tangier Island VA) but those are out of scope for this record \u2014 see sub-dialect notes.\n",
+    "features": [
+      {
+        "label": "Hoi toide",
+        "note": "High tide pronunciation"
+      },
+      {
+        "label": "Unique vowel system",
+        "note": "Preservation of archaic features"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 69.44444444444446,
+      "inland_northwest_urban": 76.54320987654322,
+      "north_idaho_mountain": 77.45098039215685,
+      "outer_banks": 100.0,
+      "gullah": 72,
+      "southern": 68,
+      "piedmont": 75,
+      "mid_atlantic": 62,
+      "new_england": 58,
+      "appalachian": 65,
+      "gulf_south": 60,
+      "cajun": 55,
+      "new_orleans": 58,
+      "nyc": 50,
+      "texas": 52,
+      "ozark": 55,
+      "plains": 45,
+      "upper_midwest": 48,
+      "inland_north": 52,
+      "mountain_west": 42,
+      "california": 40
+    }
+  },
+  {
+    "id": "nyc",
+    "name": "New York City",
+    "region": "NYC Metro",
+    "description": "One of the most distinctive American dialects. Non-rhotic, distinctive vowel shifts, strong ethnic neighborhood variation.",
+    "features": [
+      {
+        "label": "Non-rhotic",
+        "note": "\"park the car\" \u2192 /pa\u02d0k \u00f0\u0259 ka\u02d0/"
+      },
+      {
+        "label": "Raised THOUGHT vowel",
+        "note": "\"coffee\" \u2192 /k\u0254\u02d0fi/"
+      },
+      {
+        "label": "Short-a split",
+        "note": "/\u00e6/ tensed before certain consonants"
+      },
+      {
+        "label": "\"On line\" (not \"in line\")",
+        "note": "regional marker"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 50,
+      "inland_northwest_urban": 48,
+      "north_idaho_mountain": 42,
+      "outer_banks": 50,
+      "inland_north": 65,
+      "new_england": 70,
+      "mid_atlantic": 75,
+      "upper_midwest": 55,
+      "plains": 48,
+      "mountain_west": 45,
+      "california": 52,
+      "southern": 40,
+      "appalachian": 42,
+      "gulf_south": 38,
+      "texas": 45,
+      "ozark": 40,
+      "piedmont": 48,
+      "gullah": 35,
+      "cajun": 32,
+      "new_orleans": 38
+    }
+  },
+  {
+    "id": "inland_north",
+    "name": "Inland North",
+    "region": "Chicago, Cleveland, Detroit corridor",
+    "description": "Defined by the Northern Cities Vowel Shift, a dramatic chain shift documented by Labov. Began mid-20th century.",
+    "features": [
+      {
+        "label": "Cot\u2013caught distinction",
+        "note": "strongly maintained"
+      },
+      {
+        "label": "Northern Cities Shift",
+        "note": "/\u00e6/ raised and tensed; /\u0251/ fronted"
+      },
+      {
+        "label": "\"Pop\" for soda",
+        "note": "core lexical marker"
+      },
+      {
+        "label": "Pail (not bucket)",
+        "note": "retained Northern term"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 65,
+      "inland_northwest_urban": 62,
+      "north_idaho_mountain": 55,
+      "outer_banks": 52,
+      "nyc": 65,
+      "new_england": 68,
+      "mid_atlantic": 62,
+      "upper_midwest": 75,
+      "plains": 70,
+      "mountain_west": 60,
+      "california": 58,
+      "southern": 35,
+      "appalachian": 45,
+      "gulf_south": 32,
+      "texas": 40,
+      "ozark": 48,
+      "piedmont": 42,
+      "gullah": 28,
+      "cajun": 30,
+      "new_orleans": 35
+    }
+  },
+  {
+    "id": "new_england",
+    "name": "New England",
+    "region": "Boston, Providence, Hartford",
+    "description": "One of the oldest American English varieties. R-dropping (non-rhotic) in eastern areas; strong vowel distinctions.",
+    "features": [
+      {
+        "label": "Non-rhotic (eastern)",
+        "note": "\"park the car\" \u2192 /pa\u02d0k \u00f0\u0259 ka\u02d0/"
+      },
+      {
+        "label": "\"Wicked\" as intensifier",
+        "note": "wicked good, wicked cold"
+      },
+      {
+        "label": "Broadened /a/",
+        "note": "in \"bath,\" \"half,\" \"can't\""
+      },
+      {
+        "label": "\"Bubbler\" for water fountain",
+        "note": "Rhode Island / Boston area"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 55,
+      "inland_northwest_urban": 52,
+      "north_idaho_mountain": 45,
+      "outer_banks": 58,
+      "nyc": 70,
+      "inland_north": 68,
+      "mid_atlantic": 72,
+      "upper_midwest": 60,
+      "plains": 50,
+      "mountain_west": 48,
+      "california": 50,
+      "southern": 42,
+      "appalachian": 48,
+      "gulf_south": 40,
+      "texas": 42,
+      "ozark": 45,
+      "piedmont": 52,
+      "gullah": 38,
+      "cajun": 35,
+      "new_orleans": 40
+    }
+  },
+  {
+    "id": "mid_atlantic",
+    "name": "Mid-Atlantic",
+    "region": "Philadelphia, Baltimore, DC",
+    "description": "Distinct from both North and South. Philadelphia features the \"mad-bad split.\" Baltimore has unique /o\u028a/ fronting.",
+    "features": [
+      {
+        "label": "Mad-bad split (Philly)",
+        "note": "/\u00e6/ tensing before voiceless fricatives"
+      },
+      {
+        "label": "\"Wooder\" for water (Philly)",
+        "note": "/\u028a/ before /r/"
+      },
+      {
+        "label": "\"Hon\" (Baltimore)",
+        "note": "term of endearment \u2014 cultural marker"
+      },
+      {
+        "label": "\"Hoagie\" for sub",
+        "note": "Philadelphia lexical marker"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 52,
+      "inland_northwest_urban": 50,
+      "north_idaho_mountain": 48,
+      "outer_banks": 62,
+      "nyc": 75,
+      "inland_north": 62,
+      "new_england": 72,
+      "upper_midwest": 58,
+      "plains": 52,
+      "mountain_west": 48,
+      "california": 48,
+      "southern": 55,
+      "appalachian": 65,
+      "gulf_south": 50,
+      "texas": 52,
+      "ozark": 58,
+      "piedmont": 70,
+      "gullah": 45,
+      "cajun": 42,
+      "new_orleans": 48
+    }
+  },
+  {
+    "id": "appalachian",
+    "name": "Appalachian",
+    "region": "West Virginia, Eastern Kentucky",
+    "description": "Scots-Irish heritage with archaic features retained. A-prefixing, double modals, and positive \"anymore.\"",
+    "features": [
+      {
+        "label": "A-prefixing",
+        "note": "\"I was a-huntin'\""
+      },
+      {
+        "label": "Double modals",
+        "note": "\"might could,\" \"used to could\""
+      },
+      {
+        "label": "Positive \"anymore\"",
+        "note": "\"Anymore it's different\""
+      },
+      {
+        "label": "\"Reckon\" for \"suppose\"",
+        "note": "archaic retention"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 50,
+      "inland_northwest_urban": 55,
+      "north_idaho_mountain": 78,
+      "outer_banks": 65,
+      "nyc": 42,
+      "inland_north": 45,
+      "new_england": 48,
+      "mid_atlantic": 65,
+      "upper_midwest": 52,
+      "plains": 58,
+      "mountain_west": 62,
+      "california": 48,
+      "southern": 72,
+      "gulf_south": 68,
+      "texas": 65,
+      "ozark": 85,
+      "piedmont": 75,
+      "gullah": 60,
+      "cajun": 58,
+      "new_orleans": 62
+    }
+  },
+  {
+    "id": "southern",
+    "name": "Southern",
+    "region": "Deep South \u2014 Alabama, Georgia, Mississippi",
+    "description": "Classic Southern features: monophthongized /a\u026a/, pin-pen merger, completive \"done.\"",
+    "features": [
+      {
+        "label": "Pin-pen merger",
+        "note": "/\u026a/ \u2192 /\u025b/ before nasals"
+      },
+      {
+        "label": "/a\u026a/ monophthongization",
+        "note": "\"ride\" \u2192 /ra\u02d0d/"
+      },
+      {
+        "label": "Completive \"done\"",
+        "note": "\"I done told you\""
+      },
+      {
+        "label": "\"Fixin' to\"",
+        "note": "near-future marker"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 45,
+      "inland_northwest_urban": 43,
+      "north_idaho_mountain": 70,
+      "outer_banks": 68,
+      "nyc": 40,
+      "inland_north": 35,
+      "new_england": 42,
+      "mid_atlantic": 55,
+      "upper_midwest": 40,
+      "plains": 48,
+      "mountain_west": 50,
+      "california": 42,
+      "appalachian": 72,
+      "gulf_south": 80,
+      "texas": 75,
+      "ozark": 70,
+      "piedmont": 78,
+      "gullah": 65,
+      "cajun": 70,
+      "new_orleans": 72
+    }
+  },
+  {
+    "id": "gulf_south",
+    "name": "Gulf South",
+    "region": "Coastal Louisiana, Mississippi, Alabama",
+    "description": "Shares many Southern features but with distinctive Gulf Coast characteristics and French/Spanish substrate influence.",
+    "features": [
+      {
+        "label": "Pin-pen merger",
+        "note": "like inland South"
+      },
+      {
+        "label": "French loanwords",
+        "note": "bayou, levee, lagniappe"
+      },
+      {
+        "label": "/r/ variability",
+        "note": "some non-rhoticity in older speakers"
+      },
+      {
+        "label": "\"Y'all\" universal",
+        "note": "second person plural"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 42,
+      "inland_northwest_urban": 40,
+      "north_idaho_mountain": 65,
+      "outer_banks": 60,
+      "nyc": 38,
+      "inland_north": 32,
+      "new_england": 40,
+      "mid_atlantic": 50,
+      "upper_midwest": 38,
+      "plains": 45,
+      "mountain_west": 48,
+      "california": 40,
+      "appalachian": 68,
+      "southern": 80,
+      "texas": 78,
+      "ozark": 65,
+      "piedmont": 72,
+      "gullah": 70,
+      "cajun": 75,
+      "new_orleans": 80
+    }
+  },
+  {
+    "id": "texas",
+    "name": "Texas",
+    "region": "Texas (excl. far East)",
+    "description": "Blends Southern and Western features. Distinct identity with Mexican Spanish influence in South Texas.",
+    "features": [
+      {
+        "label": "Pin-pen merger (variable)",
+        "note": "stronger in East TX"
+      },
+      {
+        "label": "Cot-caught (variable)",
+        "note": "merger stronger in West TX"
+      },
+      {
+        "label": "Spanish loanwords",
+        "note": "ranch, rodeo, lasso"
+      },
+      {
+        "label": "\"Fixinto\" / \"finna\"",
+        "note": "near-future compressed form"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 48,
+      "inland_northwest_urban": 50,
+      "north_idaho_mountain": 68,
+      "outer_banks": 52,
+      "nyc": 45,
+      "inland_north": 40,
+      "new_england": 42,
+      "mid_atlantic": 52,
+      "upper_midwest": 48,
+      "plains": 70,
+      "mountain_west": 62,
+      "california": 55,
+      "appalachian": 65,
+      "southern": 75,
+      "gulf_south": 78,
+      "ozark": 68,
+      "piedmont": 62,
+      "gullah": 55,
+      "cajun": 65,
+      "new_orleans": 70
+    }
+  },
+  {
+    "id": "ozark",
+    "name": "Ozark",
+    "region": "Ozark Mountains \u2014 Missouri, Arkansas",
+    "description": "Interior Highlands dialect. Shares Appalachian features due to Scots-Irish settlement despite geographic separation.",
+    "features": [
+      {
+        "label": "A-prefixing",
+        "note": "like Appalachian"
+      },
+      {
+        "label": "Positive \"anymore\"",
+        "note": "Midland feature"
+      },
+      {
+        "label": "Double modals",
+        "note": "less frequent than Appalachia"
+      },
+      {
+        "label": "\"Tump\" for tip over",
+        "note": "regional lexical item"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 52,
+      "inland_northwest_urban": 58,
+      "north_idaho_mountain": 76,
+      "outer_banks": 55,
+      "nyc": 40,
+      "inland_north": 48,
+      "new_england": 45,
+      "mid_atlantic": 58,
+      "upper_midwest": 55,
+      "plains": 65,
+      "mountain_west": 60,
+      "california": 50,
+      "appalachian": 85,
+      "southern": 70,
+      "gulf_south": 65,
+      "texas": 68,
+      "piedmont": 68,
+      "gullah": 55,
+      "cajun": 60,
+      "new_orleans": 62
+    }
+  },
+  {
+    "id": "piedmont",
+    "name": "Piedmont",
+    "region": "North Carolina, Virginia Piedmont",
+    "description": "Transitional between Mid-Atlantic and Deep South. Retains some older Southern features while moving toward national norms.",
+    "features": [
+      {
+        "label": "Variable pin-pen merger",
+        "note": "less consistent than Deep South"
+      },
+      {
+        "label": "/a\u026a/ raising",
+        "note": "before voiceless consonants"
+      },
+      {
+        "label": "\"Carry\" for drive/take",
+        "note": "\"Carry me to the store\""
+      },
+      {
+        "label": "Moderate /r/ retention",
+        "note": "younger speakers fully rhotic"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 47,
+      "inland_northwest_urban": 45,
+      "north_idaho_mountain": 72,
+      "outer_banks": 75,
+      "nyc": 48,
+      "inland_north": 42,
+      "new_england": 52,
+      "mid_atlantic": 70,
+      "upper_midwest": 48,
+      "plains": 52,
+      "mountain_west": 50,
+      "california": 45,
+      "appalachian": 75,
+      "southern": 78,
+      "gulf_south": 72,
+      "texas": 62,
+      "ozark": 68,
+      "gullah": 68,
+      "cajun": 60,
+      "new_orleans": 65
+    }
+  },
+  {
+    "id": "gullah",
+    "name": "Gullah/Geechee",
+    "region": "South Carolina/Georgia coast & Sea Islands",
+    "description": "English-based creole with significant West African substrate. Distinct grammatical and phonological system.",
+    "features": [
+      {
+        "label": "Creole grammar",
+        "note": "habitual \"duh,\" completive \"done\""
+      },
+      {
+        "label": "African substrate",
+        "note": "vocabulary and phonology from Krio, Kongo"
+      },
+      {
+        "label": "Distinctive prosody",
+        "note": "intonation patterns from substrate"
+      },
+      {
+        "label": "Strong identity marker",
+        "note": "tied to Gullah cultural community"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 38,
+      "inland_northwest_urban": 35,
+      "north_idaho_mountain": 60,
+      "outer_banks": 72,
+      "nyc": 35,
+      "inland_north": 28,
+      "new_england": 38,
+      "mid_atlantic": 45,
+      "upper_midwest": 32,
+      "plains": 40,
+      "mountain_west": 42,
+      "california": 35,
+      "appalachian": 60,
+      "southern": 65,
+      "gulf_south": 70,
+      "texas": 55,
+      "ozark": 55,
+      "piedmont": 68,
+      "cajun": 62,
+      "new_orleans": 65
+    }
+  },
+  {
+    "id": "cajun",
+    "name": "Cajun English",
+    "region": "South Louisiana bayou country",
+    "description": "Heavily influenced by Cajun French. Distinct substrate effects on syntax, phonology, and vocabulary.",
+    "features": [
+      {
+        "label": "French substrate",
+        "note": "\"me\" for \"I,\" \"dem\" for \"them\""
+      },
+      {
+        "label": "\"Make\" for cause",
+        "note": "\"Don't make me do it\" extended"
+      },
+      {
+        "label": "French loanwords",
+        "note": "lagniappe, boudin, fais do-do"
+      },
+      {
+        "label": "\"For to\" infinitive",
+        "note": "\"I need for to go\""
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 40,
+      "inland_northwest_urban": 38,
+      "north_idaho_mountain": 62,
+      "outer_banks": 55,
+      "nyc": 32,
+      "inland_north": 30,
+      "new_england": 35,
+      "mid_atlantic": 42,
+      "upper_midwest": 35,
+      "plains": 42,
+      "mountain_west": 45,
+      "california": 38,
+      "appalachian": 58,
+      "southern": 70,
+      "gulf_south": 75,
+      "texas": 65,
+      "ozark": 60,
+      "piedmont": 60,
+      "gullah": 62,
+      "new_orleans": 85
+    }
+  },
+  {
+    "id": "new_orleans",
+    "name": "New Orleans",
+    "region": "Greater New Orleans metro",
+    "description": "Truly singular dialect. \"Yat\" variety resembles NYC in some features \u2014 attributed to 19th-century port city trade.",
+    "features": [
+      {
+        "label": "\"Where y'at?\"",
+        "note": "defining Yat greeting"
+      },
+      {
+        "label": "Non-rhotic (like NYC)",
+        "note": "trade-port commonality"
+      },
+      {
+        "label": "French/Spanish loanwords",
+        "note": "banquette, neutral ground"
+      },
+      {
+        "label": "\"Make groceries\"",
+        "note": "French calque"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 43,
+      "inland_northwest_urban": 40,
+      "north_idaho_mountain": 64,
+      "outer_banks": 58,
+      "nyc": 38,
+      "inland_north": 35,
+      "new_england": 40,
+      "mid_atlantic": 48,
+      "upper_midwest": 38,
+      "plains": 45,
+      "mountain_west": 48,
+      "california": 40,
+      "appalachian": 62,
+      "southern": 72,
+      "gulf_south": 80,
+      "texas": 70,
+      "ozark": 62,
+      "piedmont": 65,
+      "gullah": 65,
+      "cajun": 85
+    }
+  },
+  {
+    "id": "upper_midwest",
+    "name": "Upper Midwest",
+    "region": "Minnesota, Wisconsin, Dakotas",
+    "description": "Heavily influenced by Scandinavian and German immigration. Distinctive vowel qualities and prosodic patterns.",
+    "features": [
+      {
+        "label": "\"Uff da\"",
+        "note": "Norwegian exclamation"
+      },
+      {
+        "label": "\"Hotdish\" for casserole",
+        "note": "Midwest Lutheran culture"
+      },
+      {
+        "label": "Oh for + adjective",
+        "note": "\"Oh for cute!\" \u2014 Scandinavian"
+      },
+      {
+        "label": "Distinctive /o\u028a/",
+        "note": "monophthongized or fronted"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 70,
+      "inland_northwest_urban": 68,
+      "north_idaho_mountain": 65,
+      "outer_banks": 48,
+      "nyc": 55,
+      "inland_north": 75,
+      "new_england": 60,
+      "mid_atlantic": 58,
+      "plains": 72,
+      "mountain_west": 65,
+      "california": 62,
+      "appalachian": 52,
+      "southern": 40,
+      "gulf_south": 38,
+      "texas": 48,
+      "ozark": 55,
+      "piedmont": 48,
+      "gullah": 32,
+      "cajun": 35,
+      "new_orleans": 38
+    }
+  },
+  {
+    "id": "plains",
+    "name": "Plains / Midland",
+    "region": "Kansas, Nebraska, Iowa, Indiana",
+    "description": "Sometimes called \"General American\" \u2014 historically treated as broadcast standard. Diverse settlement from North and South.",
+    "features": [
+      {
+        "label": "Cot-caught merger",
+        "note": "widespread"
+      },
+      {
+        "label": "\"Supper\" for evening meal",
+        "note": "rural Plains usage"
+      },
+      {
+        "label": "Fully rhotic",
+        "note": "\"standard\" perception"
+      },
+      {
+        "label": "\"Warsh\"",
+        "note": "intrusive /r/ in some subregions"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 60,
+      "inland_northwest_urban": 65,
+      "north_idaho_mountain": 62,
+      "outer_banks": 45,
+      "nyc": 48,
+      "inland_north": 70,
+      "new_england": 50,
+      "mid_atlantic": 52,
+      "upper_midwest": 72,
+      "mountain_west": 75,
+      "california": 58,
+      "appalachian": 58,
+      "southern": 48,
+      "gulf_south": 45,
+      "texas": 70,
+      "ozark": 65,
+      "piedmont": 52,
+      "gullah": 40,
+      "cajun": 42,
+      "new_orleans": 45
+    }
+  },
+  {
+    "id": "mountain_west",
+    "name": "Mountain West",
+    "region": "Colorado, Utah, Idaho, Montana",
+    "description": "Settled from Plains/Midland and New England. Mormon influence in Utah. Generally rhotic and \"unmarked.\"",
+    "features": [
+      {
+        "label": "Cot-caught merger",
+        "note": "nearly universal"
+      },
+      {
+        "label": "Pin-pen merger absent",
+        "note": "vs Southern"
+      },
+      {
+        "label": "\"Sluff\" for skip class",
+        "note": "Utah/Idaho marker"
+      },
+      {
+        "label": "\"The\" before highways",
+        "note": "\"the I-15\""
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 68,
+      "inland_northwest_urban": 70,
+      "north_idaho_mountain": 72,
+      "outer_banks": 42,
+      "nyc": 45,
+      "inland_north": 60,
+      "new_england": 48,
+      "mid_atlantic": 48,
+      "upper_midwest": 65,
+      "plains": 75,
+      "california": 70,
+      "appalachian": 62,
+      "southern": 50,
+      "gulf_south": 48,
+      "texas": 62,
+      "ozark": 60,
+      "piedmont": 50,
+      "gullah": 42,
+      "cajun": 45,
+      "new_orleans": 48
+    }
+  },
+  {
+    "id": "california",
+    "name": "California",
+    "region": "California (esp. Southern/Central)",
+    "description": "Rapidly evolving with massive in-migration. California Vowel Shift documented by Labov in 1990s.",
+    "features": [
+      {
+        "label": "California Vowel Shift",
+        "note": "/\u026a/ \u2192 /i\u02d0/ before laterals"
+      },
+      {
+        "label": "Uptalk",
+        "note": "high rising terminal \u2014 spreading nationally"
+      },
+      {
+        "label": "\"Like\" as quotative",
+        "note": "I was like, \"no way\""
+      },
+      {
+        "label": "\"Hella\"",
+        "note": "Northern California intensifier"
+      }
+    ],
+    "similarity": {
+      "pacific_northwest": 75,
+      "inland_northwest_urban": 72,
+      "north_idaho_mountain": 58,
+      "outer_banks": 40,
+      "nyc": 52,
+      "inland_north": 58,
+      "new_england": 50,
+      "mid_atlantic": 48,
+      "upper_midwest": 62,
+      "plains": 58,
+      "mountain_west": 70,
+      "appalachian": 48,
+      "southern": 42,
+      "gulf_south": 40,
+      "texas": 55,
+      "ozark": 50,
+      "piedmont": 45,
+      "gullah": 35,
+      "cajun": 38,
+      "new_orleans": 40
+    }
+  }
+];
 
-        // Questions loaded from gcp_questions.json
+const REGIONS = {
+  "pacific_northwest": [
+    [
+      10,
+      10
+    ],
+    [
+      110,
+      10
+    ],
+    [
+      110,
+      80
+    ],
+    [
+      10,
+      80
+    ]
+  ],
+  "inland_northwest_urban": [
+    [
+      130,
+      10
+    ],
+    [
+      230,
+      10
+    ],
+    [
+      230,
+      80
+    ],
+    [
+      130,
+      80
+    ]
+  ],
+  "north_idaho_mountain": [
+    [
+      250,
+      10
+    ],
+    [
+      350,
+      10
+    ],
+    [
+      350,
+      80
+    ],
+    [
+      250,
+      80
+    ]
+  ],
+  "upper_midwest": [
+    [
+      370,
+      10
+    ],
+    [
+      470,
+      10
+    ],
+    [
+      470,
+      80
+    ],
+    [
+      370,
+      80
+    ]
+  ],
+  "inland_north": [
+    [
+      490,
+      10
+    ],
+    [
+      590,
+      10
+    ],
+    [
+      590,
+      80
+    ],
+    [
+      490,
+      80
+    ]
+  ],
+  "new_england": [
+    [
+      730,
+      10
+    ],
+    [
+      830,
+      10
+    ],
+    [
+      830,
+      80
+    ],
+    [
+      730,
+      80
+    ]
+  ],
+  "mountain_west": [
+    [
+      10,
+      100
+    ],
+    [
+      110,
+      100
+    ],
+    [
+      110,
+      170
+    ],
+    [
+      10,
+      170
+    ]
+  ],
+  "california": [
+    [
+      10,
+      190
+    ],
+    [
+      110,
+      190
+    ],
+    [
+      110,
+      260
+    ],
+    [
+      10,
+      260
+    ]
+  ],
+  "plains": [
+    [
+      130,
+      100
+    ],
+    [
+      230,
+      100
+    ],
+    [
+      230,
+      170
+    ],
+    [
+      130,
+      170
+    ]
+  ],
+  "ozark": [
+    [
+      250,
+      100
+    ],
+    [
+      350,
+      100
+    ],
+    [
+      350,
+      170
+    ],
+    [
+      250,
+      170
+    ]
+  ],
+  "appalachian": [
+    [
+      370,
+      100
+    ],
+    [
+      470,
+      100
+    ],
+    [
+      470,
+      170
+    ],
+    [
+      370,
+      170
+    ]
+  ],
+  "nyc": [
+    [
+      610,
+      100
+    ],
+    [
+      710,
+      100
+    ],
+    [
+      710,
+      170
+    ],
+    [
+      610,
+      170
+    ]
+  ],
+  "mid_atlantic": [
+    [
+      730,
+      100
+    ],
+    [
+      830,
+      100
+    ],
+    [
+      830,
+      170
+    ],
+    [
+      730,
+      170
+    ]
+  ],
+  "texas": [
+    [
+      130,
+      190
+    ],
+    [
+      230,
+      190
+    ],
+    [
+      230,
+      260
+    ],
+    [
+      130,
+      260
+    ]
+  ],
+  "southern": [
+    [
+      370,
+      190
+    ],
+    [
+      470,
+      190
+    ],
+    [
+      470,
+      260
+    ],
+    [
+      370,
+      260
+    ]
+  ],
+  "piedmont": [
+    [
+      490,
+      190
+    ],
+    [
+      590,
+      190
+    ],
+    [
+      590,
+      260
+    ],
+    [
+      490,
+      190
+    ]
+  ],
+  "outer_banks": [
+    [
+      610,
+      190
+    ],
+    [
+      710,
+      190
+    ],
+    [
+      710,
+      260
+    ],
+    [
+      610,
+      260
+    ]
+  ],
+  "new_orleans": [
+    [
+      130,
+      280
+    ],
+    [
+      230,
+      280
+    ],
+    [
+      230,
+      350
+    ],
+    [
+      130,
+      350
+    ]
+  ],
+  "cajun": [
+    [
+      250,
+      280
+    ],
+    [
+      350,
+      280
+    ],
+    [
+      350,
+      350
+    ],
+    [
+      250,
+      350
+    ]
+  ],
+  "gulf_south": [
+    [
+      370,
+      280
+    ],
+    [
+      470,
+      280
+    ],
+    [
+      470,
+      350
+    ],
+    [
+      370,
+      350
+    ]
+  ],
+  "gullah": [
+    [
+      610,
+      280
+    ],
+    [
+      710,
+      280
+    ],
+    [
+      710,
+      350
+    ],
+    [
+      610,
+      350
+    ]
+  ]
+};
 
-        async function startExam() {
-            document.getElementById('startScreen').style.display = 'none';
-            document.getElementById('loadingScreen').style.display = 'block';
+const MIGRATION_ROUTES = [];
 
-            try {
-                // Questions are loaded via script tag - check if they exist
-                if (typeof QUESTION_BANK === 'undefined' || !QUESTION_BANK || QUESTION_BANK.length === 0) {
-                    throw new Error('Question bank not loaded. Make sure gcp_questions.js is included.');
-                }
-                
-                const allQuestions = QUESTION_BANK;
-                
-                // Calculate domain distribution: Design 30%, Implementation 25%, Security 20%, Optimization 15%, Reliability 10%
-                const domains = {
-                    "Design & Planning": 3,
-                    "Implementation": 2,
-                    "Security & Compliance": 2,
-                    "Optimization": 2,
-                    "Reliability": 1
-                };
+const TRADE_ROUTES = [];
 
-                const selectedQuestions = [];
-                const questionsByDomain = {};
+// ─── RENDERING ───────────────────────────────────────────────────────────────
 
-                // Group questions by domain
-                allQuestions.forEach(q => {
-                    if (!questionsByDomain[q.domain]) {
-                        questionsByDomain[q.domain] = [];
-                    }
-                    questionsByDomain[q.domain].push(q);
-                });
+const svgNS = 'http://www.w3.org/2000/svg';
+let selectedDialect = null;
 
-                // Select questions according to domain distribution
-                for (const [domain, count] of Object.entries(domains)) {
-                    const domainQuestions = questionsByDomain[domain] || [];
-                    const shuffled = domainQuestions.sort(() => 0.5 - Math.random());
-                    selectedQuestions.push(...shuffled.slice(0, count));
-                }
+function lerp(a, b, t) { return a + (b - a) * t; }
 
-                // Shuffle the final selection
-                examState.questions = selectedQuestions.sort(() => 0.5 - Math.random());
+function similarityColor(score) {
+  const t = score / 100;
+  if (t < 0.5) {
+    const u = t / 0.5;
+    return `rgb(${Math.round(lerp(127,159,u))},${Math.round(lerp(168,167,u))},${Math.round(lerp(201,160,u))})`;
+  } else {
+    const u = (t - 0.5) / 0.5;
+    return `rgb(${Math.round(lerp(159,212,u))},${Math.round(lerp(167,167,u))},${Math.round(lerp(160,106,u))})`;
+  }
+}
 
-                document.getElementById('loadingScreen').style.display = 'none';
-                document.getElementById('questionScreen').classList.add('active');
+function polyCenter(pts) {
+  const x = pts.reduce((s,p)=>s+p[0],0)/pts.length;
+  const y = pts.reduce((s,p)=>s+p[1],0)/pts.length;
+  return [x,y];
+}
 
-                displayQuestion();
-            } catch (error) {
-                document.getElementById('loadingScreen').innerHTML = `
-                    <p style="color: #ea4335;">Error loading questions: ${error.message}</p>
-                    <p style="color: #666; margin-top: 10px;">Make sure gcp_questions.js is in the same directory as this HTML file.</p>
-                    <button class="btn" onclick="location.reload()" style="margin-top: 20px;">Try Again</button>
-                `;
-            }
-        }
+function buildMap() {
+  const rg = document.getElementById('regionsGroup');
+  const lg = document.getElementById('labelsGroup');
 
-        function displayQuestion() {
-            const question = examState.questions[examState.currentQuestionIndex];
-            const progress = ((examState.currentQuestionIndex + 1) / examState.questions.length) * 100;
-            
-            document.getElementById('progressFill').style.width = `${progress}%`;
-            document.getElementById('questionNumber').textContent = 
-                `Question ${examState.currentQuestionIndex + 1} of ${examState.questions.length}`;
-            document.getElementById('currentScore').textContent = 
-                `Score: ${examState.score}/${examState.currentQuestionIndex}`;
-            
-            if (question.scenario) {
-                document.getElementById('scenarioText').textContent = question.scenario;
-                document.getElementById('scenarioText').style.display = 'block';
-            } else {
-                document.getElementById('scenarioText').style.display = 'none';
-            }
-            
-            document.getElementById('questionText').textContent = question.question;
-            
-            const optionsContainer = document.getElementById('optionsContainer');
-            optionsContainer.innerHTML = '';
-            
-            question.options.forEach((option, index) => {
-                const optionDiv = document.createElement('div');
-                optionDiv.className = 'option';
-                optionDiv.onclick = () => selectOption(index);
-                
-                optionDiv.innerHTML = `
-                    <input type="radio" name="answer" value="${index}" id="option${index}">
-                    <label class="option-text" for="option${index}">${option}</label>
-                `;
-                
-                optionsContainer.appendChild(optionDiv);
-            });
-            
-            document.getElementById('feedback').classList.remove('show');
-            document.getElementById('submitBtn').style.display = 'inline-block';
-            document.getElementById('nextBtn').style.display = 'none';
-            
-            examState.selectedAnswer = null;
-            examState.answered = false;
-        }
+  Object.entries(REGIONS).forEach(([id, pts]) => {
+    const poly = document.createElementNS(svgNS, 'polygon');
+    poly.setAttribute('points', pts.map(p=>p.join(',')).join(' '));
+    poly.setAttribute('fill', '#1a1610');
+    poly.setAttribute('stroke', '#3d3425');
+    poly.setAttribute('stroke-width', '1');
+    poly.dataset.id = id;
+    poly.style.cursor = 'pointer';
+    poly.style.transition = 'fill 0.5s';
+    poly.addEventListener('mouseenter', (e) => showTooltip(e, id));
+    poly.addEventListener('mouseleave', hideTooltip);
+    poly.addEventListener('click', () => selectDialect(id));
+    rg.appendChild(poly);
 
-        function selectOption(index) {
-            if (examState.answered) return;
-            
-            examState.selectedAnswer = index;
-            
-            document.querySelectorAll('.option').forEach((opt, i) => {
-                opt.classList.toggle('selected', i === index);
-                opt.querySelector('input').checked = i === index;
-            });
-        }
+    const [cx, cy] = polyCenter(pts);
+    const label = document.createElementNS(svgNS, 'text');
+    label.setAttribute('x', cx);
+    label.setAttribute('y', cy);
+    label.setAttribute('text-anchor', 'middle');
+    label.setAttribute('dominant-baseline', 'middle');
+    label.setAttribute('fill', '#8a7d65');
+    label.setAttribute('font-size', '7');
+    label.setAttribute('font-family', 'Source Code Pro, monospace');
+    label.setAttribute('pointer-events', 'none');
+    label.dataset.id = id;
+    const d = DIALECTS.find(d=>d.id===id);
+    label.textContent = d ? d.name.toUpperCase() : id.toUpperCase().replace(/_/g, ' ');
+    lg.appendChild(label);
+  });
+}
 
-        function submitAnswer() {
-            if (examState.selectedAnswer === null) {
-                alert('Please select an answer before submitting.');
-                return;
-            }
-            
-            if (examState.answered) return;
-            
-            examState.answered = true;
-            const question = examState.questions[examState.currentQuestionIndex];
-            const isCorrect = examState.selectedAnswer === question.correctAnswer;
-            
-            if (isCorrect) {
-                examState.score++;
-            } else {
-                // Track incorrect answer
-                examState.incorrectAnswers.push({
-                    question: question,
-                    selectedAnswer: examState.selectedAnswer,
-                    correctAnswer: question.correctAnswer
-                });
-            }
-            
-            document.querySelectorAll('.option').forEach((opt, i) => {
-                opt.style.pointerEvents = 'none';
-                if (i === question.correctAnswer) {
-                    opt.classList.add('correct');
-                } else if (i === examState.selectedAnswer && !isCorrect) {
-                    opt.classList.add('incorrect');
-                }
-            });
-            
-            const feedback = document.getElementById('feedback');
-            feedback.className = `feedback show ${isCorrect ? 'correct' : 'incorrect'}`;
-            feedback.innerHTML = `
-                <div class="feedback-title">${isCorrect ? '✓ Correct!' : '✗ Incorrect'}</div>
-                <p>${question.explanation}</p>
-                <p style="margin-top: 12px;"><strong>Domain:</strong> ${question.domain}</p>
-            `;
-            
-            document.getElementById('submitBtn').style.display = 'none';
-            document.getElementById('nextBtn').style.display = 'inline-block';
-            document.getElementById('currentScore').textContent = 
-                `Score: ${examState.score}/${examState.currentQuestionIndex + 1}`;
-        }
+function buildMigrationRoutes() {
+  const mg = document.getElementById('migrationGroup');
+  mg.innerHTML = '';
 
-        function nextQuestion() {
-            examState.currentQuestionIndex++;
-            
-            if (examState.currentQuestionIndex < examState.questions.length) {
-                displayQuestion();
-            } else {
-                showResults();
-            }
-        }
+  MIGRATION_ROUTES.forEach(r => {
+    const fromPts = REGIONS[r.from];
+    const toPts = REGIONS[r.to];
+    if (!fromPts || !toPts) return;
+    
+    const [fx, fy] = polyCenter(fromPts);
+    const [tx, ty] = polyCenter(toPts);
+    
+    const line = document.createElementNS(svgNS, 'line');
+    line.setAttribute('x1', fx);
+    line.setAttribute('y1', fy);
+    line.setAttribute('x2', tx);
+    line.setAttribute('y2', ty);
+    line.setAttribute('class', 'migration-arrow');
+    line.setAttribute('marker-end', 'url(#arrow-migration)');
+    mg.appendChild(line);
+  });
+}
 
-        function showResults() {
-            const percentage = Math.round((examState.score / examState.questions.length) * 100);
-            const passed = percentage >= 70;
-            
-            document.getElementById('questionScreen').classList.remove('active');
-            document.getElementById('resultsScreen').classList.add('active');
-            
-            document.getElementById('finalScore').textContent = `${percentage}%`;
-            document.getElementById('scoreLabel').textContent = 
-                `${examState.score} out of ${examState.questions.length} questions correct`;
-            
-            document.getElementById('totalQuestions').textContent = examState.questions.length;
-            document.getElementById('correctAnswers').textContent = examState.score;
-            document.getElementById('incorrectAnswers').textContent = 
-                examState.questions.length - examState.score;
-            document.getElementById('percentageScore').textContent = `${percentage}%`;
-            
-            const passFailDiv = document.getElementById('passFailMessage');
-            passFailDiv.className = `pass-fail ${passed ? 'pass' : 'fail'}`;
-            passFailDiv.textContent = passed 
-                ? '✓ You would pass! (70% or higher required)'
-                : '✗ More study needed (70% required to pass)';
-            
-            // Display incorrect answers review
-            displayIncorrectAnswersReview();
-        }
+function buildTradeRoutes() {
+  const tg = document.getElementById('tradeGroup');
+  tg.innerHTML = '';
+  TRADE_ROUTES.forEach(r => {
+    const poly = document.createElementNS(svgNS, 'polyline');
+    poly.setAttribute('points', r.path.map(p=>p.join(',')).join(' '));
+    poly.setAttribute('class', 'trade-route');
+    poly.setAttribute('marker-end', 'url(#arrow-trade)');
+    tg.appendChild(poly);
+  });
+}
 
-        function displayIncorrectAnswersReview() {
-            const reviewSection = document.getElementById('reviewSection');
-            
-            if (examState.incorrectAnswers.length === 0) {
-                reviewSection.innerHTML = `
-                    <div class="no-mistakes">
-                        🎉 Perfect! You answered all questions correctly!
-                    </div>
-                `;
-                return;
-            }
-            
-            // Group incorrect answers by domain
-            const byDomain = {};
-            examState.incorrectAnswers.forEach(item => {
-                const domain = item.question.domain;
-                if (!byDomain[domain]) {
-                    byDomain[domain] = [];
-                }
-                byDomain[domain].push(item);
-            });
-            
-            // Build the review HTML
-            let reviewHTML = '<h3>Questions to Review</h3>';
-            
-            // Sort domains alphabetically
-            const sortedDomains = Object.keys(byDomain).sort();
-            
-            sortedDomains.forEach(domain => {
-                reviewHTML += `
-                    <div class="domain-group">
-                        <h4>${domain} (${byDomain[domain].length} ${byDomain[domain].length === 1 ? 'question' : 'questions'})</h4>
-                `;
-                
-                byDomain[domain].forEach(item => {
-                    const question = item.question;
-                    const yourAnswer = question.options[item.selectedAnswer];
-                    const correctAnswer = question.options[item.correctAnswer];
-                    
-                    reviewHTML += `
-                        <div class="review-question">
-                            <div class="review-question-text">${question.question}</div>
-                            <div class="review-answer your-answer">
-                                <strong>Your answer:</strong> ${yourAnswer}
-                            </div>
-                            <div class="review-answer correct-answer">
-                                <strong>Correct answer:</strong> ${correctAnswer}
-                            </div>
-                            <div class="explanation-box">
-                                <strong>Explanation:</strong> ${question.explanation}
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                reviewHTML += '</div>';
-            });
-            
-            reviewSection.innerHTML = reviewHTML;
-        }
-    </script>
+function updateHeatmap() {
+  const polys = document.querySelectorAll('#regionsGroup polygon');
+  polys.forEach(poly => {
+    const id = poly.dataset.id;
+    if (!selectedDialect) {
+      poly.setAttribute('fill', '#1a1610');
+      return;
+    }
+    if (id === selectedDialect.id) {
+      poly.setAttribute('fill', '#c9a84c');
+      poly.setAttribute('fill-opacity', '0.5');
+      return;
+    }
+    const score = selectedDialect.similarity[id] ?? 30;
+    poly.setAttribute('fill', similarityColor(score));
+    poly.setAttribute('fill-opacity', '0.7');
+  });
+
+  document.getElementById('refName').textContent = selectedDialect ? selectedDialect.name.toUpperCase() : '—';
+
+  document.querySelectorAll('#labelsGroup text').forEach(t => {
+    t.setAttribute('fill', selectedDialect ? '#c9a84c' : '#8a7d65');
+    t.setAttribute('font-size', '7');
+  });
+}
+
+function selectDialect(id) {
+  const d = DIALECTS.find(x => x.id === id);
+  if (!d) return;
+  selectedDialect = d;
+
+  document.querySelectorAll('.dialect-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.id === id);
+  });
+
+  updateHeatmap();
+  renderRightPanel(d);
+}
+
+function renderRightPanel(d) {
+  const panel = document.getElementById('rightPanel');
+
+  const others = DIALECTS.filter(x => x.id !== d.id)
+    .map(x => ({ id: x.id, name: x.name, score: d.similarity[x.id] ?? 0 }))
+    .sort((a,b) => b.score - a.score);
+
+  const barsHtml = others.map(o => {
+    const color = similarityColor(o.score);
+    return `<div class="sim-row">
+      <span class="sim-label">${o.name}</span>
+      <div class="sim-bar-bg">
+        <div class="sim-bar-fill" style="width:${o.score}%;background:${color};"></div>
+      </div>
+      <span class="sim-pct">${o.score.toFixed(1)}%</span>
+    </div>`;
+  }).join('');
+
+  const featuresHtml = d.features.map(f =>
+    `<div class="feature-item"><strong>${f.label}</strong> — ${f.note}</div>`
+  ).join('');
+
+  panel.innerHTML = `
+    <div class="info-card">
+      <h3>${d.name}</h3>
+      <p style="font-size:0.68rem;color:var(--muted);margin-bottom:0.5rem;font-style:italic;">${d.region}</p>
+      <p>${d.description}</p>
+    </div>
+
+    <div>
+      <div class="section-label">Key Features</div>
+      <div class="feature-list">${featuresHtml}</div>
+    </div>
+
+    <div>
+      <div class="section-label">Similarity to All Regions</div>
+      <div class="similarity-bars">${barsHtml}</div>
+    </div>
+  `;
+}
+
+const tooltip = document.getElementById('tooltip');
+function showTooltip(e, id) {
+  const d = DIALECTS.find(x => x.id === id);
+  if (!d) return;
+  let extra = '';
+  if (selectedDialect && selectedDialect.id !== id) {
+    const score = selectedDialect.similarity[id] ?? '—';
+    extra = `<br><span style="color:var(--gold);">${typeof score === 'number' ? score.toFixed(1) : score}% similarity</span>`;
+  }
+  tooltip.innerHTML = `<strong>${d.name}</strong><br>${d.region}${extra}`;
+  tooltip.style.opacity = 1;
+  moveTip(e);
+}
+function hideTooltip() { tooltip.style.opacity = 0; }
+function moveTip(e) {
+  const rect = document.querySelector('.map-area').getBoundingClientRect();
+  tooltip.style.left = (e.clientX - rect.left + 12) + 'px';
+  tooltip.style.top = (e.clientY - rect.top - 10) + 'px';
+}
+document.querySelector('.map-area').addEventListener('mousemove', e => {
+  if (tooltip.style.opacity > 0) moveTip(e);
+});
+
+function buildDialectList() {
+  const list = document.getElementById('dialectList');
+  DIALECTS.forEach(d => {
+    const btn = document.createElement('button');
+    btn.className = 'dialect-btn';
+    btn.dataset.id = d.id;
+    btn.innerHTML = `${d.name}<span class="region-tag">${d.region}</span>`;
+    btn.addEventListener('click', () => selectDialect(d.id));
+    list.appendChild(btn);
+  });
+}
+
+function buildLegend() {
+  const grad = document.getElementById('legendGrad');
+  const colors = [];
+  for (let i = 0; i <= 20; i++) {
+    colors.push(similarityColor(i * 5));
+  }
+  grad.style.background = `linear-gradient(to right, ${colors.join(',')})`;
+}
+
+buildDialectList();
+buildMap();
+buildMigrationRoutes();
+buildTradeRoutes();
+buildLegend();
+</script>
 </body>
 </html>
