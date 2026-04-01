@@ -823,14 +823,24 @@
             const optionsContainer = document.getElementById('optionsContainer');
             optionsContainer.innerHTML = '';
             
-            question.options.forEach((option, index) => {
+            // Shuffle the options to prevent predictable correct answer positions
+            // Create array of indices and shuffle them
+            const indices = question.options.map((_, i) => i);
+            const shuffledIndices = indices.sort(() => 0.5 - Math.random());
+            
+            // Store the mapping so we can check the correct answer later
+            question.shuffledMapping = shuffledIndices;
+            question.shuffledCorrectAnswer = shuffledIndices.indexOf(question.correctAnswer);
+            
+            shuffledIndices.forEach((originalIndex, displayIndex) => {
+                const option = question.options[originalIndex];
                 const optionDiv = document.createElement('div');
                 optionDiv.className = 'option';
-                optionDiv.onclick = () => selectOption(index);
+                optionDiv.onclick = () => selectOption(displayIndex);
                 
                 optionDiv.innerHTML = `
-                    <input type="radio" name="answer" value="${index}" id="option${index}">
-                    <label class="option-text" for="option${index}">${option}</label>
+                    <input type="radio" name="answer" value="${displayIndex}" id="option${displayIndex}">
+                    <label class="option-text" for="option${displayIndex}">${option}</label>
                 `;
                 
                 optionsContainer.appendChild(optionDiv);
@@ -865,22 +875,23 @@
             
             examState.answered = true;
             const question = examState.questions[examState.currentQuestionIndex];
-            const isCorrect = examState.selectedAnswer === question.correctAnswer;
+            // Use the shuffled correct answer index
+            const isCorrect = examState.selectedAnswer === question.shuffledCorrectAnswer;
             
             if (isCorrect) {
                 examState.score++;
             } else {
-                // Track incorrect answer
+                // Track incorrect answer - store the original indices for review
                 examState.incorrectAnswers.push({
                     question: question,
-                    selectedAnswer: examState.selectedAnswer,
+                    selectedAnswer: question.shuffledMapping[examState.selectedAnswer],
                     correctAnswer: question.correctAnswer
                 });
             }
             
             document.querySelectorAll('.option').forEach((opt, i) => {
                 opt.style.pointerEvents = 'none';
-                if (i === question.correctAnswer) {
+                if (i === question.shuffledCorrectAnswer) {
                     opt.classList.add('correct');
                 } else if (i === examState.selectedAnswer && !isCorrect) {
                     opt.classList.add('incorrect');
