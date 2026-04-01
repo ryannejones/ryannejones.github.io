@@ -1751,10 +1751,12 @@ function similarityColor(score) {
   const t = score / 100;
   if (t < 0.5) {
     const u = t / 0.5;
-    return `rgb(${Math.round(lerp(127,159,u))},${Math.round(lerp(168,167,u))},${Math.round(lerp(201,160,u))})`;
+    // 0% = darker blue-grey, 50% = medium
+    return `rgb(${Math.round(lerp(80,159,u))},${Math.round(lerp(100,167,u))},${Math.round(lerp(130,160,u))})`;
   } else {
     const u = (t - 0.5) / 0.5;
-    return `rgb(${Math.round(lerp(159,212,u))},${Math.round(lerp(167,167,u))},${Math.round(lerp(160,106,u))})`;
+    // 50% to 100% = lighter gold
+    return `rgb(${Math.round(lerp(159,230,u))},${Math.round(lerp(167,200,u))},${Math.round(lerp(160,130,u))})`;
   }
 }
 
