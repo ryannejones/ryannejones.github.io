@@ -1194,19 +1194,6 @@
             }
         }
 
-                document.getElementById('loadingScreen').style.display = 'none';
-                document.getElementById('questionScreen').classList.add('active');
-
-                displayQuestion();
-            } catch (error) {
-                document.getElementById('loadingScreen').innerHTML = `
-                    <p style="color: #ea4335;">Error loading questions: ${error.message}</p>
-                    <p style="color: #666; margin-top: 10px;">Make sure gcp_questions.js is in the same directory as this HTML file.</p>
-                    <button class="btn" onclick="location.reload()" style="margin-top: 20px;">Try Again</button>
-                `;
-            }
-        }
-
         function displayQuestion() {
             const question = examState.questions[examState.currentQuestionIndex];
             const progress = ((examState.currentQuestionIndex + 1) / examState.questions.length) * 100;
