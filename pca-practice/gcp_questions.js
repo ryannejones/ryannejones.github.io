@@ -1649,5 +1649,341 @@ const QUESTION_BANK = [
     "correctAnswer": 0,
     "explanation": "Anthos provides consistent application deployment, configuration management, and security policy enforcement across GCP, AWS, Azure, and on-premises. This is exactly what it's designed for. Separate deployment (B) creates management complexity and inconsistent policies. Cloud Run (C) is GCP-only. Terraform (D) provisions infrastructure but doesn't manage runtime policies and applications.",
     "domain": "Hybrid & Multicloud"
+  },
+  {
+    "question": "Altostrat wants to enable 24/7 natural language user support and personalized content recommendations. Which combination of Google Cloud services best addresses these requirements?",
+    "caseStudy": "Company Overview: Altostrat is a prominent media company with a vast library of audio and video content including podcasts, interviews, news, and documentaries.\n\nExisting Environment: GKE for scalability, Cloud Storage for media library, BigQuery as data warehouse, Cloud Run functions for serverless event-driven tasks. Legacy on-premises systems for content ingestion and archival. Google Identity + third-party IdPs. Cloud Monitoring + Prometheus for observability.\n\nBusiness Requirements: Accelerate operational workflows, simplify infrastructure management, optimize cloud storage costs, enable 24/7 natural language user support, auto-generate content summaries, extract metadata using NLP/computer vision, detect inappropriate content, analyze content for trends.\n\nTechnical Requirements: Modernize CI/CD for containerized deployments, secure high-performance hybrid cloud connectivity, scalable Kubernetes on-prem and cloud, optimize storage costs, AI-powered harmful content detection, auditable/explainable AI, LLMs for personalized experiences, advanced chatbots with NLU.",
+    "caseStudyName": "Altostrat Media",
+    "options": [
+      "Vertex AI Agent Builder for conversational AI and Vertex AI with Gemini for personalized recommendations",
+      "Cloud Run functions with custom NLP logic and BigQuery ML for recommendations",
+      "Dialogflow CX for chatbots and AutoML for recommendation models",
+      "Contact Center AI and Cloud Vision API for content analysis"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Vertex AI Agent Builder provides managed conversational AI with LLM backing for 24/7 support, while Vertex AI with Gemini handles personalized recommendations at scale. This directly addresses Altostrat's requirements for natural language interaction and personalized experiences using Google Cloud's generative AI - which is the stated strategic direction. Dialogflow CX (C) is older and less capable than Agent Builder for this use case.",
+    "domain": "AI & Machine Learning"
+  },
+  {
+    "question": "Altostrat needs to detect and filter inappropriate content from their media library automatically. Their AI decisions must be auditable and explainable. Which approach satisfies both requirements?",
+    "caseStudy": "Company Overview: Altostrat is a prominent media company with a vast library of audio and video content including podcasts, interviews, news, and documentaries.\n\nExisting Environment: GKE for scalability, Cloud Storage for media library, BigQuery as data warehouse, Cloud Run functions for serverless event-driven tasks. Legacy on-premises systems for content ingestion and archival. Google Identity + third-party IdPs. Cloud Monitoring + Prometheus for observability.\n\nBusiness Requirements: Accelerate operational workflows, simplify infrastructure management, optimize cloud storage costs, enable 24/7 natural language user support, auto-generate content summaries, extract metadata using NLP/computer vision, detect inappropriate content, analyze content for trends.\n\nTechnical Requirements: Modernize CI/CD for containerized deployments, secure high-performance hybrid cloud connectivity, scalable Kubernetes on-prem and cloud, optimize storage costs, AI-powered harmful content detection, auditable/explainable AI, LLMs for personalized experiences, advanced chatbots with NLU.",
+    "caseStudyName": "Altostrat Media",
+    "options": [
+      "Use Cloud Vision API SafeSearch and Video Intelligence API for detection, with Vertex AI Explainable AI to provide feature attributions for each decision",
+      "Build a custom TensorFlow model on Vertex AI Training with manual audit logs written to BigQuery",
+      "Use Cloud Natural Language API for text and Cloud Vision API for images, store all results in Cloud Storage",
+      "Use Vertex AI AutoML to train a custom content moderation model without explainability features"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Cloud Vision API SafeSearch and Video Intelligence API provide pre-built inappropriate content detection. Vertex AI Explainable AI satisfies the technical requirement for auditable, explainable AI decisions by providing feature attributions. The technical requirements explicitly call out both harmful content detection and explainability, making this the complete answer. Custom models (B, D) add unnecessary complexity when pre-built APIs already solve content moderation.",
+    "domain": "AI & Machine Learning"
+  },
+  {
+    "question": "Altostrat maintains legacy on-premises content ingestion systems and needs secure, high-performance connectivity to Google Cloud for data ingestion. What should they implement?",
+    "caseStudy": "Company Overview: Altostrat is a prominent media company with a vast library of audio and video content including podcasts, interviews, news, and documentaries.\n\nExisting Environment: GKE for scalability, Cloud Storage for media library, BigQuery as data warehouse, Cloud Run functions for serverless event-driven tasks. Legacy on-premises systems for content ingestion and archival. Google Identity + third-party IdPs. Cloud Monitoring + Prometheus for observability.\n\nBusiness Requirements: Accelerate operational workflows, simplify infrastructure management, optimize cloud storage costs, enable 24/7 natural language user support, auto-generate content summaries, extract metadata using NLP/computer vision, detect inappropriate content, analyze content for trends.\n\nTechnical Requirements: Modernize CI/CD for containerized deployments, secure high-performance hybrid cloud connectivity, scalable Kubernetes on-prem and cloud, optimize storage costs, AI-powered harmful content detection, auditable/explainable AI, LLMs for personalized experiences, advanced chatbots with NLU.",
+    "caseStudyName": "Altostrat Media",
+    "options": [
+      "Cloud VPN tunnels for encrypted connectivity between on-premises and GCP",
+      "Dedicated Interconnect or Partner Interconnect for private high-bandwidth connectivity",
+      "Cloud NAT to allow on-premises systems to connect to GCP APIs",
+      "Direct Peering with Google to access GCP services"
+    ],
+    "correctAnswer": 1,
+    "explanation": "The technical requirements explicitly call for 'secure, high-performance hybrid cloud connectivity for data ingestion.' Dedicated or Partner Interconnect provides private, high-bandwidth connectivity that bypasses the public internet - ideal for transferring large media files. Cloud VPN (A) is encrypted but lower bandwidth and higher latency, insufficient for 'high-performance' media data ingestion. Cloud NAT (C) is for outbound internet access, not hybrid connectivity.",
+    "domain": "Hybrid & Multicloud"
+  },
+  {
+    "question": "Altostrat wants to optimize cloud storage costs for their growing media library while maintaining availability. Their content ranges from actively viewed to rarely accessed archival footage. What storage strategy should they implement?",
+    "caseStudy": "Company Overview: Altostrat is a prominent media company with a vast library of audio and video content including podcasts, interviews, news, and documentaries.\n\nExisting Environment: GKE for scalability, Cloud Storage for media library, BigQuery as data warehouse, Cloud Run functions for serverless event-driven tasks. Legacy on-premises systems for content ingestion and archival. Google Identity + third-party IdPs. Cloud Monitoring + Prometheus for observability.\n\nBusiness Requirements: Accelerate operational workflows, simplify infrastructure management, optimize cloud storage costs, enable 24/7 natural language user support, auto-generate content summaries, extract metadata using NLP/computer vision, detect inappropriate content, analyze content for trends.\n\nTechnical Requirements: Modernize CI/CD for containerized deployments, secure high-performance hybrid cloud connectivity, scalable Kubernetes on-prem and cloud, optimize storage costs, AI-powered harmful content detection, auditable/explainable AI, LLMs for personalized experiences, advanced chatbots with NLU.",
+    "caseStudyName": "Altostrat Media",
+    "options": [
+      "Store all media in Cloud Storage Standard class for consistent performance",
+      "Use Cloud Storage with Autoclass to automatically transition objects between storage classes based on access patterns",
+      "Store recent content in Cloud Storage Standard, manually move older content to Nearline or Coldline based on age",
+      "Use Filestore for active content and Cloud Storage Archive for everything older than 1 year"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Cloud Storage Autoclass automatically moves objects between Standard, Nearline, Coldline, and Archive based on actual access patterns without manual intervention. This directly addresses Altostrat's requirement to 'optimize cloud storage costs for growing media volumes' with minimal management overhead. Manual tiering (C) requires operational effort and doesn't adapt to actual usage patterns. Standard for everything (A) doesn't optimize costs. Filestore (D) is for file system workloads, not media storage.",
+    "domain": "Design & Planning"
+  },
+  {
+    "question": "Altostrat wants to modernize their CI/CD pipeline for containerized deployments with a centralized management platform that supports both their GKE cloud environment and on-premises Kubernetes. What solution should they implement?",
+    "caseStudy": "Company Overview: Altostrat is a prominent media company with a vast library of audio and video content including podcasts, interviews, news, and documentaries.\n\nExisting Environment: GKE for scalability, Cloud Storage for media library, BigQuery as data warehouse, Cloud Run functions for serverless event-driven tasks. Legacy on-premises systems for content ingestion and archival. Google Identity + third-party IdPs. Cloud Monitoring + Prometheus for observability.\n\nBusiness Requirements: Accelerate operational workflows, simplify infrastructure management, optimize cloud storage costs, enable 24/7 natural language user support, auto-generate content summaries, extract metadata using NLP/computer vision, detect inappropriate content, analyze content for trends.\n\nTechnical Requirements: Modernize CI/CD for containerized deployments, secure high-performance hybrid cloud connectivity, scalable Kubernetes on-prem and cloud, optimize storage costs, AI-powered harmful content detection, auditable/explainable AI, LLMs for personalized experiences, advanced chatbots with NLU.",
+    "caseStudyName": "Altostrat Media",
+    "options": [
+      "Cloud Build for CI/CD pipelines with Artifact Registry for container images, deployed to GKE",
+      "Anthos with Cloud Build and Artifact Registry, using Anthos Config Management for consistent policy across on-premises and cloud Kubernetes clusters",
+      "Jenkins on Compute Engine for CI/CD with manual deployment scripts for on-premises and GKE",
+      "Cloud Deploy for managed delivery pipelines targeting GKE only"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Anthos provides centralized management across both on-premises and cloud Kubernetes clusters, satisfying the technical requirement for 'scalable, performant Kubernetes environments both on-premises and in the cloud.' Cloud Build handles CI, Artifact Registry stores images, and Anthos Config Management enforces consistent policy everywhere. Cloud Deploy (D) only targets GKE. Jenkins (C) requires significant management. Cloud Build alone (A) doesn't address on-premises Kubernetes management.",
+    "domain": "Implementation"
+  },
+  {
+    "question": "Altostrat uses a mix of Cloud Monitoring and Prometheus for observability, with alerts delivered only via email which are frequently missed. How should they modernize their alerting strategy?",
+    "caseStudy": "Company Overview: Altostrat is a prominent media company with a vast library of audio and video content including podcasts, interviews, news, and documentaries.\n\nExisting Environment: GKE for scalability, Cloud Storage for media library, BigQuery as data warehouse, Cloud Run functions for serverless event-driven tasks. Legacy on-premises systems for content ingestion and archival. Google Identity + third-party IdPs. Cloud Monitoring + Prometheus for observability.\n\nBusiness Requirements: Accelerate operational workflows, simplify infrastructure management, optimize cloud storage costs, enable 24/7 natural language user support, auto-generate content summaries, extract metadata using NLP/computer vision, detect inappropriate content, analyze content for trends.\n\nTechnical Requirements: Modernize CI/CD for containerized deployments, secure high-performance hybrid cloud connectivity, scalable Kubernetes on-prem and cloud, optimize storage costs, AI-powered harmful content detection, auditable/explainable AI, LLMs for personalized experiences, advanced chatbots with NLU.",
+    "caseStudyName": "Altostrat Media",
+    "options": [
+      "Migrate entirely to Prometheus and Grafana for unified open-source monitoring",
+      "Use Cloud Monitoring with multi-channel alerting via PagerDuty or Cloud Monitoring notification channels including SMS, Pub/Sub, and webhooks",
+      "Continue using email alerts but implement stricter SLAs for response times",
+      "Deploy a custom alerting service on Cloud Run that reads from BigQuery logs"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Cloud Monitoring supports multiple notification channels including email, SMS, PagerDuty, webhooks, and Pub/Sub. This directly addresses the business requirement for 'centralized visibility and proactive action' and the problem of email alerts being ignored. Multi-channel alerting ensures critical alerts reach the right people through the right channels. Pure Prometheus/Grafana (A) loses native GCP integration. Stricter SLAs (C) doesn't solve the underlying alert delivery problem.",
+    "domain": "Reliability"
+  },
+  {
+    "question": "Cymbal wants to automatically generate product attributes and descriptions from supplier-provided information including titles, descriptions, and images. Which Google Cloud service is most appropriate?",
+    "caseStudy": "Company Overview: Cymbal is a fast-growing online retailer with a large product catalog spanning multiple retail sub-verticals.\n\nExisting Environment: Mix of on-premises and cloud systems. Databases: MySQL, MS SQL Server, Redis, MongoDB. Kubernetes clusters. Legacy SFTP/ETL batch integrations. Custom web app querying relational DBs. IVR system for customer calls. Call center agents for manual order entry. Open source monitoring: Grafana, Nagios, Elastic.\n\nBusiness Requirements: Automate product catalog enrichment, improve product discoverability, increase customer engagement, drive sales conversion, reduce call center and data center costs.\n\nTechnical Requirements: Generate product attributes from supplier data, generate/enhance product images, automate product discovery via natural language, handle scale without performance loss, human-in-the-loop review UI for AI-generated content, data security and compliance.",
+    "caseStudyName": "Cymbal Retail",
+    "options": [
+      "Vertex AI with Gemini multimodal models to process text and images and generate structured product attributes",
+      "Cloud Vision API for image analysis and Cloud Natural Language API for text processing",
+      "AutoML Tables to classify products into categories based on supplier data",
+      "Document AI to extract structured data from supplier documents"
+    ],
+    "correctAnswer": 0,
+    "explanation": "Gemini's multimodal capabilities can process both text (supplier descriptions) and images simultaneously to generate rich, structured product attributes. This directly addresses the technical requirement for attribute generation from 'titles, descriptions, and images.' Pre-built APIs (B) can analyze content but can't generate new attributes. AutoML Tables (C) classifies but doesn't generate descriptions. Document AI (D) extracts from documents but doesn't handle images or generate new content.",
+    "domain": "AI & Machine Learning"
+  },
+  {
+    "question": "Cymbal wants to replace their IVR system and reduce call center costs by allowing customers to complete orders through natural language conversations. Which solution should they implement?",
+    "caseStudy": "Company Overview: Cymbal is a fast-growing online retailer with a large product catalog spanning multiple retail sub-verticals.\n\nExisting Environment: Mix of on-premises and cloud systems. Databases: MySQL, MS SQL Server, Redis, MongoDB. Kubernetes clusters. Legacy SFTP/ETL batch integrations. Custom web app querying relational DBs. IVR system for customer calls. Call center agents for manual order entry. Open source monitoring: Grafana, Nagios, Elastic.\n\nBusiness Requirements: Automate product catalog enrichment, improve product discoverability, increase customer engagement, drive sales conversion, reduce call center and data center costs.\n\nTechnical Requirements: Generate product attributes from supplier data, generate/enhance product images, automate product discovery via natural language, handle scale without performance loss, human-in-the-loop review UI for AI-generated content, data security and compliance.",
+    "caseStudyName": "Cymbal Retail",
+    "options": [
+      "Dialogflow CX with Contact Center AI to handle customer conversations and integrate with existing order management systems",
+      "A custom Cloud Run application with Vertex AI for natural language processing",
+      "Vertex AI Agent Builder to create a conversational agent with Discovery AI for product search",
+      "Cloud Functions triggered by customer speech input processed by Speech-to-Text API"
+    ],
+    "correctAnswer": 2,
+    "explanation": "Vertex AI Agent Builder combined with Discovery AI directly addresses Cymbal's conversational commerce requirement - the solution concept explicitly mentions 'Google Cloud's Discovery AI to process user requests and retrieve the most relevant products.' Agent Builder provides the conversational layer while Discovery AI handles intelligent product retrieval. This is the most complete, purpose-built solution for Cymbal's stated use case. Dialogflow CX (A) is older and doesn't integrate Discovery AI as cleanly.",
+    "domain": "AI & Machine Learning"
+  },
+  {
+    "question": "Cymbal requires a Human-in-the-Loop (HITL) review process where associates can review, approve, reject, or modify AI-generated product content before it goes live. What architecture supports this?",
+    "caseStudy": "Company Overview: Cymbal is a fast-growing online retailer with a large product catalog spanning multiple retail sub-verticals.\n\nExisting Environment: Mix of on-premises and cloud systems. Databases: MySQL, MS SQL Server, Redis, MongoDB. Kubernetes clusters. Legacy SFTP/ETL batch integrations. Custom web app querying relational DBs. IVR system for customer calls. Call center agents for manual order entry. Open source monitoring: Grafana, Nagios, Elastic.\n\nBusiness Requirements: Automate product catalog enrichment, improve product discoverability, increase customer engagement, drive sales conversion, reduce call center and data center costs.\n\nTechnical Requirements: Generate product attributes from supplier data, generate/enhance product images, automate product discovery via natural language, handle scale without performance loss, human-in-the-loop review UI for AI-generated content, data security and compliance.",
+    "caseStudyName": "Cymbal Retail",
+    "options": [
+      "Store AI-generated content directly in the production database with a rollback mechanism",
+      "Use Vertex AI Pipelines with a manual approval step that pauses the pipeline, notifies reviewers via Pub/Sub, and resumes after approval via a Cloud Run UI",
+      "Have AI generate content in batch overnight and email it to associates for review",
+      "Use BigQuery to store pending content and have associates run SQL queries to approve records"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Vertex AI Pipelines supports conditional steps and pausing for human review. Pub/Sub notifies reviewers, and a Cloud Run UI provides the interface for approving, rejecting, or modifying content. This implements a proper HITL workflow as required. Storing directly to production (A) bypasses the review requirement entirely. Email batch review (C) is manual and error-prone. SQL approval (D) is not a user-friendly interface for non-technical associates.",
+    "domain": "Implementation"
+  },
+  {
+    "question": "Cymbal's current web application queries relational databases by product name and category only. They want to implement natural language product search so customers can describe what they need conversationally. What should they implement?",
+    "caseStudy": "Company Overview: Cymbal is a fast-growing online retailer with a large product catalog spanning multiple retail sub-verticals.\n\nExisting Environment: Mix of on-premises and cloud systems. Databases: MySQL, MS SQL Server, Redis, MongoDB. Kubernetes clusters. Legacy SFTP/ETL batch integrations. Custom web app querying relational DBs. IVR system for customer calls. Call center agents for manual order entry. Open source monitoring: Grafana, Nagios, Elastic.\n\nBusiness Requirements: Automate product catalog enrichment, improve product discoverability, increase customer engagement, drive sales conversion, reduce call center and data center costs.\n\nTechnical Requirements: Generate product attributes from supplier data, generate/enhance product images, automate product discovery via natural language, handle scale without performance loss, human-in-the-loop review UI for AI-generated content, data security and compliance.",
+    "caseStudyName": "Cymbal Retail",
+    "options": [
+      "Add full-text search to their existing MySQL database using MATCH AGAINST queries",
+      "Use Vertex AI Search (Discovery AI for Retail) to provide semantic, natural language product discovery",
+      "Implement Elasticsearch on GKE to index the product catalog",
+      "Use Cloud Natural Language API to parse queries then translate to SQL"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Vertex AI Search (Discovery AI for Retail) is specifically designed for e-commerce product discovery with semantic understanding of natural language queries. The solution concept explicitly calls out 'Discovery AI to process user requests and retrieve the most relevant products.' Full-text SQL search (A) only matches keywords. Elasticsearch (C) requires significant management and tuning. SQL translation (D) is fragile and can't handle semantic meaning.",
+    "domain": "AI & Machine Learning"
+  },
+  {
+    "question": "Cymbal needs to migrate their heterogeneous databases (MySQL, MS SQL Server, Redis, MongoDB) to Google Cloud while modernizing their stack. What is the recommended approach?",
+    "caseStudy": "Company Overview: Cymbal is a fast-growing online retailer with a large product catalog spanning multiple retail sub-verticals.\n\nExisting Environment: Mix of on-premises and cloud systems. Databases: MySQL, MS SQL Server, Redis, MongoDB. Kubernetes clusters. Legacy SFTP/ETL batch integrations. Custom web app querying relational DBs. IVR system for customer calls. Call center agents for manual order entry. Open source monitoring: Grafana, Nagios, Elastic.\n\nBusiness Requirements: Automate product catalog enrichment, improve product discoverability, increase customer engagement, drive sales conversion, reduce call center and data center costs.\n\nTechnical Requirements: Generate product attributes from supplier data, generate/enhance product images, automate product discovery via natural language, handle scale without performance loss, human-in-the-loop review UI for AI-generated content, data security and compliance.",
+    "caseStudyName": "Cymbal Retail",
+    "options": [
+      "Migrate all databases to Cloud Spanner for unified management",
+      "Use Database Migration Service to migrate MySQL to Cloud SQL, MS SQL Server to Cloud SQL, and evaluate Firestore for MongoDB workloads",
+      "Lift and shift all databases to Compute Engine VMs to minimize migration risk",
+      "Migrate everything to BigQuery as the single source of truth"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Database Migration Service (DMS) provides managed migration for MySQL and SQL Server to Cloud SQL with minimal downtime. MongoDB workloads are candidates for Firestore (document model) or Cloud SQL depending on usage patterns. This right-sizes each database to an appropriate managed GCP service. Spanner (A) is expensive and overkill for typical retail workloads. VM lift-and-shift (C) doesn't reduce operational overhead. BigQuery (D) is an analytics warehouse, not a transactional database.",
+    "domain": "Implementation"
+  },
+  {
+    "question": "Cymbal's open source monitoring stack (Grafana, Nagios, Elastic) creates operational overhead. They want unified monitoring and proactive alerting as part of their modernization. What should they implement?",
+    "caseStudy": "Company Overview: Cymbal is a fast-growing online retailer with a large product catalog spanning multiple retail sub-verticals.\n\nExisting Environment: Mix of on-premises and cloud systems. Databases: MySQL, MS SQL Server, Redis, MongoDB. Kubernetes clusters. Legacy SFTP/ETL batch integrations. Custom web app querying relational DBs. IVR system for customer calls. Call center agents for manual order entry. Open source monitoring: Grafana, Nagios, Elastic.\n\nBusiness Requirements: Automate product catalog enrichment, improve product discoverability, increase customer engagement, drive sales conversion, reduce call center and data center costs.\n\nTechnical Requirements: Generate product attributes from supplier data, generate/enhance product images, automate product discovery via natural language, handle scale without performance loss, human-in-the-loop review UI for AI-generated content, data security and compliance.",
+    "caseStudyName": "Cymbal Retail",
+    "options": [
+      "Keep Grafana and replace Nagios with Cloud Monitoring alerts",
+      "Migrate to Cloud Monitoring and Cloud Logging with custom dashboards, SLO monitoring, and multi-channel alerting",
+      "Deploy a managed Elasticsearch cluster on GKE for unified log aggregation",
+      "Use BigQuery for log storage and Data Studio for dashboards"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Cloud Monitoring and Cloud Logging provide unified, fully managed observability that eliminates the overhead of managing Grafana, Nagios, and Elastic separately. SLO monitoring enables proactive alerting, directly addressing Cymbal's requirement to 'reduce costs around manual processes.' Native GCP integration means automatic metrics collection from all GCP services. Keeping open source tools (A, C) maintains operational overhead. BigQuery/Data Studio (D) isn't real-time monitoring.",
+    "domain": "Reliability"
+  },
+  {
+    "question": "KnightMotives needs reliable network connectivity for vehicles in rural areas to support real-time AI features. Their manufacturing plants also need improved connectivity to headquarters. What approach addresses both needs?",
+    "caseStudy": "Company Overview: KnightMotives is a car manufacturer specializing in autonomous, self-driving vehicles including BEVs, hybrids, and ICE vehicles. Hybrid/ICE vehicles lack modern in-vehicle technology causing declining sales. Online ordering system is unreliable.\n\nExisting Environment: Largely on-premises IT with some cloud. Outdated mainframe for supply chain. Outdated ERP. No dealer budget for new equipment. Multiple codebases across vehicles, significant technical debt. Network connectivity challenges at plants and in rural areas.\n\nBusiness Requirements: Personalized driver relationship, cohesive experience across all models, better build-to-order model, monetize corporate data, modernize obsolete AI infrastructure, EU data protection compliance, autonomous driving investment, employee upskilling.\n\nTechnical Requirements: Consistent UX with AI across all vehicle models, update legacy in-vehicle hardware/software, reliable rural network connectivity, hybrid cloud strategy, modernize legacy systems, robust data management platform, comprehensive security framework, improved online build-to-order system, CRM system.",
+    "caseStudyName": "KnightMotives Automotive",
+    "options": [
+      "Deploy Cloud VPN between all plants and headquarters, use standard cellular for vehicle connectivity",
+      "Use Dedicated Interconnect for plant-to-HQ connectivity and integrate with mobile network operators using GCP's Network Connectivity Center for vehicle telematics",
+      "Use Cloud CDN to cache vehicle software updates closer to rural areas",
+      "Deploy Anthos on edge devices in each plant for local processing"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Dedicated Interconnect provides the high-bandwidth, low-latency connectivity needed between manufacturing plants and headquarters. Network Connectivity Center manages hybrid and multicloud network connectivity including vehicle telematics integration. This addresses both the plant connectivity requirement and rural vehicle connectivity. Cloud VPN (A) lacks the performance needed for plant-HQ. CDN (C) only caches content, doesn't solve real-time connectivity. Anthos on edge (D) helps with compute but not network connectivity.",
+    "domain": "Hybrid & Multicloud"
+  },
+  {
+    "question": "KnightMotives stores corporate data in silos across multiple systems. They want to monetize this data while maintaining strict EU data protection compliance. What architecture should they implement?",
+    "caseStudy": "Company Overview: KnightMotives is a car manufacturer specializing in autonomous, self-driving vehicles including BEVs, hybrids, and ICE vehicles. Hybrid/ICE vehicles lack modern in-vehicle technology causing declining sales. Online ordering system is unreliable.\n\nExisting Environment: Largely on-premises IT with some cloud. Outdated mainframe for supply chain. Outdated ERP. No dealer budget for new equipment. Multiple codebases across vehicles, significant technical debt. Network connectivity challenges at plants and in rural areas.\n\nBusiness Requirements: Personalized driver relationship, cohesive experience across all models, better build-to-order model, monetize corporate data, modernize obsolete AI infrastructure, EU data protection compliance, autonomous driving investment, employee upskilling.\n\nTechnical Requirements: Consistent UX with AI across all vehicle models, update legacy in-vehicle hardware/software, reliable rural network connectivity, hybrid cloud strategy, modernize legacy systems, robust data management platform, comprehensive security framework, improved online build-to-order system, CRM system.",
+    "caseStudyName": "KnightMotives Automotive",
+    "options": [
+      "Consolidate all data into BigQuery with column-level security, data masking, and VPC Service Controls to prevent exfiltration, with Cloud DLP to identify and protect PII",
+      "Store all data in Cloud Storage with IAM policies controlling access per dataset",
+      "Use Pub/Sub to stream all data to partners for monetization with encryption in transit",
+      "Deploy a data lake on Compute Engine VMs with custom access controls"
+    ],
+    "correctAnswer": 0,
+    "explanation": "BigQuery with column-level security, data masking, and VPC Service Controls provides the robust data management platform required. Cloud DLP identifies and protects PII for EU GDPR compliance. VPC Service Controls prevents data exfiltration even with compromised credentials. This addresses both data monetization (making data accessible to authorized partners) and strict data protection (EU regulations). Cloud Storage IAM (B) lacks column-level controls. Pub/Sub to partners (C) has no compliance controls. Custom VMs (D) add management overhead.",
+    "domain": "Security & Compliance"
+  },
+  {
+    "question": "KnightMotives has significant technical debt from multiple codebases across vehicle models and needs a consistent AI-powered UX across all models. What approach enables this while managing the legacy codebase challenge?",
+    "caseStudy": "Company Overview: KnightMotives is a car manufacturer specializing in autonomous, self-driving vehicles including BEVs, hybrids, and ICE vehicles. Hybrid/ICE vehicles lack modern in-vehicle technology causing declining sales. Online ordering system is unreliable.\n\nExisting Environment: Largely on-premises IT with some cloud. Outdated mainframe for supply chain. Outdated ERP. No dealer budget for new equipment. Multiple codebases across vehicles, significant technical debt. Network connectivity challenges at plants and in rural areas.\n\nBusiness Requirements: Personalized driver relationship, cohesive experience across all models, better build-to-order model, monetize corporate data, modernize obsolete AI infrastructure, EU data protection compliance, autonomous driving investment, employee upskilling.\n\nTechnical Requirements: Consistent UX with AI across all vehicle models, update legacy in-vehicle hardware/software, reliable rural network connectivity, hybrid cloud strategy, modernize legacy systems, robust data management platform, comprehensive security framework, improved online build-to-order system, CRM system.",
+    "caseStudyName": "KnightMotives Automotive",
+    "options": [
+      "Rewrite all vehicle software simultaneously using a unified codebase deployed via GKE",
+      "Use Apigee to create a unified API layer that abstracts legacy vehicle codebases, with Vertex AI powering AI features accessed through standardized APIs",
+      "Deploy separate AI models for each vehicle model type managed independently",
+      "Use Firebase to build a consistent mobile companion app while leaving vehicle software unchanged"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Apigee provides an API management layer that abstracts the underlying fragmented codebases, presenting a consistent interface. Vertex AI powers AI features through these standardized APIs, enabling consistent UX across all models without requiring immediate codebase consolidation. This addresses technical debt gradually. Full rewrite (A) is risky and takes years. Separate models per vehicle (C) doesn't achieve consistency. Firebase companion app (D) doesn't address in-vehicle experience.",
+    "domain": "Design & Planning"
+  },
+  {
+    "question": "KnightMotives has experienced past data breaches and needs a comprehensive security framework. Their autonomous vehicle data is especially sensitive. What security architecture should they prioritize?",
+    "caseStudy": "Company Overview: KnightMotives is a car manufacturer specializing in autonomous, self-driving vehicles including BEVs, hybrids, and ICE vehicles. Hybrid/ICE vehicles lack modern in-vehicle technology causing declining sales. Online ordering system is unreliable.\n\nExisting Environment: Largely on-premises IT with some cloud. Outdated mainframe for supply chain. Outdated ERP. No dealer budget for new equipment. Multiple codebases across vehicles, significant technical debt. Network connectivity challenges at plants and in rural areas.\n\nBusiness Requirements: Personalized driver relationship, cohesive experience across all models, better build-to-order model, monetize corporate data, modernize obsolete AI infrastructure, EU data protection compliance, autonomous driving investment, employee upskilling.\n\nTechnical Requirements: Consistent UX with AI across all vehicle models, update legacy in-vehicle hardware/software, reliable rural network connectivity, hybrid cloud strategy, modernize legacy systems, robust data management platform, comprehensive security framework, improved online build-to-order system, CRM system.",
+    "caseStudyName": "KnightMotives Automotive",
+    "options": [
+      "Implement VPC Service Controls around sensitive data, Binary Authorization for all deployments, Cloud Armor for API protection, and Security Command Center for centralized threat detection",
+      "Enable Cloud KMS encryption for all data at rest and in transit",
+      "Use IAM with least privilege for all service accounts and audit all access via Cloud Audit Logs",
+      "Deploy a third-party SIEM solution on Compute Engine for security event management"
+    ],
+    "correctAnswer": 0,
+    "explanation": "A layered security approach addresses KnightMotives' security requirements: VPC Service Controls prevents data exfiltration, Binary Authorization ensures only approved software deploys to vehicles/systems, Cloud Armor protects APIs, and Security Command Center provides centralized threat detection and compliance monitoring. KMS encryption alone (B) is necessary but insufficient. Least privilege IAM (C) is also necessary but not comprehensive. Third-party SIEM (D) adds management overhead when Security Command Center is native.",
+    "domain": "Security & Compliance"
+  },
+  {
+    "question": "KnightMotives wants to improve their unreliable online build-to-order system which dealers depend on. The system must be highly available and handle global dealer traffic. What architecture should they implement?",
+    "caseStudy": "Company Overview: KnightMotives is a car manufacturer specializing in autonomous, self-driving vehicles including BEVs, hybrids, and ICE vehicles. Hybrid/ICE vehicles lack modern in-vehicle technology causing declining sales. Online ordering system is unreliable.\n\nExisting Environment: Largely on-premises IT with some cloud. Outdated mainframe for supply chain. Outdated ERP. No dealer budget for new equipment. Multiple codebases across vehicles, significant technical debt. Network connectivity challenges at plants and in rural areas.\n\nBusiness Requirements: Personalized driver relationship, cohesive experience across all models, better build-to-order model, monetize corporate data, modernize obsolete AI infrastructure, EU data protection compliance, autonomous driving investment, employee upskilling.\n\nTechnical Requirements: Consistent UX with AI across all vehicle models, update legacy in-vehicle hardware/software, reliable rural network connectivity, hybrid cloud strategy, modernize legacy systems, robust data management platform, comprehensive security framework, improved online build-to-order system, CRM system.",
+    "caseStudyName": "KnightMotives Automotive",
+    "options": [
+      "Deploy the application on GKE with Cloud Spanner as the backend database, using Cloud Load Balancing with multi-region failover",
+      "Run the application on App Engine Standard with Cloud SQL in a single region",
+      "Deploy on Compute Engine managed instance groups with regional persistent disks",
+      "Use Cloud Run with Firestore for the order database"
+    ],
+    "correctAnswer": 0,
+    "explanation": "GKE provides scalable container orchestration, Cloud Spanner handles global relational data with strong consistency (critical for order management across regions), and Cloud Load Balancing with multi-region failover ensures high availability. This addresses the reliability problems causing dealer relationship strain. App Engine + single-region Cloud SQL (B) creates a single point of failure. Compute Engine MIGs (C) lack the global database consistency needed. Cloud Run + Firestore (D) works for simpler use cases but Firestore's document model is a poor fit for complex order management.",
+    "domain": "Reliability"
+  },
+  {
+    "question": "KnightMotives wants to adopt a hybrid cloud strategy for their IT infrastructure modernization while their mainframe and ERP systems are gradually replaced. What approach minimizes disruption?",
+    "caseStudy": "Company Overview: KnightMotives is a car manufacturer specializing in autonomous, self-driving vehicles including BEVs, hybrids, and ICE vehicles. Hybrid/ICE vehicles lack modern in-vehicle technology causing declining sales. Online ordering system is unreliable.\n\nExisting Environment: Largely on-premises IT with some cloud. Outdated mainframe for supply chain. Outdated ERP. No dealer budget for new equipment. Multiple codebases across vehicles, significant technical debt. Network connectivity challenges at plants and in rural areas.\n\nBusiness Requirements: Personalized driver relationship, cohesive experience across all models, better build-to-order model, monetize corporate data, modernize obsolete AI infrastructure, EU data protection compliance, autonomous driving investment, employee upskilling.\n\nTechnical Requirements: Consistent UX with AI across all vehicle models, update legacy in-vehicle hardware/software, reliable rural network connectivity, hybrid cloud strategy, modernize legacy systems, robust data management platform, comprehensive security framework, improved online build-to-order system, CRM system.",
+    "caseStudyName": "KnightMotives Automotive",
+    "options": [
+      "Immediately migrate all systems to GCP and decommission on-premises infrastructure",
+      "Use Anthos to manage workloads across on-premises and GCP, migrating applications incrementally while maintaining mainframe integrations via Apigee API gateway",
+      "Maintain all systems on-premises until modernization is complete before moving to cloud",
+      "Move only new applications to GCP and keep all legacy systems permanently on-premises"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Anthos enables a true hybrid strategy by managing workloads across both on-premises and GCP environments consistently. Migrating incrementally reduces risk while Apigee maintains integrations with legacy mainframe and ERP systems during the transition. Immediate full migration (A) is too risky with critical manufacturing systems. Staying on-premises (C) delays modernization benefits. Permanent split (D) creates ongoing operational complexity without a path to full modernization.",
+    "domain": "Hybrid & Multicloud"
+  },
+  {
+    "question": "EHR Healthcare needs to maintain legacy file- and API-based integrations with insurance providers on-premises while migrating to Google Cloud. There are no plans to replace these systems soon. What solution maintains these integrations?",
+    "caseStudy": "Company Overview: EHR Healthcare provides electronic health record (EHR) software as a service to multinational medical offices, hospitals, and insurance providers.\n\nExisting Environment: Multiple colocation facilities (one lease expiring). Customer-facing apps are web-based, many containerized on Kubernetes. Databases: MySQL, MS SQL Server, Redis, MongoDB. Legacy file- and API-based integrations with insurance providers on-premises (no plans to replace soon). Microsoft Active Directory for user management. Open source monitoring tools, alerts via email often ignored.\n\nBusiness Requirements: Onboard new insurance providers quickly, 99.9% availability for customer-facing systems, centralized visibility and proactive monitoring, healthcare trend insights, reduce latency, maintain regulatory compliance, decrease infrastructure admin costs, generate industry trend reports.\n\nTechnical Requirements: Maintain legacy interfaces to insurance providers (on-prem + cloud), consistent container management, secure high-performance on-prem to GCP connection, consistent logging/monitoring/alerting, manage multiple container environments, dynamically scale, ingest data from new providers.",
+    "caseStudyName": "EHR Healthcare",
+    "options": [
+      "Migrate the legacy systems to Cloud Run to make them cloud-native",
+      "Use Dedicated Interconnect or Partner Interconnect to maintain secure, high-performance connectivity between on-premises legacy systems and GCP workloads",
+      "Replicate all insurance provider data to BigQuery and retire the legacy integrations",
+      "Use Cloud VPN for connectivity and expose legacy systems via internal load balancers"
+    ],
+    "correctAnswer": 1,
+    "explanation": "The technical requirements explicitly state the need for 'a secure and high-performance connection between on-premises systems and Google Cloud' and maintaining legacy interfaces. Dedicated or Partner Interconnect provides private, reliable, high-bandwidth connectivity without touching the legacy systems. Cloud Run migration (A) contradicts the requirement to not replace these systems. BigQuery replication (C) doesn't maintain real-time integration. Cloud VPN (D) is lower performance and less reliable than Interconnect for production workloads.",
+    "domain": "Hybrid & Multicloud"
+  },
+  {
+    "question": "EHR Healthcare currently manages Microsoft Active Directory for user management. After migrating to GCP, how should they manage identity while maintaining AD compatibility?",
+    "caseStudy": "Company Overview: EHR Healthcare provides electronic health record (EHR) software as a service to multinational medical offices, hospitals, and insurance providers.\n\nExisting Environment: Multiple colocation facilities (one lease expiring). Customer-facing apps are web-based, many containerized on Kubernetes. Databases: MySQL, MS SQL Server, Redis, MongoDB. Legacy file- and API-based integrations with insurance providers on-premises (no plans to replace soon). Microsoft Active Directory for user management. Open source monitoring tools, alerts via email often ignored.\n\nBusiness Requirements: Onboard new insurance providers quickly, 99.9% availability for customer-facing systems, centralized visibility and proactive monitoring, healthcare trend insights, reduce latency, maintain regulatory compliance, decrease infrastructure admin costs, generate industry trend reports.\n\nTechnical Requirements: Maintain legacy interfaces to insurance providers (on-prem + cloud), consistent container management, secure high-performance on-prem to GCP connection, consistent logging/monitoring/alerting, manage multiple container environments, dynamically scale, ingest data from new providers.",
+    "caseStudyName": "EHR Healthcare",
+    "options": [
+      "Replace Active Directory with Cloud Identity and recreate all users manually",
+      "Use Google Cloud Directory Sync (GCDS) to synchronize Active Directory users to Cloud Identity, enabling SSO across on-premises and GCP resources",
+      "Deploy Active Directory on Compute Engine VMs in GCP",
+      "Use Cloud IAM independently for GCP resources while keeping AD only for on-premises"
+    ],
+    "correctAnswer": 1,
+    "explanation": "GCDS synchronizes existing AD users to Cloud Identity, enabling SSO across both environments without disrupting existing AD infrastructure. This supports the business requirement to onboard new insurance providers quickly while maintaining existing authentication. Manual recreation (A) is error-prone and time-consuming. AD on VMs (C) requires management overhead and doesn't integrate with Cloud Identity. Split identity systems (D) creates management complexity and poor user experience.",
+    "domain": "Security & Compliance"
+  },
+  {
+    "question": "EHR Healthcare needs 99.9% availability for all customer-facing applications. Their apps are containerized on Kubernetes and the colocation facility lease is expiring. What architecture should they implement on GCP?",
+    "caseStudy": "Company Overview: EHR Healthcare provides electronic health record (EHR) software as a service to multinational medical offices, hospitals, and insurance providers.\n\nExisting Environment: Multiple colocation facilities (one lease expiring). Customer-facing apps are web-based, many containerized on Kubernetes. Databases: MySQL, MS SQL Server, Redis, MongoDB. Legacy file- and API-based integrations with insurance providers on-premises (no plans to replace soon). Microsoft Active Directory for user management. Open source monitoring tools, alerts via email often ignored.\n\nBusiness Requirements: Onboard new insurance providers quickly, 99.9% availability for customer-facing systems, centralized visibility and proactive monitoring, healthcare trend insights, reduce latency, maintain regulatory compliance, decrease infrastructure admin costs, generate industry trend reports.\n\nTechnical Requirements: Maintain legacy interfaces to insurance providers (on-prem + cloud), consistent container management, secure high-performance on-prem to GCP connection, consistent logging/monitoring/alerting, manage multiple container environments, dynamically scale, ingest data from new providers.",
+    "caseStudyName": "EHR Healthcare",
+    "options": [
+      "Deploy all applications on a single regional GKE cluster with node auto-provisioning",
+      "Use GKE Autopilot clusters across multiple regions with Cloud Load Balancing and automated failover, with Cloud Spanner for globally consistent data",
+      "Migrate containers to App Engine Flexible for managed scaling",
+      "Run containers on Compute Engine managed instance groups with custom orchestration"
+    ],
+    "correctAnswer": 1,
+    "explanation": "GKE Autopilot reduces operational overhead (addressing the cost requirement), multi-region deployment with Cloud Load Balancing and failover achieves 99.9%+ availability, and Cloud Spanner ensures data consistency across regions. The technical requirements call for 'consistent way to manage container-based applications' and 'dynamically scale and provision new environments.' Single regional GKE (A) can't achieve multi-region availability. App Engine (C) loses Kubernetes consistency. Custom orchestration (D) increases operational overhead.",
+    "domain": "Reliability"
+  },
+  {
+    "question": "EHR Healthcare's monitoring is fragmented across open source tools and alerts are sent via email and often ignored. They need centralized, proactive monitoring for a healthcare environment with compliance requirements. What should they implement?",
+    "caseStudy": "Company Overview: EHR Healthcare provides electronic health record (EHR) software as a service to multinational medical offices, hospitals, and insurance providers.\n\nExisting Environment: Multiple colocation facilities (one lease expiring). Customer-facing apps are web-based, many containerized on Kubernetes. Databases: MySQL, MS SQL Server, Redis, MongoDB. Legacy file- and API-based integrations with insurance providers on-premises (no plans to replace soon). Microsoft Active Directory for user management. Open source monitoring tools, alerts via email often ignored.\n\nBusiness Requirements: Onboard new insurance providers quickly, 99.9% availability for customer-facing systems, centralized visibility and proactive monitoring, healthcare trend insights, reduce latency, maintain regulatory compliance, decrease infrastructure admin costs, generate industry trend reports.\n\nTechnical Requirements: Maintain legacy interfaces to insurance providers (on-prem + cloud), consistent container management, secure high-performance on-prem to GCP connection, consistent logging/monitoring/alerting, manage multiple container environments, dynamically scale, ingest data from new providers.",
+    "caseStudyName": "EHR Healthcare",
+    "options": [
+      "Standardize on Prometheus and Grafana across all environments for unified monitoring",
+      "Implement Cloud Monitoring with SLO tracking, Cloud Logging with log retention policies meeting compliance requirements, and multi-channel alerting via PagerDuty integration",
+      "Use Cloud Audit Logs only for compliance and keep existing monitoring tools",
+      "Deploy Elastic Stack on GKE for unified log management"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Cloud Monitoring addresses 'centralized visibility and proactive action' and SLO tracking. Cloud Logging with retention policies satisfies healthcare compliance requirements for audit trails. Multi-channel alerting via PagerDuty solves the 'alerts ignored via email' problem. The technical requirements explicitly call for 'consistent logging, log retention, monitoring, and alerting capabilities.' Prometheus/Grafana (A) doesn't solve compliance log retention. Audit Logs only (C) isn't comprehensive monitoring. Elastic Stack on GKE (D) maintains operational overhead.",
+    "domain": "Reliability"
+  },
+  {
+    "question": "EHR Healthcare wants to onboard new insurance providers quickly and generate insights into healthcare trends from provider data. What data architecture enables both?",
+    "caseStudy": "Company Overview: EHR Healthcare provides electronic health record (EHR) software as a service to multinational medical offices, hospitals, and insurance providers.\n\nExisting Environment: Multiple colocation facilities (one lease expiring). Customer-facing apps are web-based, many containerized on Kubernetes. Databases: MySQL, MS SQL Server, Redis, MongoDB. Legacy file- and API-based integrations with insurance providers on-premises (no plans to replace soon). Microsoft Active Directory for user management. Open source monitoring tools, alerts via email often ignored.\n\nBusiness Requirements: Onboard new insurance providers quickly, 99.9% availability for customer-facing systems, centralized visibility and proactive monitoring, healthcare trend insights, reduce latency, maintain regulatory compliance, decrease infrastructure admin costs, generate industry trend reports.\n\nTechnical Requirements: Maintain legacy interfaces to insurance providers (on-prem + cloud), consistent container management, secure high-performance on-prem to GCP connection, consistent logging/monitoring/alerting, manage multiple container environments, dynamically scale, ingest data from new providers.",
+    "caseStudyName": "EHR Healthcare",
+    "options": [
+      "Use Cloud SQL as the central database for all provider data with custom reporting queries",
+      "Use Pub/Sub to ingest data from new providers, Dataflow for transformation, BigQuery as the data warehouse for trend analysis, and Looker for reporting",
+      "Use Cloud Storage to collect provider files and run batch Dataproc jobs for analysis",
+      "Use Firestore for provider data ingestion and Cloud Functions for trend calculations"
+    ],
+    "correctAnswer": 1,
+    "explanation": "Pub/Sub enables rapid onboarding of new providers through a standard ingestion interface (addressing 'create interfaces to ingest and process data from new providers'). Dataflow handles transformation, BigQuery stores and analyzes the data warehouse at scale, and Looker generates the trend reports and insights required by business requirements. Cloud SQL (A) doesn't scale for multi-provider analytics. Cloud Storage + Dataproc (C) works but lacks real-time ingestion. Firestore (D) is a poor fit for analytical workloads.",
+    "domain": "Design & Planning"
+  },
+  {
+    "question": "EHR Healthcare stores protected health information (PHI) and must maintain regulatory compliance (HIPAA). They are migrating from colocation to GCP. What measures are required to maintain compliance?",
+    "caseStudy": "Company Overview: EHR Healthcare provides electronic health record (EHR) software as a service to multinational medical offices, hospitals, and insurance providers.\n\nExisting Environment: Multiple colocation facilities (one lease expiring). Customer-facing apps are web-based, many containerized on Kubernetes. Databases: MySQL, MS SQL Server, Redis, MongoDB. Legacy file- and API-based integrations with insurance providers on-premises (no plans to replace soon). Microsoft Active Directory for user management. Open source monitoring tools, alerts via email often ignored.\n\nBusiness Requirements: Onboard new insurance providers quickly, 99.9% availability for customer-facing systems, centralized visibility and proactive monitoring, healthcare trend insights, reduce latency, maintain regulatory compliance, decrease infrastructure admin costs, generate industry trend reports.\n\nTechnical Requirements: Maintain legacy interfaces to insurance providers (on-prem + cloud), consistent container management, secure high-performance on-prem to GCP connection, consistent logging/monitoring/alerting, manage multiple container environments, dynamically scale, ingest data from new providers.",
+    "caseStudyName": "EHR Healthcare",
+    "options": [
+      "Enable default Google-managed encryption for all GCP services",
+      "Implement CMEK (Customer-Managed Encryption Keys) with Cloud KMS for PHI data, VPC Service Controls to prevent data exfiltration, Cloud Audit Logs for all data access, and sign a BAA with Google Cloud",
+      "Use Cloud Armor to protect all customer-facing endpoints handling PHI",
+      "Implement IAM least privilege and store all PHI in a dedicated GCP project"
+    ],
+    "correctAnswer": 1,
+    "explanation": "HIPAA compliance requires a Business Associate Agreement (BAA) with Google Cloud, CMEK for data encryption control, VPC Service Controls to prevent PHI exfiltration, and comprehensive audit logging of all PHI access. This satisfies the business requirement to 'maintain regulatory compliance.' Default encryption (A) doesn't provide customer control required for HIPAA. Cloud Armor (C) protects endpoints but doesn't address data compliance. Least privilege + project isolation (D) are necessary but not sufficient for HIPAA.",
+    "domain": "Security & Compliance"
   }
 ];

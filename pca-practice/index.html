@@ -401,6 +401,205 @@
             color: #333;
         }
 
+        .stats-panel {
+            background: #1f1f1f;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stats-panel h3 {
+            color: #10b981;
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .stat-box {
+            background: #2d2d2d;
+            border-radius: 6px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #10b981;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #888;
+            margin-top: 4px;
+        }
+
+        .domain-bar-container {
+            margin: 6px 0;
+        }
+
+        .domain-bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #b0b0b0;
+            margin-bottom: 3px;
+        }
+
+        .domain-bar-track {
+            background: #404040;
+            border-radius: 3px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .domain-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .domain-bar-fill.good { background: #10b981; }
+        .domain-bar-fill.ok { background: #f59e0b; }
+        .domain-bar-fill.bad { background: #ea4335; }
+
+        .session-history {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #888;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+
+        .session-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .clear-stats {
+            font-size: 11px;
+            color: #666;
+            background: none;
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 4px 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            float: right;
+        }
+
+        .clear-stats:hover { color: #ea4335; border-color: #ea4335; }
+
+        .length-btn {
+            background: #1f1f1f;
+            color: #b0b0b0;
+            border: 2px solid #404040;
+            border-radius: 8px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.6;
+            transition: all 0.2s;
+            min-width: 100px;
+        }
+
+        .length-btn:hover {
+            border-color: #10b981;
+            color: #e0e0e0;
+        }
+
+        .length-btn.active {
+            border-color: #10b981;
+            background: #1a3a2e;
+            color: #10b981;
+        }
+
+        body.light-mode .length-btn {
+            background: #f0f0f0;
+            color: #555;
+            border-color: #ccc;
+        }
+
+        body.light-mode .length-btn:hover {
+            border-color: #10b981;
+            color: #333;
+        }
+
+        body.light-mode .length-btn.active {
+            background: #d1fae5;
+            border-color: #10b981;
+            color: #065f46;
+        }
+
+        .case-study-banner {
+            background: #1a2a1a;
+            border: 1px solid #10b981;
+            border-radius: 6px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .case-study-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 16px;
+            cursor: pointer;
+            background: #1f3a1f;
+        }
+
+        .case-study-header:hover { background: #244024; }
+
+        .case-study-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #10b981;
+        }
+
+        .case-study-toggle {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .case-study-body {
+            padding: 14px 16px;
+            font-size: 13px;
+            color: #b0b0b0;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            max-height: 250px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .case-study-body.expanded { display: block; }
+
+        body.light-mode .case-study-banner { background: #f0fdf4; border-color: #10b981; }
+        body.light-mode .case-study-header { background: #dcfce7; }
+        body.light-mode .case-study-header:hover { background: #bbf7d0; }
+        body.light-mode .case-study-title { color: #065f46; }
+        body.light-mode .case-study-body { color: #444; }
+
+        body.light-mode .stats-panel { background: #f0f0f0; }
+        body.light-mode .stat-box { background: #e0e0e0; }
+        body.light-mode .stat-value { color: #10b981; }
+        body.light-mode .stat-label { color: #666; }
+        body.light-mode .domain-bar-label { color: #555; }
+        body.light-mode .domain-bar-track { background: #ccc; }
+        body.light-mode .session-history { color: #666; }
+        body.light-mode .session-row { border-bottom: 1px solid #ddd; }
+        body.light-mode .clear-stats { color: #999; border-color: #ccc; }
+
         .progress-bar {
             width: 100%;
             height: 8px;
@@ -639,12 +838,45 @@
                     and hybrid & multicloud.
                 </p>
                 <p style="margin-top: 20px; font-style: italic; color: #999;">
-                    This practice exam does not include case studies. It is meant as a study aide, not a full practice exam.
+                    This is a study aid, not an official practice exam. It is not affiliated with or endorsed by Google.
+                    Case studies are pulled from the <a href="https://cloud.google.com/learn/certification/cloud-architect" target="_blank" style="color: #10b981;">Google Cloud certifications site</a> as of 31 MAY 2026.
                 </p>
                 <p style="margin-top: 15px;">
                     <strong>Format:</strong> Multiple choice questions with immediate feedback and explanations.
                 </p>
+
+                <div style="margin: 20px 0;">
+                    <p style="margin-bottom: 10px;"><strong>Exam Length:</strong></p>
+                    <div style="display: flex; gap: 12px; justify-content: center;">
+                        <button class="length-btn active" id="len10" onclick="setLength(10)">10 Questions<br><span style="font-size:11px;font-weight:400;">~5 min</span></button>
+                        <button class="length-btn" id="len30" onclick="setLength(30)">30 Questions<br><span style="font-size:11px;font-weight:400;">~15 min</span></button>
+                        <button class="length-btn" id="len60" onclick="setLength(60)">60 Questions<br><span style="font-size:11px;font-weight:400;">~30 min</span></button>
+                    </div>
+                </div>
+
                 <button class="btn" onclick="startExam()">Start Practice Exam</button>
+                
+                <!-- Stats Panel -->
+                <div class="stats-panel" id="statsPanel" style="margin-top: 30px; text-align: left;">
+                    <h3>📊 Your Progress</h3>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-value" id="statAttempts">0</div>
+                            <div class="stat-label">Exams Taken</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="statAverage">—</div>
+                            <div class="stat-label">Average Score</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-value" id="statBest">—</div>
+                            <div class="stat-label">Best Score</div>
+                        </div>
+                    </div>
+                    <div id="domainBars"></div>
+                    <div class="session-history" id="sessionHistory"></div>
+                    <button class="clear-stats" onclick="clearStats()">Clear History</button>
+                </div>
             </div>
 
             <!-- Loading Screen -->
@@ -666,6 +898,14 @@
 
                 <div id="scenarioText" class="scenario" style="display: none;"></div>
                 
+                <div id="caseStudyBanner" class="case-study-banner" style="display:none;">
+                    <div class="case-study-header" onclick="toggleCaseStudy()">
+                        <span class="case-study-title" id="caseStudyTitle">📋 Case Study</span>
+                        <span class="case-study-toggle" id="caseStudyToggle">▼ Show</span>
+                    </div>
+                    <div class="case-study-body" id="caseStudyBody"></div>
+                </div>
+
                 <div id="questionText" class="question-text"></div>
 
                 <div id="optionsContainer" class="options"></div>
@@ -728,12 +968,103 @@
         // Load saved theme on page load (default to dark)
         window.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('theme');
-            // Default to dark mode - only switch to light if explicitly saved
             if (savedTheme === 'light') {
                 document.body.classList.add('light-mode');
                 document.getElementById('themeIcon').textContent = '🌙';
             }
+            loadStats();
         });
+
+        // ── Stats persistence ──────────────────────────────────────────
+        function getStats() {
+            try {
+                return JSON.parse(localStorage.getItem('gcpExamStats') || '{"sessions":[]}');
+            } catch(e) {
+                return { sessions: [] };
+            }
+        }
+
+        function saveSession(percentage, domainResults) {
+            const stats = getStats();
+            stats.sessions.push({
+                date: new Date().toLocaleDateString(),
+                score: percentage,
+                domains: domainResults   // { "Security": {correct:2,total:3}, ... }
+            });
+            localStorage.setItem('gcpExamStats', JSON.stringify(stats));
+        }
+
+        function clearStats() {
+            if (confirm('Clear all exam history?')) {
+                localStorage.removeItem('gcpExamStats');
+                loadStats();
+            }
+        }
+
+        function loadStats() {
+            const stats = getStats();
+            const sessions = stats.sessions;
+
+            document.getElementById('statAttempts').textContent = sessions.length || 0;
+
+            if (sessions.length === 0) {
+                document.getElementById('statAverage').textContent = '—';
+                document.getElementById('statBest').textContent = '—';
+                document.getElementById('domainBars').innerHTML = '<p style="color:#666;font-size:12px;">Complete an exam to see domain breakdown.</p>';
+                document.getElementById('sessionHistory').innerHTML = '';
+                return;
+            }
+
+            const scores = sessions.map(s => s.score);
+            const avg = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+            const best = Math.max(...scores);
+
+            document.getElementById('statAverage').textContent = avg + '%';
+            document.getElementById('statBest').textContent = best + '%';
+
+            // Aggregate domain performance across ALL sessions
+            const domainTotals = {};
+            sessions.forEach(s => {
+                if (!s.domains) return;
+                Object.entries(s.domains).forEach(([domain, data]) => {
+                    if (!domainTotals[domain]) domainTotals[domain] = { correct: 0, total: 0 };
+                    domainTotals[domain].correct += data.correct;
+                    domainTotals[domain].total   += data.total;
+                });
+            });
+
+            // Render domain bars
+            let barsHTML = '<div style="margin-top:10px;">';
+            Object.entries(domainTotals)
+                .sort((a, b) => (a[1].correct / a[1].total) - (b[1].correct / b[1].total))
+                .forEach(([domain, data]) => {
+                    const pct = Math.round((data.correct / data.total) * 100);
+                    const cls = pct >= 80 ? 'good' : pct >= 60 ? 'ok' : 'bad';
+                    barsHTML += `
+                        <div class="domain-bar-container">
+                            <div class="domain-bar-label">
+                                <span>${domain}</span>
+                                <span>${pct}% (${data.correct}/${data.total})</span>
+                            </div>
+                            <div class="domain-bar-track">
+                                <div class="domain-bar-fill ${cls}" style="width:${pct}%"></div>
+                            </div>
+                        </div>`;
+                });
+            barsHTML += '</div>';
+            document.getElementById('domainBars').innerHTML = barsHTML;
+
+            // Session history (most recent first)
+            let histHTML = '';
+            [...sessions].reverse().slice(0, 8).forEach(s => {
+                const color = s.score >= 70 ? '#10b981' : '#ea4335';
+                histHTML += `<div class="session-row">
+                    <span>${s.date}</span>
+                    <span style="color:${color};font-weight:600;">${s.score}%</span>
+                </div>`;
+            });
+            document.getElementById('sessionHistory').innerHTML = histHTML;
+        }
 
         let examState = {
             questions: [],
@@ -746,47 +1077,122 @@
 
         // Questions loaded from gcp_questions.json
 
+        let examLength = 10;
+
+        function toggleCaseStudy() {
+            const body = document.getElementById('caseStudyBody');
+            const toggle = document.getElementById('caseStudyToggle');
+            const expanded = body.classList.toggle('expanded');
+            toggle.textContent = expanded ? '▲ Hide' : '▼ Show';
+        }
+
+        function setLength(n) {
+            examLength = n;
+            document.querySelectorAll('.length-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('len' + n).classList.add('active');
+        }
+
         async function startExam() {
             document.getElementById('startScreen').style.display = 'none';
             document.getElementById('loadingScreen').style.display = 'block';
 
             try {
-                // Questions are loaded via script tag - check if they exist
                 if (typeof QUESTION_BANK === 'undefined' || !QUESTION_BANK || QUESTION_BANK.length === 0) {
                     throw new Error('Question bank not loaded. Make sure gcp_questions.js is included.');
                 }
                 
-                const allQuestions = QUESTION_BANK;
-                
-                // Calculate domain distribution: Design 30%, Implementation 25%, Security 20%, Optimization 15%, Reliability 10%
-                const domains = {
-                    "Design & Planning": 3,
-                    "Implementation": 2,
-                    "Security & Compliance": 2,
-                    "Optimization": 2,
-                    "Reliability": 1
+                // Separate regular and case study questions
+                const regularQuestions = QUESTION_BANK.filter(q => !q.caseStudy);
+                const caseStudyQuestions = QUESTION_BANK.filter(q => q.caseStudy);
+
+                // Domain weights for regular questions (~80% of exam)
+                const weights = {
+                    "Design & Planning":      0.25,
+                    "Implementation":         0.20,
+                    "Security & Compliance":  0.18,
+                    "AI & Machine Learning":  0.12,
+                    "Optimization":           0.10,
+                    "Reliability":            0.08,
+                    "Infrastructure as Code": 0.04,
+                    "Hybrid & Multicloud":    0.03
                 };
 
-                const selectedQuestions = [];
-                const questionsByDomain = {};
+                // Reserve ~20% of exam for case study questions (min 1 for 10q, ~6 for 30q, ~12 for 60q)
+                const caseStudyCount = Math.max(1, Math.round(examLength * 0.20));
+                const regularCount = examLength - caseStudyCount;
 
-                // Group questions by domain
-                allQuestions.forEach(q => {
-                    if (!questionsByDomain[q.domain]) {
-                        questionsByDomain[q.domain] = [];
-                    }
+                // Scale domain weights to regularCount
+                const domainCounts = {};
+                let assigned = 0;
+                const domainNames = Object.keys(weights);
+
+                domainNames.forEach(d => {
+                    const count = Math.max(1, Math.round(weights[d] * regularCount));
+                    domainCounts[d] = count;
+                    assigned += count;
+                });
+
+                // Fix rounding drift
+                let diff = regularCount - assigned;
+                const sorted = domainNames.slice().sort((a, b) => weights[b] - weights[a]);
+                let i = 0;
+                while (diff !== 0) {
+                    const d = sorted[i % sorted.length];
+                    if (diff > 0) { domainCounts[d]++; diff--; }
+                    else if (diff < 0 && domainCounts[d] > 1) { domainCounts[d]--; diff++; }
+                    i++;
+                }
+
+                // Group regular questions by domain and select
+                const questionsByDomain = {};
+                regularQuestions.forEach(q => {
+                    if (!questionsByDomain[q.domain]) questionsByDomain[q.domain] = [];
                     questionsByDomain[q.domain].push(q);
                 });
 
-                // Select questions according to domain distribution
-                for (const [domain, count] of Object.entries(domains)) {
-                    const domainQuestions = questionsByDomain[domain] || [];
-                    const shuffled = domainQuestions.sort(() => 0.5 - Math.random());
+                const selectedQuestions = [];
+                for (const [domain, count] of Object.entries(domainCounts)) {
+                    const dqs = questionsByDomain[domain] || [];
+                    const shuffled = dqs.slice().sort(() => 0.5 - Math.random());
                     selectedQuestions.push(...shuffled.slice(0, count));
                 }
 
-                // Shuffle the final selection
-                examState.questions = selectedQuestions.sort(() => 0.5 - Math.random());
+                // Pick case study questions - try to get a balanced mix of case studies
+                // Group by case study name, pick from each round-robin
+                const csByName = {};
+                caseStudyQuestions.forEach(q => {
+                    if (!csByName[q.caseStudyName]) csByName[q.caseStudyName] = [];
+                    csByName[q.caseStudyName].push(q);
+                });
+                // Shuffle within each case study
+                Object.values(csByName).forEach(arr => arr.sort(() => 0.5 - Math.random()));
+
+                const csNames = Object.keys(csByName);
+                const selectedCS = [];
+                let csIdx = 0;
+                while (selectedCS.length < caseStudyCount) {
+                    const name = csNames[csIdx % csNames.length];
+                    const pool = csByName[name];
+                    if (pool.length > 0) selectedCS.push(pool.shift());
+                    csIdx++;
+                    if (csIdx > caseStudyCount * csNames.length) break; // safety
+                }
+
+                // Combine and shuffle
+                examState.questions = [...selectedQuestions, ...selectedCS].sort(() => 0.5 - Math.random());
+
+                document.getElementById('loadingScreen').style.display = 'none';
+                document.getElementById('questionScreen').classList.add('active');
+
+                displayQuestion();
+            } catch (error) {
+                document.getElementById('loadingScreen').innerHTML = `
+                    <p style="color: #ea4335;">Error loading questions: ${error.message}</p>
+                    <p style="color: #666; margin-top: 10px;">Make sure gcp_questions.js is in the same directory as this HTML file.</p>
+                    <button class="btn" onclick="location.reload()" style="margin-top: 20px;">Try Again</button>
+                `;
+            }
+        }
 
                 document.getElementById('loadingScreen').style.display = 'none';
                 document.getElementById('questionScreen').classList.add('active');
@@ -816,6 +1222,19 @@
                 document.getElementById('scenarioText').style.display = 'block';
             } else {
                 document.getElementById('scenarioText').style.display = 'none';
+            }
+
+            // Case study banner
+            const banner = document.getElementById('caseStudyBanner');
+            if (question.caseStudy) {
+                banner.style.display = 'block';
+                document.getElementById('caseStudyTitle').textContent = '📋 Case Study: ' + question.caseStudyName;
+                document.getElementById('caseStudyBody').textContent = question.caseStudy;
+                // Collapse between questions
+                document.getElementById('caseStudyBody').classList.remove('expanded');
+                document.getElementById('caseStudyToggle').textContent = '▼ Show';
+            } else {
+                banner.style.display = 'none';
             }
             
             document.getElementById('questionText').textContent = question.question;
@@ -926,6 +1345,20 @@
             const percentage = Math.round((examState.score / examState.questions.length) * 100);
             const passed = percentage >= 70;
             
+            // Build per-domain results for stats tracking
+            const domainResults = {};
+            examState.questions.forEach((q, i) => {
+                const domain = q.domain;
+                if (!domainResults[domain]) domainResults[domain] = { correct: 0, total: 0 };
+                domainResults[domain].total++;
+                // A question is correct if it's NOT in incorrectAnswers
+                const wasWrong = examState.incorrectAnswers.some(ia => ia.question === q);
+                if (!wasWrong) domainResults[domain].correct++;
+            });
+
+            // Save session to localStorage
+            saveSession(percentage, domainResults);
+
             document.getElementById('questionScreen').classList.remove('active');
             document.getElementById('resultsScreen').classList.add('active');
             
