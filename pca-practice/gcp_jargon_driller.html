@@ -359,9 +359,12 @@
     } else {
       var input = document.getElementById('freeInput');
       if (!input || !input.value.trim()) return;
-      var val = input.value.trim().toLowerCase();
-      var answer = q.options[q.correctIndex].toLowerCase();
-      isCorrect = (val === answer || answer.indexOf(val) !== -1 || val.indexOf(answer) !== -1);
+      var val = input.value.trim().toLowerCase().replace(/[-_]/g, ' ').replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, ' ');
+      var answer = q.options[q.correctIndex].toLowerCase().replace(/[-_]/g, ' ').replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, ' ');
+      // Also extract just the key service name (first few words before "for" or "providing")
+      var answerCore = answer.split(/ for | providing | enabling | using | with /)[0].trim();
+      isCorrect = (val === answer || answer.indexOf(val) !== -1 || val.indexOf(answer) !== -1 || 
+                   answerCore.indexOf(val) !== -1 || val.indexOf(answerCore) !== -1);
       input.disabled = true;
       input.style.borderColor = isCorrect ? 'var(--correct)' : 'var(--wrong)';
       if (!isCorrect) {
